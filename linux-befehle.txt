@@ -1,0 +1,482 @@
+Standard-Befehle mit Parameter
+=============================
+ls -la
+man
+pwd -uax
+top
+whoami
+finger
+ping
+net???
+
+Tools
+======
+grep
+awk
+sed
+curl 
+	curl smtp://gmail.com --ssl u user@gmail.com:passwort --mail-from '<user@gmail.com>' --mail-rcpt'anderer_user@gmail.com>' -T hello.txt
+	curl ftp://ftp.halifax.rwth-aachen.de/ubuntu-releases/23.04//ubuntu-12.04-dektop-i386.iso -o ubuntu.iso
+	curl ftp://my.ftp.server/super/secret -T secretanswer.txt -u username:passwort
+	curl -k https://127.0.0.1:8443
+	curl --cert mycert.pem https://secure.example.com
+	curl -o /dev/null -s -w %{time_connect}:%{time_total} http://slashdot.org
+	curl -X GET http://127.0.0.1:8080
+wget
+	wget -mpk --follow-ftp --ignore-length -e robots=off --exclude forum
+tmuc
+sudo apt-get update
+sudo apt-get install ...
+sudo apt-cache search ...
+
+packages: ssh, openjdk, mc
+
+An A-Z Index of the Bash command line for Linux.
+
+  alias    Create an alias •
+  apropos  Search Help manual pages (man -k)
+  apt-get  Search for and install software packages (Debian/Ubuntu)
+  aptitude Search for and install software packages (Debian/Ubuntu)
+  aspell   Spell Checker
+  awk      Find and Replace text, database sort/validate/index
+b
+  basename Strip directory and suffix from filenames
+  bash     GNU Bourne-Again SHell 
+  bc       Arbitrary precision calculator language 
+  bg       Send to background
+  break    Exit from a loop •
+  builtin  Run a shell builtin
+  bzip2    Compress or decompress named file(s)
+c
+  cal      Display a calendar
+  case     Conditionally perform a command
+  cat      Concatenate and print (display) the content of files
+  cd       Change Directory
+  cfdisk   Partition table manipulator for Linux
+  chgrp    Change group ownership
+  chmod    Change access permissions
+  chown    Change file owner and group
+  chroot   Run a command with a different root directory
+  chkconfig System services (runlevel)
+  cksum    Print CRC checksum and byte counts
+  clear    Clear terminal screen
+  cmp      Compare two files
+  comm     Compare two sorted files line by line
+  command  Run a command - ignoring shell functions •
+  continue Resume the next iteration of a loop •
+  cp       Copy one or more files to another location
+  cron     Daemon to execute scheduled commands
+  crontab  Schedule a command to run at a later time
+  csplit   Split a file into context-determined pieces
+  cut      Divide a file into several parts
+d
+  date     Display or change the date & time
+  dc       Desk Calculator
+  dd       Convert and copy a file, write disk headers, boot records
+  ddrescue Data recovery tool
+  declare  Declare variables and give them attributes •
+  df       Display free disk space
+  diff     Display the differences between two files
+  diff3    Show differences among three files
+  dig      DNS lookup
+  dir      Briefly list directory contents
+  dircolors Colour setup for `ls'
+  dirname  Convert a full pathname to just a path
+  dirs     Display list of remembered directories
+  dmesg    Print kernel & driver messages 
+  du       Estimate file space usage
+e
+  echo     Display message on screen •
+  egrep    Search file(s) for lines that match an extended expression
+  eject    Eject removable media
+  enable   Enable and disable builtin shell commands •
+  env      Environment variables
+  ethtool  Ethernet card settings
+  eval     Evaluate several commands/arguments
+  exec     Execute a command
+  exit     Exit the shell
+  expect   Automate arbitrary applications accessed over a terminal
+  expand   Convert tabs to spaces
+  export   Set an environment variable
+  expr     Evaluate expressions
+f
+  false    Do nothing, unsuccessfully
+  fdformat Low-level format a floppy disk
+  fdisk    Partition table manipulator for Linux
+  fg       Send job to foreground 
+  fgrep    Search file(s) for lines that match a fixed string
+  file     Determine file type
+  find     Search for files that meet a desired criteria
+  fmt      Reformat paragraph text
+  fold     Wrap text to fit a specified width.
+  for      Expand words, and execute commands
+  format   Format disks or tapes
+  free     Display memory usage
+  fsck     File system consistency check and repair
+  ftp      File Transfer Protocol
+  function Define Function Macros
+  fuser    Identify/kill the process that is accessing a file
+g
+  gawk     Find and Replace text within file(s)
+  getopts  Parse positional parameters
+  grep     Search file(s) for lines that match a given pattern
+  groupadd Add a user security group
+  groupdel Delete a group
+  groupmod Modify a group
+  groups   Print group names a user is in
+  gzip     Compress or decompress named file(s)
+h
+  hash     Remember the full pathname of a name argument
+  head     Output the first part of file(s)
+  help     Display help for a built-in command •
+  history  Command History
+  hostname Print or set system name
+i
+  iconv    Convert the character set of a file
+  id       Print user and group id's
+  if       Conditionally perform a command
+  ifconfig Configure a network interface
+  ifdown   Stop a network interface 
+  ifup     Start a network interface up
+  import   Capture an X server screen and save the image to file
+  install  Copy files and set attributes
+j
+  jobs     List active jobs •
+  join     Join lines on a common field
+k
+  kill     Stop a process from running
+  killall  Kill processes by name
+l
+  less     Display output one screen at a time
+  let      Perform arithmetic on shell variables •
+  ln       Create a symbolic link to a file
+  local    Create variables •
+  locate   Find files
+  logname  Print current login name
+  logout   Exit a login shell •
+  look     Display lines beginning with a given string
+  lpc      Line printer control program
+  lpr      Off line print
+  lprint   Print a file
+  lprintd  Abort a print job
+  lprintq  List the print queue
+  lprm     Remove jobs from the print queue
+  ls       List information about file(s)
+  lsof     List open files
+m
+  make     Recompile a group of programs
+  man      Help manual
+  mkdir    Create new folder(s)
+  mkfifo   Make FIFOs (named pipes)
+  mkisofs  Create an hybrid ISO9660/JOLIET/HFS filesystem
+  mknod    Make block or character special files
+  more     Display output one screen at a time
+  mount    Mount a file system
+  mtools   Manipulate MS-DOS files
+  mtr      Network diagnostics (traceroute/ping)
+  mv       Move or rename files or directories
+  mmv      Mass Move and rename (files)
+n
+  netstat  Networking information
+  nice     Set the priority of a command or job
+  nl       Number lines and write files
+  nohup    Run a command immune to hangups
+  notify-send  Send desktop notifications
+  nslookup Query Internet name servers interactively
+o
+  open     Open a file in its default application
+  op       Operator access 
+p
+  passwd   Modify a user password
+  paste    Merge lines of files
+  pathchk  Check file name portability
+  ping     Test a network connection
+  pkill    Stop processes from running
+  popd     Restore the previous value of the current directory
+  pr       Prepare files for printing
+  printcap Printer capability database
+  printenv Print environment variables
+  printf   Format and print data •
+  ps       Process status
+  pushd    Save and then change the current directory
+  pwd      Print Working Directory
+q
+  quota    Display disk usage and limits
+  quotacheck Scan a file system for disk usage
+  quotactl Set disk quotas
+r
+  ram      ram disk device
+  rcp      Copy files between two machines
+  read     Read a line from standard input •
+  readarray Read from stdin into an array variable •
+  readonly Mark variables/functions as readonly
+  reboot   Reboot the system
+  rename   Rename files
+  renice   Alter priority of running processes 
+  remsync  Synchronize remote files via email
+  return   Exit a shell function
+  rev      Reverse lines of a file
+  rm       Remove files
+  rmdir    Remove folder(s)
+  rsync    Remote file copy (Synchronize file trees)
+s
+  screen   Multiplex terminal, run remote shells via ssh
+  scp      Secure copy (remote file copy)
+  sdiff    Merge two files interactively
+  sed      Stream Editor
+  select   Accept keyboard input
+  seq      Print numeric sequences
+  set      Manipulate shell variables and functions
+  sftp     Secure File Transfer Program
+  shift    Shift positional parameters
+  shopt    Shell Options
+  shutdown Shutdown or restart linux
+  sleep    Delay for a specified time
+  slocate  Find files
+  sort     Sort text files
+  source   Run commands from a file '.'
+  split    Split a file into fixed-size pieces
+  ssh      Secure Shell client (remote login program)
+  strace   Trace system calls and signals
+  su       Substitute user identity
+  sudo     Execute a command as another user
+  sum      Print a checksum for a file
+  suspend  Suspend execution of this shell •
+  symlink  Make a new name for a file
+  sync     Synchronize data on disk with memory
+t
+  tail     Output the last part of file
+  tar      Tape ARchiver
+  tee      Redirect output to multiple files
+  test     Evaluate a conditional expression
+  time     Measure Program running time
+  timeout  Run a command with a time limit
+  times    User and system times
+  touch    Change file timestamps
+  top      List processes running on the system
+  traceroute Trace Route to Host
+  trap     Run a command when a signal is set(bourne)
+  tr       Translate, squeeze, and/or delete characters
+  true     Do nothing, successfully
+  tsort    Topological sort
+  tty      Print filename of terminal on stdin
+  type     Describe a command •
+u
+  ulimit   Limit user resources •
+  umask    Users file creation mask
+  umount   Unmount a device
+  unalias  Remove an alias •
+  uname    Print system information
+  unexpand Convert spaces to tabs
+  uniq     Uniquify files
+  units    Convert units from one scale to another
+  unset    Remove variable or function names
+  unshar   Unpack shell archive scripts
+  until    Execute commands (until error)
+  uptime   Show uptime
+  useradd  Create new user account
+  userdel  Delete a user account
+  usermod  Modify user account
+  users    List users currently logged in
+  uuencode Encode a binary file 
+  uudecode Decode a file created by uuencode
+v
+  v        Verbosely list directory contents (`ls -l -b')
+  vdir     Verbosely list directory contents (`ls -l -b')
+  vi       Text Editor
+  vmstat   Report virtual memory statistics
+w
+  wait     Wait for a process to complete •
+  watch    Execute/display a program periodically
+  wc       Print byte, word, and line counts
+  whereis  Search the user's $path, man pages and source files for a program
+  which    Search the user's $path for a program file
+  while    Execute commands
+  who      Print all usernames currently logged in
+  whoami   Print the current user id and name (`id -un')
+  wget     Retrieve web pages or files via HTTP, HTTPS or FTP
+  write    Send a message to another user 
+x
+  xargs    Execute utility, passing constructed argument list(s)
+  xdg-open Open a file or URL in the user's preferred application.
+  yes      Print a string until interrupted
+  .        Run a command script in the current shell
+  !!       Run the last command again
+  ###      Comment / Remark
+
+Basic Shell Commands
+
+Jeremy Sanders
+
+October 2011
+
+acroread - Read or print a PDF file.
+cat - Send a file to the screen in one go. Useful for piping to other programs
+cat file1                       # list file1 to screen
+cat file1 file2 file3 > outfile # add files together into outfile
+cat *.txt > outfile             # add all .txt files together
+cat file1 file2 | grep fred     # pipe files
+cc - Compile a C program
+cc test1.c                     # compile test1.c to a.out
+cc -O2 -o test2.prog test2.c   # compile test2.c to test2.prog
+cd - Change current directory
+cd                     # go to home directory
+cd ~/papers            # go to /home/user/papers
+cd ~fred               # go to /home/fred
+cd dir                 # go to directory (relative)
+cd /dir1/dir2/dir3...  # go to directory (absolute)
+cd -                   # go to last directory you were in
+cp - Copy file(s)
+cp file1 file2                      # copy file1 to file2
+cp file1 directory                  # copy file1 into directory
+cp file1 file2 file3 ... directory  # copy files into directory
+cp -R dir1 dir2/  # copy dir1 into dir2 including subdirectries
+cp -pR dir1 dir2/ # copy directory, preserving permissions
+date - Shows current date
+> date
+Sat Aug 31 17:18:53 BST 2002
+dvips - Convert a dvi file to PostScript
+dvips document.dvi        # convert document.dvi to document.ps
+dvips -Ppdf document.dvi  # convert to ps, for conversion to pdf
+emacs - The ubiquitous text editor
+emacs foo.txt             # open file in emacs
+emacsclient foo.txt       # open file in existing emacs (need to use
+                          # M-x start server first)
+file - Tells you what sort of file it is
+> file temp_70.jpg 
+temp_70.jpg: JPEG image data, JFIF standard 1.01,
+resolution (DPI), 72 x 72
+firefox - Start Mozilla Firefox
+f77/f90 - Compile a Fortran 77/99 program
+f77 -O2 -o testprog testprog.f
+gedit - Gnome text editor
+gnuplot - A plotting package.
+grep - Look for text in files. List out lines containing text (with filename if more than one file examined).
+grep "hi there" file1 file2 ... # look for 'hi there' in files
+grep -i "hi there" filename     # ignore capitals in search
+cat filename | grep "hi there"  # use pipe
+grep -v "foo" filename          # list lines that do not include foo
+gtar - GNU version of the tar utility (also called tar on Linux). Store directories and files together into a single archive file. Use the normal tar program to backup files to a tape. See info tar for documentation.
+gtar cf out.tar dir1    # put contents of directory into out.tar
+gtar czf out.tar.gz dir1 # write compressed tar, out.tar.gz
+gtar tf in.tar          # list contents of in.tar
+gtar tzf in.tar.gz      # list contents of compressed in.tar.gz
+gtar xf in.tar          # extract contents of in.tar here
+gtar xzf in.tar.gz      # extract compressed in.tar.gz
+gtar xf in.tar file.txt ... # extract file.txt from in.tar
+gv - View a Postscript document with Ghostscript.
+gzip / gunzip - GNU Compress files into a smaller space, or decompress .Z or .gz files.
+gzip file.fits          # compresses file.fits into file.fits.gz
+gunzip file.fits.gz     # recovers original file.fits
+gzip *.dat              # compresses all .dat files into .dat.gz
+gunzip *.dat.gz         # decompresses all .dat.gz files into .dat
+program | gzip > out.gz # compresses program output into out.gz
+program | gunzip > out  # decompresses compressed program output
+info - A documentation system designed to replace man for GNU programs (e.g. gtar, gcc). Use cursor keys and return to go to sections. Press b to go back to previous section. A little hard to use.
+info gtar               # documentation for gtar
+kill - Kill, pause or continue a process. Can also be used for killing daemons.
+> ps -u jss
+...
+ 666  pts/1        06:06:06  badprocess 
+> kill 666        # this sends a ``nice'' kill to the
+                  # process. If that doesn't work do
+> kill -KILL 666   # (or equivalently)
+> kill -9 666     # which should really kill it!
+
+> kill -STOP 667  # pause (stop) process 
+> kill -CONT 667  # unpause process
+latex - Convert a tex file to dvi
+logout - Closes the current shell. Also try ``exit''.
+lp - Sends files to a printer
+lp file.ps  # sends postscript file to the default printer
+lp -dlp2 file.ps           # sends file to the printer lp2
+lp -c file.ps    # copies file first, so you can delete it
+lpstat -p lp2         # get status and list of jobs on lp2
+cancel lp2-258                  # cancel print job lp2-258 
+
+lpr -Plp2 file.ps                    # send file.ps to lp2
+lpq -Plp2                        # get list of jobs on lp2
+lprm -Plp2 1234                   # delete job 1234 on lp2
+ls - Show lists of files or information on the files
+ls file     # does the file exist?
+ls -l file  # show information about the file
+ls *.txt    # show all files ending in .txt
+ls -lt      # show information about all files in date order
+ls -lrt     # above reversed in order
+ls -a       # show all files including hidden files
+ls dir      # show contents of directory
+ls -d dir   # does the directory exist?
+ls -p       # adds meaning characters to ends of filenames
+ls -R       # show files also in subdirectories of directory
+ls -1       # show one file per line
+man - Get instructions for a particular Unix command or a bit of Unix. Use space to get next page and q to exit.
+man man      # get help on man
+man grep     # get help on grep
+man -s1 sort # show documentation on sort in section 1
+more - Show a file one screen at a time
+more file                # show file one screen at a time
+grep 'frog' file | more  # Do it to output of other command
+mv - Move file(s) or rename a file
+mv file1 file2                     # rename file1 to file2
+mv dir1 dir2                       # rename directory dir1 to dir2
+mv file1 file2 file3 ... directory # move files into directory
+nano - very simple text editor. Warning - this program can introduce extra line breaks in your file if the screen is too narrow!
+nice - Start a process in a nice way. Nice levels run from -19 (high priority) to 19 (low priority). Jobs with a higher priority get more CPU time. See renice for more detail. You should probably be using the grid-engine to run long jobs.
+nice +19 myjob1   # run at lowest priority
+nice +8 myjob2    # run at lowish priority
+openoffice.org - a free office suite available for Linux/Unix, Windows and Mac OS X.
+passwd - change your password
+pine - A commonly used text-based mail client. It is now called alpine. Allows you to send and receive emails. Configuration options allow it to become quite powerful. Other alternatives for mail are mozilla mail and mutt, however I suggest you stick to alpine or thunderbird.
+printenv - Print an environment variable in tcsh
+setenv MYVARIABLE Fred
+printenv MYVARIABLE
+printenv # print all variables
+ps - List processes on system
+> ps -u jss          # list jss's processes
+  934 pts/0    00:00:00 bash
+^^^^^ ^^^^^    ^^^^^^^^ ^^^^^^^
+PID   output   CPU time name
+> ps -f      # list processes started here in full format
+> ps -AF     # list all processes in extra full format
+> ps -A -l            # list all processes in long format
+> ps -A | grep tcsh   # list all tcsh processes
+pwd - Show current working directory
+> pwd
+/home/jss/writing/lecture
+quota - Shows you how much disk space you have left
+> quota -v
+...
+renice - Renice a running process. Make a process interact better with other processes on the system (see top to see how it is doing). Nice levels run from -19 (high priority) to 19 (low priority). Only your own processes can be niced and they can only be niced in the positive direction (unless you are root). Normal processes start at nice 0.
+> ps -u jss | grep bigprocess      # look for bigprocess
+ 1234 pts/0    99:00:00 bigprocess
+> renice 19 1234                   # renice PID 1234 to 19
+rm - Delete (remove) files
+rm file1     # delete a file (use -i to ask whether sure)
+rm -r dir1   # delete a directory and everything in it (CARE!)
+rm -rf dir1  # like above, but don't ask if we have a -i alias
+rmdir - Delete a directory if it is empty (rm -r dirname is useful if it is not empty)
+rmdir dirname
+staroffice - An office suite providing word processor, spreadsheet, drawing package. See Users' Guide on how to install this. This is a commercial version of the openoffice office package - use openoffice.org on linux.
+setenv - Set an environment variable in tcsh.
+setenv MYVARIABLE Fred
+echo Hi there $MYVARIABLE
+tar - Combine files into one larger archive file, or extract files from that archive (same as gtar on Linux).
+tar cvf /dev/rmt/0 ./      # backup cwd into tape
+tar tvf /dev/rmt/0         # list contents of tape
+tar xvf /dev/rmt/0         # extract contents of tape
+thunderbird - Start mozilla thunderbird.
+top - Interactively show you the ``top'' processes on a system - the ones consuming the most computing (CPU) time. Press the ``q'' key in top to exit. Press the ``k'' key to kill a particular process. Press ``r'' to renice a process.
+About this document ...
+
+Basic Shell Commands
+This document was generated using the LaTeX2HTML translator Version 2008 (1.71)
+
+Copyright © 1993, 1994, 1995, 1996, Nikos Drakos, Computer Based Learning Unit, University of Leeds. 
+Copyright © 1997, 1998, 1999, Ross Moore, Mathematics Department, Macquarie University, Sydney.
+
+The command line arguments were: 
+latex2html -split 0 -font_size 10pt -no_navigation commands_basic.tex
+
+The translation was initiated by Jeremy Sanders on 2011-10-02 
+
+Jeremy Sanders 2011-10-02
