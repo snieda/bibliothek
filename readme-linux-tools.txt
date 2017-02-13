@@ -143,3 +143,11 @@ git log --follow --grep=<pattern> --graph --cc <Dateipfad>
 
 Was wurde bisher nur lokal committed (ohne durch push auf remote gespielt worden zu sein)
 git log origin/<MY-BRANCH>..<MY-BRANCH>
+
+--------------------------------------------
+TEXT
+--------------------------------------------
+vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
+	vjde (code completition)
+	filled .vimrc
+	exuberant-ctags (index for java-docs) 
