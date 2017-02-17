@@ -151,3 +151,9 @@ vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-codin
 	vjde (code completition)
 	filled .vimrc
 	exuberant-ctags (index for java-docs) 
+
+--------------------------------------------
+FILE CONCATENATE
+--------------------------------------------
+ls | xargs cat | tee output.txt
+
