@@ -144,6 +144,13 @@ git log --follow --grep=<pattern> --graph --cc <Dateipfad>
 Was wurde bisher nur lokal committed (ohne durch push auf remote gespielt worden zu sein)
 git log origin/<MY-BRANCH>..<MY-BRANCH>
 
+Vergleich mybranch --> master
+git diff mybranch...master
+
+Eigene Änderungen komplett überschreiben
+git clean -dfx
+git reset --hard HEAD
+
 --------------------------------------------
 TEXT
 --------------------------------------------
