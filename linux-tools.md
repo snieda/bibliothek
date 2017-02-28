@@ -155,13 +155,13 @@ diff output als patch einfuegen
 	git apply --3way --summary --check meinbranchname.patch
 	git apply --3way meinbranchname.patch
 
-# TEXT
+## TEXT
 
 vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
 	vjde (code completition)
 	filled .vimrc
 	exuberant-ctags (index for java-docs) 
 
-# FILE CONCATENATE
+## FILE CONCATENATE
 
 	ls | xargs cat | tee output.txt
