@@ -1,4 +1,6 @@
-# wget
+# Linux Tool Descriptions
+
+## wget
 
 	-m: mirror
 	-p: page-requisites
@@ -13,11 +15,12 @@
 	--content-disposition tries to find extension through content
 	wget -mpk --follow-ftp --ignore-length -e robots=off --exclude forum
 
-# nmap
+## nmap
 
 	nmap -p 8000-9000 -v  192.168.4.245
 
-# curl --> jenkins REST-API
+## curl --> jenkins REST-API
+
 build mit parametern starten:
 
 	curl -X POST https://jenkins.....de/job/projekt/view/gustav_flyway_environments/job/5_MYDB/build --user '<meinname>:<meinpasswort>' --insecure --data token=TOKEN --data-urlencode json='{"parameter": [{"name":"umgebung", "value":"TS"}, {"name":"branch", "value":"<mydomain>"}]}'
@@ -26,7 +29,7 @@ letzten build auf result abfragen:
 
 	curl --silent -X POST https://jenkins.....de/job/projekt/view/gustav_flyway_environments/job/5_MYDB/lastBuild/api/xml?xpath=/*/result --user '<myname>:<meinpasswort>' --insecure 
 
-# linux monitors
+## linux monitors
 
 netstat
 top
@@ -34,7 +37,7 @@ htop
 lsof
 iftop
 
-# hdd partitionieren und formatieren
+## hdd partitionieren und formatieren
 
 sudo mkdosfs -n 'Label' -I /dev/sdd -F 32
 
@@ -43,31 +46,29 @@ oder
 fdisk ...
 sudo mkfs.ext3 -n 'Label' -I /dev/sdd
 
---------------------------------------------
-vmdk mounten
---------------------------------------------
-------------------------------------------------------------------------
+## vmdk mounten
+
 sudo mount vmware-server-flat.vmdk /tmp/test/ -o ro,loop=/dev/loop1,offset=32768 -t ntfs
 
 Mount a VMware virtual disk (.vmdk) file on a Linux box
 Assumes XP/2000/2003. For Server 2008+ try offset=105,906,176 You can find this number in the System Information utility under Partition Starting Offset. UEFI based boxes you want partition 2 since the first is just the boot files (and FAT). This works with (storage side) snapshots which is handy for single file restores on NFS mounted VMware systems
 
-------------------------------------------------------------------------
-common internet file system mounten
-------------------------------------------------------------------------
-mount -t cifs //xxx.xxx.xxx.xxx/transfer /mnt -o user=ICH,domain=MEINEDOMAIN
+## common internet file system mounten
+
+	mount -t cifs //xxx.xxx.xxx.xxx/transfer /mnt -o user=ICH,domain=MEINEDOMAIN
 
 oder 
 
-echo "connect network share drives"
-IP1 = //XX.XX.XX.XX
-USER1 = XX
-SHARE1 = Projekte
-sudo mkdir /media/$SHARE1
-sudo mount -t cifs -o username=$USER1 $IP1/$SHARE1 /media/$SHARE1/
+	echo "connect network share drives"
+	IP1 = //XX.XX.XX.XX
+	USER1 = XX
+	SHARE1 = Projekte
+	sudo mkdir /media/$SHARE1
+	sudo mount -t cifs -o username=$USER1 $IP1/$SHARE1 /media/$SHARE1/
 
-------------------------------------------------------------------------
-kpartx -av <image-flat.vmdk>; mount -o /dev/mapper/loop0p1 /mnt/vmdk
+## Platte partitionieren
+
+	kpartx -av <image-flat.vmdk>; mount -o /dev/mapper/loop0p1 /mnt/vmdk
 
 Mount a VMware virtual disk (.vmdk) file on a Linux box
 This does not require you to know the partition offset, kpartx will find all partitions in the image and create loopback devices for them automatically. This works for all types of images (dd of hard drives, img, etc) not just vmkd. You can also activate LVM volumes in the image by running
@@ -79,78 +80,80 @@ then run
 kpartx -dv <image-flad.vmdk>
 to remove the partition mappings.
 
---------------------------------------------
-find
---------------------------------------------
-find -type f -mtime -365 -ls -regex "de[/]tsl2[/].*Definition.java"
+## find
 
-# search for executable files that were accessed max 24 hours ago
+	find -type f -mtime -365 -ls -regex "de[/]tsl2[/].*Definition.java"
+
+### search for executable files that were accessed max 24 hours ago
 find -type f -executable -atime -1
-# search files modified maximum 120 minutes ago
+### search files modified maximum 120 minutes ago
 find -type f -mmin -120
-# search files created maximum 120 minutes ago without cache files
+### search files created maximum 120 minutes ago without cache files
 find -type f -regextype "sed" -regex ".*^(cache).*" -mmin -120
 
---------------------------------------------
-file renaming
---------------------------------------------
-for f in abc*.txt do mv -- "$f" "${abc/nix}"; done
+## file renaming
 
-install terminal tools
-sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff w3m rar p7zip ntp ne xcompmgr tcpdump links2 tmux inotify-tools fzf
+	for f in abc*.txt do mv -- "$f" "${abc/nix}"; done
 
---------------------------------------------
-cygwin
---------------------------------------------
+## install terminal tools
+	sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff w3m rar p7zip ntp ne xcompmgr tcpdump links2 tmux inotify-tools fzf
+
+##cygwin
 console package installer:
-wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
-chmod +x apt-cyg
-mv apt-cyg /usr/local/bin
 
---------------------------------------------
-disk usage
---------------------------------------------
-du -hc d 1 | sort -h
+	wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
+	chmod +x apt-cyg
+	mv apt-cyg /usr/local/bin
+
+## disk usage
+
+	du -hc d 1 | sort -h
 
 oder
-tree -d --du  -hc | grep "M]"
 
---------------------------------------------
-xclip
---------------------------------------------
-cat ~/.ssh/id_rsa.pub | xclip -sel clip
+	tree -d --du  -hc | grep "M]"
 
---------------------------------------------
-git
---------------------------------------------
+## xclip
+
+	cat ~/.ssh/id_rsa.pub | xclip -sel clip
+
+## git
 
 Um den aktuellen Stand vom remote master in den eigenen branch zu mergen gibt es zwei Möglichkeiten:
 
-git pull origin master
+	git pull origin master
+
 oder
-git fetch origin
-git merge origin/master
+
+	git fetch origin
+	git merge origin/master
 
 Vergleich einer Datei in unterschiedlichen branches
-git diff <BRANCH-1> <BRANCH-2> <Dateipfad>
+
+	git diff <BRANCH-1> <BRANCH-2> <Dateipfad>
 
 Anzeige der Historie mit Änderungs-Details
-git log --follow --grep=<pattern> --graph --cc <Dateipfad>
+
+	git log --follow --grep=<pattern> --graph --cc <Dateipfad>
 
 Was wurde bisher nur lokal committed (ohne durch push auf remote gespielt worden zu sein)
-git log origin/<MY-BRANCH>..<MY-BRANCH>
+
+	git log origin/<MY-BRANCH>..<MY-BRANCH>
 
 Vergleich mybranch --> master
-git diff mybranch...master
+
+	git diff mybranch...master
 
 Eigene Änderungen komplett überschreiben
-git clean -dfx
-git reset --hard HEAD
+
+	git clean -dfx
+	git reset --hard HEAD
 
 diff output als patch einfuegen
-git diff > meinbranchname.patch
-git apply --3way --summary --check meinbranchname.patch
-git apply --3way meinbranchname.patch
+
+	git diff > meinbranchname.patch
+	git apply --3way --summary --check meinbranchname.patch
+	git apply --3way meinbranchname.patch
 
 # TEXT
 
