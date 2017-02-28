@@ -151,6 +151,11 @@ Eigene Änderungen komplett überschreiben
 git clean -dfx
 git reset --hard HEAD
 
+diff output als patch einfuegen
+git diff > meinbranchname.patch
+git apply --3way --summary --check meinbranchname.patch
+git apply --3way meinbranchname.patch
+
 --------------------------------------------
 TEXT
 --------------------------------------------
