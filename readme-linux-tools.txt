@@ -1,45 +1,41 @@
---------------------------------------------
--- wget
---------------------------------------------
--m: mirror
--p: page-requisites
--k: convert to local
---ignore-length
--e robots=off --wait 1
---follow-ftp
---reject file-rejlist
--X --exclude dir-list
--np --no-parent
--N --timestamping only newer files
---content-disposition tries to find extension through content
-wget -mpk --follow-ftp --ignore-length -e robots=off --exclude forum
+# wget
 
---------------------------------------------
-nmap
---------------------------------------------
-nmap -p 8000-9000 -v  192.168.4.245
+	-m: mirror
+	-p: page-requisites
+	-k: convert to local
+	--ignore-length
+	-e robots=off --wait 1
+	--follow-ftp
+	--reject file-rejlist
+	-X --exclude dir-list
+	-np --no-parent
+	-N --timestamping only newer files
+	--content-disposition tries to find extension through content
+	wget -mpk --follow-ftp --ignore-length -e robots=off --exclude forum
 
---------------------------------------------
-curl --> jenkins REST-API
---------------------------------------------
+# nmap
+
+	nmap -p 8000-9000 -v  192.168.4.245
+
+# curl --> jenkins REST-API
 build mit parametern starten:
-curl -X POST https://jenkins.intra.vsa.de/job/vsa/view/gustav_flyway_Enwicklungsumgebungen/job/5_ENTW_IPS/build --user 'schneith:<meinpasswort>' --insecure --data token=TOKEN --data-urlencode json='{"parameter": [{"name":"umgebung", "value":"TS"}, {"name":"branch", "value":"gustav_domainips_6"}]}'
+
+	curl -X POST https://jenkins.....de/job/projekt/view/gustav_flyway_environments/job/5_MYDB/build --user '<meinname>:<meinpasswort>' --insecure --data token=TOKEN --data-urlencode json='{"parameter": [{"name":"umgebung", "value":"TS"}, {"name":"branch", "value":"<mydomain>"}]}'
 
 letzten build auf result abfragen:
-curl --silent -X POST https://jenkins.intra.vsa.de/job/vsa/view/gustav_flyway_Enwicklungsumgebungen/job/5_ENTW_IPS/lastBuild/api/xml?xpath=/*/result --user 'schneith:<meinpasswort>' --insecure 
 
---------------------------------------------
-monitors
---------------------------------------------
+	curl --silent -X POST https://jenkins.....de/job/projekt/view/gustav_flyway_environments/job/5_MYDB/lastBuild/api/xml?xpath=/*/result --user '<myname>:<meinpasswort>' --insecure 
+
+# linux monitors
+
 netstat
 top
 htop
 lsof
 iftop
 
---------------------------------------------
-hdd partitionieren und formatieren
---------------------------------------------
+# hdd partitionieren und formatieren
+
 sudo mkdosfs -n 'Label' -I /dev/sdd -F 32
 
 oder
@@ -59,7 +55,7 @@ Assumes XP/2000/2003. For Server 2008+ try offset=105,906,176 You can find this 
 ------------------------------------------------------------------------
 common internet file system mounten
 ------------------------------------------------------------------------
-mount -t cifs //192.168.0.100/transfer /mnt -o user=ICH,domain=MEINEDOMAIN
+mount -t cifs //xxx.xxx.xxx.xxx/transfer /mnt -o user=ICH,domain=MEINEDOMAIN
 
 oder 
 
@@ -156,16 +152,14 @@ git diff > meinbranchname.patch
 git apply --3way --summary --check meinbranchname.patch
 git apply --3way meinbranchname.patch
 
---------------------------------------------
-TEXT
---------------------------------------------
+# TEXT
+
 vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
 	vjde (code completition)
 	filled .vimrc
 	exuberant-ctags (index for java-docs) 
 
---------------------------------------------
-FILE CONCATENATE
---------------------------------------------
-ls | xargs cat | tee output.txt
+# FILE CONCATENATE
+
+	ls | xargs cat | tee output.txt
 
