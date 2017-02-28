@@ -17,13 +17,13 @@
 
 ## nmap
 
-	nmap -p 8000-9000 -v  192.168.4.245
+	nmap -p 8000-9000 -v  xxx.xxx.xxx.xxx
 
 ## curl --> jenkins REST-API
 
 build mit parametern starten:
 
-	curl -X POST https://jenkins.....de/job/projekt/view/gustav_flyway_environments/job/5_MYDB/build --user '<meinname>:<meinpasswort>' --insecure --data token=TOKEN --data-urlencode json='{"parameter": [{"name":"umgebung", "value":"TS"}, {"name":"branch", "value":"<mydomain>"}]}'
+	curl -X POST https://jenkins.....de/job/projekt/view/gustav_flyway_environments/job/5_MYDB/build --user '<meinname>:<meinpasswort>' --insecure --data token=TOKEN --data-urlencode json='{"parameter": [{"name":"umgebung", "value":"MYNAME"}, {"name":"branch", "value":"<mydomain>"}]}'
 
 letzten build auf result abfragen:
 
