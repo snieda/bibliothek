@@ -150,10 +150,16 @@ Eigene Änderungen komplett überschreiben
 	git reset --hard HEAD
 
 diff output als patch einfuegen
-
+	# erzeuge patch fuer changes und new files
 	git diff > meinbranchname.patch
 	git diff --cached > meinbranchname-gitadded.patch
 	
+	# evtl. bisherige Aenderungen zuruecksetzen
+	# git reset --hard
+	# git clean -ndf
+	git stash
+	
+	# patch einspielen
 	git apply --3way --summary --check meinbranchname.patch
 	git apply --3way meinbranchname.patch
 
