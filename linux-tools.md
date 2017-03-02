@@ -152,6 +152,8 @@ Eigene Änderungen komplett überschreiben
 diff output als patch einfuegen
 
 	git diff > meinbranchname.patch
+	git diff --cached > meinbranchname-gitadded.patch
+	
 	git apply --3way --summary --check meinbranchname.patch
 	git apply --3way meinbranchname.patch
 
