@@ -10,8 +10,8 @@
 # system preparations
 # ----------------------------------------------------
 #echo "prepare (partionate, format) new disc /dev/sda"
-#echo -e "o\nn\np\n\n\n\nw" | fdisk /dev/sda
-#mkfs.ext4 -F -L "casper-rw" /dev/sda
+#echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
+#sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
 
 echo "do some updates..."
 sudo apt-get update
