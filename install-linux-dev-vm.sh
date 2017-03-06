@@ -3,6 +3,7 @@
 # install development-tools on linux (Thomas Schneider / 2016)
 # 
 # preconditions: debian 64bit system
+# PLEASE SET: PRJ, IP1, USER1, SHARE1 before starting
 ##############################################################################
 
 # ----------------------------------------------------
@@ -16,7 +17,7 @@ echo "do some updates..."
 sudo apt-get update
 # sudo apt-get upgrade
 echo "install system tools (~83MB)..."
-sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff w3m rar p7zip ntp xcompmgr
+sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff links2 w3m rar p7zip ntp xcompmgr tmux ne openssh-server
 
 echo "install virtualbox guest additions"
 sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
@@ -73,6 +74,22 @@ echo -e "\n yes\n\nyes\n" | bash Anaconda3-4.2.0-Linux-x86_64.sh
 sudo apt install python-pip
 
 # ----------------------------------------------------
+# additional terminal tools
+# ----------------------------------------------------
+mkdir bin
+
+echo "installing Fuzzy Finder"
+wget https://github.com/junegunn/fzf/raw/master/install
+mv install fzf-install.sh
+chmod a+x fzf-install.sh
+./fzf-install.sh
+
+echo "installing micro editor"
+wget https://github.com/zyedidia/micro/releases/download/nightly/micro-1.1.5-dev.26-linux64.tar.gz
+tar -xvf micro-1.1.5-dev.26-linux64.tar.gz
+mv micro bin/
+
+# ----------------------------------------------------
 # user/project dependent installations
 # ----------------------------------------------------
 
@@ -84,15 +101,15 @@ sudo apt install python-pip
 echo "connect network share drives"
 IP1 = //XX.XX.XX.XX
 USER1 = XX
-SHARE1 = Projekte
+SHARE1 = XXXX
 sudo mkdir /media/$SHARE1
-sudo mount -t cifs -o username=$USER1 $IP1/$SHARE1 /media/$SHARE1/
+sudo mount -t cifs -o username=$USER1,gid=$USER,uid=$USER $IP1/$SHARE1 /media/$SHARE1/
 
 echo "prepare ssh key to be copied to server machines"
 echo -e "\n\n\n" | ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub | xclip -sel clip
 
 echo "get git projects"
-git clone https://bitbucket.org/idvkpi/kpi-py.git workspace/kpi-py
-#pip3 install -r workspace/kpi-py/requirements.txt
-pip install -r workspace/kpi-py/requirements.txt
+PRJ=XXX
+git clone https://bitbucket.org/REPO/$PRJ.git workspace/$PRJ
+pip install -r workspace/$PRJ/requirements.txt
