@@ -5,6 +5,12 @@
 # preconditions: debian 64bit system
 # PLEASE SET: PRJ, IP1, USER1, SHARE1 before starting
 ##############################################################################
+echo "Installing development like Java+Netbeans, Python+Anaconda and Sublime-Text"
+read -p "Mount network-drive on IP  : " IP1
+read -p "Mount network-drive on PATH: " SHARE1
+read -p "Mount network-drive on USER: " USER1
+read -p "Clone Bitbucket Repository : " REPO
+read -p "Clone Bitbucket Project    : " PRJ
 
 # ----------------------------------------------------
 # system preparations
@@ -99,9 +105,10 @@ mv micro bin/
 #./rslsync
 
 echo "connect network share drives"
-IP1 = //XX.XX.XX.XX
-USER1 = XX
-SHARE1 = XXXX
+IP1 = ${IP1:-//XX.XX.XX.XX}
+USER1 = ${USER1:-XX}
+SHARE1 = ${SHARE1:-XXXX}
+
 sudo mkdir /media/$SHARE1
 sudo mount -t cifs -o username=$USER1,gid=$USER,uid=$USER $IP1/$SHARE1 /media/$SHARE1/
 
@@ -110,6 +117,7 @@ echo -e "\n\n\n" | ssh-keygen -t rsa
 cat ~/.ssh/id_rsa.pub | xclip -sel clip
 
 echo "get git projects"
-PRJ=XXX
-git clone https://bitbucket.org/REPO/$PRJ.git workspace/$PRJ
+REPO=${REPO:-XXXX}
+PRJ=${PRJ:-XXX}
+git clone https://bitbucket.org/$REPO/$PRJ.git workspace/$PRJ
 pip install -r workspace/$PRJ/requirements.txt
