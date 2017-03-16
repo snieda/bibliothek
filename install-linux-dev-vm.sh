@@ -104,6 +104,12 @@ mv micro bin/
 #tar -xf resilio-sync_x64.tar.gz
 #./rslsync
 
+echo "domain"
+wget http://download.beyondtrust.com/PBISO/8.0.0.2016/linux.deb.x64/pbis-open-8.0.0.2016.linux.x86_64.deb.sh
+chmod +x pbis-open-8.0.0.2016.linux.x86_64.deb.sh
+./pbis-open-8.0.0.2016.linux.x86_64.deb.sh
+domainjoin-cli join $DOMAIN $DOMAIN_USER
+
 echo "connect network share drives"
 IP1 = ${IP1:-//XX.XX.XX.XX}
 USER1 = ${USER1:-XX}
