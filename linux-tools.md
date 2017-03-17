@@ -138,7 +138,7 @@ Anzeige der Historie mit Änderungs-Details
 
 Was wurde bisher nur lokal committed (ohne durch push auf remote gespielt worden zu sein)
 
-	git log origin/<MY-BRANCH>..<MY-BRANCH>
+	git log <MY-BRANCH>...origin/<MY-BRANCH>
 
 Vergleich mybranch --> master
 
@@ -150,6 +150,7 @@ Eigene Änderungen komplett überschreiben
 	git reset --hard HEAD
 
 diff output als patch einfuegen
+
 	# erzeuge patch fuer changes und new files
 	git diff > meinbranchname.patch
 	git diff --cached > meinbranchname-gitadded.patch
@@ -163,12 +164,20 @@ diff output als patch einfuegen
 	git apply --3way --summary --check meinbranchname.patch
 	git apply --3way meinbranchname.patch
 
+bestimmte Dateien aus anderem branch übernehmen
+
+	git checkout <BRANCH> -- <FILE-PATH>
+
 ## TEXT
 
 vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
 	vjde (code completition)
 	filled .vimrc
 	exuberant-ctags (index for java-docs) 
+
+slap:     https://github.com/slap-editor/slap
+micro:    https://github.com/zyedidia/micro/releases
+suplemon: https://github.com/richrd/suplemon
 
 ## FILE CONCATENATE
 
