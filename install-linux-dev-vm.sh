@@ -23,7 +23,7 @@ echo "do some updates..."
 sudo apt-get update
 # sudo apt-get upgrade
 echo "install system tools (~83MB)..."
-sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff links2 w3m rar p7zip ntp xcompmgr tmux ne openssh-server icdiff
+sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff links2 w3m rar p7zip ntp xcompmgr tmux ne openssh-server icdiff colorized-logs
 
 echo "install virtualbox guest additions"
 sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
