@@ -23,7 +23,13 @@ echo "do some updates..."
 sudo apt-get update
 # sudo apt-get upgrade
 echo "install system tools (~83MB)..."
-sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff links2 w3m rar p7zip ntp xcompmgr tmux ne openssh-server icdiff colorized-logs
+sudo apt-get -y install mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
+
+echo "install console text tools..."
+sudo apt-get -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin
+
+echo "install networking tools..."
+sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m
 
 echo "install virtualbox guest additions"
 sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
@@ -50,7 +56,7 @@ cat <<EOM >> ~/.config/sublime-text-3/Packages/User/"Package Control".sublime-se
         "Block Cursor Everywhere",
         "BracketHighlighter",
         "CursorRuler",
-		"Diffy",
+	"Diffy",
         "Git",
         "GitGutter",
         "Markdown Preview",
@@ -91,8 +97,8 @@ chmod a+x fzf-install.sh
 ./fzf-install.sh
 
 echo "installing micro editor"
-wget https://github.com/zyedidia/micro/releases/download/nightly/micro-1.1.5-dev.26-linux64.tar.gz
-tar -xvf micro-1.1.5-dev.26-linux64.tar.gz
+wget https://github.com/zyedidia/micro/releases/download/nightly/micro-1.1.5-dev.179-linux64.tar.gz
+tar -xvf micro-1.1.5-dev.179-linux64.tar.gz
 mv micro bin/
 
 # ----------------------------------------------------
