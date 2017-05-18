@@ -143,7 +143,11 @@ Was wurde bisher nur lokal committed (ohne durch push auf remote gespielt worden
 Vergleich mybranch --> master
 
 	git diff mybranch...master
-
+	
+	ignoriere spaces und uebersichtlicher:
+	
+	git diff --color-words -w mybranch...master
+	
 Eigene Änderungen komplett überschreiben
 
 	git clean -dfx
@@ -178,6 +182,9 @@ vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-codin
 slap:     https://github.com/slap-editor/slap
 micro:    https://github.com/zyedidia/micro/releases
 suplemon: https://github.com/richrd/suplemon
+
+icdiff
+ansi2html
 
 ## FILE CONCATENATE
 
