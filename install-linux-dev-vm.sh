@@ -16,6 +16,8 @@ read -p  "Prepare (part, format) new disc /dev/sda (yes): " DO_FORMAT
 if [ "$DO_FORMAT" == "yes" ]; then
     echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
     sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
+    echo "Please restart the VM to include the formatted drive!"
+    exit
 fi
 
 echo "Installing development like Java+Netbeans, Python+Anaconda and Sublime-Text"
