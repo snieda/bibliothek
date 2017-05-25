@@ -1,23 +1,33 @@
 #!/bin/bash
+echo <<INTRO
 ##############################################################################
 # install development-tools on linux (Thomas Schneider / 2016)
 # 
 # preconditions: debian 64bit system
 # PLEASE SET: PRJ, IP1, USER1, SHARE1 before starting
 ##############################################################################
-echo "Installing development like Java+Netbeans, Python+Anaconda and Sublime-Text"
-read -p "Mount network-drive on IP  : " IP1
-read -p "Mount network-drive on PATH: " SHARE1
-read -p "Mount network-drive on USER: " USER1
-read -p "Clone Bitbucket Repository : " REPO
-read -p "Clone Bitbucket Project    : " PRJ
+INTRO
 
 # ----------------------------------------------------
 # system preparations
 # ----------------------------------------------------
-#echo "prepare (partionate, format) new disc /dev/sda"
-#echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
-#sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
+DO_FORMAT=no
+read -p  "Prepare (part, format) new disc /dev/sda (yes): " DO_FORMAT
+if [ "$DO_FORMAT" == "yes" ]; then
+    echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
+    sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
+fi
+
+echo "Installing development like Java+Netbeans, Python+Anaconda and Sublime-Text"
+read -p "Mount network-drive on IP                     : " IP1
+if [ "$IP1" != "" ]; then
+    read -p "Mount network-drive on PATH                   : " SHARE1
+    read -p "Mount network-drive on USER                   : " USER1
+    read -p "Clone Bitbucket Repository                    : " REPO
+    if [ "$REP0" != "" ]; then
+        read -p "Clone Bitbucket Project                       : " PRJ
+    fi
+fi
 
 echo "do some updates..."
 sudo apt-get update
