@@ -1,14 +1,15 @@
 #!/bin/bash
-cat <<INTRO | set MSG_INTRO
+read -d '' INTRO <<EOM
 ##############################################################################
 # install development-tools on linux (Thomas Schneider / 2016)
 # 
 # preconditions: debian 64bit system
 # PLEASE SET: PRJ, IP1, USER1, SHARE1 before starting
 ##############################################################################
-INTRO
+EOM
 
-echo $MSG_INTRO
+clear
+echo $INTRO
 
 # ----------------------------------------------------
 # system preparations
