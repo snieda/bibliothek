@@ -124,9 +124,10 @@ chmod a+x fzf-install.sh
 ./fzf-install.sh
 
 echo "installing micro editor"
-wget https://github.com/zyedidia/micro/releases/download/v1.2.0/micro-1.2.0-linux64.tar.gz
-tar -xvf micro-1.2.0-linux64.tar.gz
-mv micro bin/
+MICRO_DIR=micro-1.2.0
+wget https://github.com/zyedidia/micro/releases/download/v1.2.0/$MICRO_DIR-linux64.tar.gz
+tar -xvf $MICRO_NAME-linux64.tar.gz
+cp $MICRO_DIR/micro bin/
 
 # ----------------------------------------------------
 # user/project dependent installations
