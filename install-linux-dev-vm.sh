@@ -140,7 +140,7 @@ if [ "$INST_RESILIO_SYNC" == "y" ]; then
     ./rslsync
 fi
 
-if [ "$IP1" != "n" ]; then
+if [ "$IP1" != "" ]; then
     echo "domain"
     wget http://download.beyondtrust.com/PBISO/8.0.0.2016/linux.deb.x64/pbis-open-8.0.0.2016.linux.x86_64.deb.sh
     chmod +x pbis-open-8.0.0.2016.linux.x86_64.deb.sh
@@ -153,7 +153,9 @@ if [ "$IP1" != "n" ]; then
     SHARE1 = ${SHARE1:-XXXX}
 
     sudo mkdir /media/$SHARE1
-    sudo mount -t cifs -o username=$USER1,gid=$USER,uid=$USER $IP1/$SHARE1 /media/$SHARE1/
+    echo "sudo mount -t cifs -o username=$USER1,gid=$USER,uid=$USER $IP1/$SHARE1 /media/$SHARE1/" > bin/mount-$SHARE1.sh
+    chmod a+x bin/mount-$SHARE1
+    bin/mount-$SHARE1
 fi
 
 echo "prepare ssh key to be copied to server machines"
