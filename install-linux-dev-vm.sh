@@ -124,8 +124,8 @@ chmod a+x fzf-install.sh
 ./fzf-install.sh
 
 echo "installing micro editor"
-wget https://github.com/zyedidia/micro/releases/download/nightly/micro-1.1.5-dev.179-linux64.tar.gz
-tar -xvf micro-1.1.5-dev.179-linux64.tar.gz
+wget https://github.com/zyedidia/micro/releases/download/v1.2.0/micro-1.2.0-linux64.tar.gz
+tar -xvf micro-1.2.0-linux64.tar.gz
 mv micro bin/
 
 # ----------------------------------------------------
@@ -143,7 +143,7 @@ if [ "$IP1" != "n" ]; then
     echo "domain"
     wget http://download.beyondtrust.com/PBISO/8.0.0.2016/linux.deb.x64/pbis-open-8.0.0.2016.linux.x86_64.deb.sh
     chmod +x pbis-open-8.0.0.2016.linux.x86_64.deb.sh
-    ./pbis-open-8.0.0.2016.linux.x86_64.deb.sh
+    sudo ./pbis-open-8.0.0.2016.linux.x86_64.deb.sh
     domainjoin-cli join $DOMAIN $DOMAIN_USER
 
     echo "connect network share drives"
@@ -165,4 +165,6 @@ if [ "$REPO" != "" ]; then
     PRJ=${PRJ:-XXX}
     git clone https://bitbucket.org/$REPO/$PRJ.git workspace/$PRJ
     pip install -r workspace/$PRJ/requirements.txt
+    cd workspace/$PRJ
+    subl
 fi
