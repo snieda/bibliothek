@@ -52,7 +52,7 @@ echo "install console text tools..."
 sudo apt-get -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin
 
 echo "install networking tools..."
-sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m
+sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
 
 echo "install virtualbox guest additions"
 sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
