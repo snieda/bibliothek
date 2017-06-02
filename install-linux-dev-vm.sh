@@ -28,6 +28,7 @@ if [ "$DO_FORMAT" == "y" ]; then
 fi
 
 echo "Installing development like Java+Netbeans, Python+Anaconda and Sublime-Text"
+read -p "Virtualbox Version                            : " -i 5.1.6 VB_VERSION
 read -p "Mount network-drive on IP                     : " IP1
 if [ "$IP1" != "" ]; then
     read -p "Mount network-drive on PATH                   : " SHARE1
@@ -55,19 +56,29 @@ echo "install networking tools..."
 sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
 
 echo "install virtualbox guest additions"
-sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
+#sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
+sudo apt-get install linux-headers-$(uname -r) build-essential dkms
+wget http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
+sudo mkdir /media/VBoxGuestAdditions
+sudo mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
+sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
+rm VBoxGuestAdditions_$VB_VERSION.iso
+sudo umount /media/VBoxGuestAdditions
+sudo rmdir /media/VBoxGuestAdditions
 
 if [ "$INST_NETBEANS" != "n" ]; then
     echo "install java+netbeans..."
     # wget http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
     wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/jdk-8u111-nb-8_2-linux-x64.sh
     sudo bash jdk-8u111-nb-8_2-linux-x64.sh --silent &
+    jdk-8u111-nb-8_2-linux-x64.sh
     wget http://plugins.netbeans.org/download/plugin/3380
 fi
 
 echo "install sublime-text + plugins..."
 wget https://download.sublimetext.com/sublime-text_build-3126_amd64.deb
 sudo dpkg-deb -x sublime-text_build-3126_amd64.deb /
+rm sublime-text_build-3126_amd64.deb
 # start sublime-text to create the directory structure
 subl
 wget  https://packagecontrol.io/Package%20Control.sublime-package
@@ -107,6 +118,7 @@ if [ "$INST_ANACONDA" != "n" ]; then
     #sudo rm -rf anaconda3
     # the bash script provides -b for non-interactive - but with unwanted defaults
     echo -e "\n yes\n\nyes\n" | bash Anaconda3-4.2.0-Linux-x86_64.sh
+    rm Anaconda3-4.2.0-Linux-x86_64.sh
 fi
 
 #sudo apt -y install python3 python3-pip python3-nose
@@ -171,3 +183,9 @@ if [ "$REPO" != "" ]; then
     cd workspace/$PRJ
     subl
 fi
+
+echo "package the box"
+sudo apt-get clean
+sudo dd if=/dev/zero of=/EMPTY bs=1M
+sudo rm -f /EMPTY
+#sudo shutdown -h now
