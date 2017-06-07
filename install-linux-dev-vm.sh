@@ -57,7 +57,7 @@ sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m tig
 
 echo "install virtualbox guest additions"
 #sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
-sudo apt-get install linux-headers-$(uname -r) build-essential dkms
+sudo apt-get -y install linux-headers-$(uname -r) build-essential dkms
 wget http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
 sudo mkdir /media/VBoxGuestAdditions
 sudo mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
@@ -184,7 +184,7 @@ if [ "$REPO" != "" ]; then
     subl
 fi
 
-echo "package the box"
+echo "package the box..."
 sudo apt-get clean
 sudo dd if=/dev/zero of=/EMPTY bs=1M
 sudo rm -f /EMPTY
