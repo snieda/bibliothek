@@ -152,7 +152,7 @@ echo "installing Fuzzy Finder"
 wget https://github.com/junegunn/fzf/raw/master/install
 mv install fzf-install.sh
 chmod a+x fzf-install.sh
-./fzf-install.sh
+echo "\n\n\n" | ./fzf-install.sh
 
 echo "installing micro editor"
 MICRO_DIR=micro-1.2.0
