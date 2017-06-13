@@ -50,9 +50,9 @@ read -p "Mount network-drive on IP                     : " IP1
 if [ "$IP1" != "" ]; then
     read -p "Mount network-drive on PATH                   : " SHARE1
     read -p "Mount network-drive on USER                   : " USER1
-    read -p "Clone Bitbucket Repository                    : " REPO
+    read -p "Clone GIT Repository                          : " REPO
     if [ "$REP0" != "" ]; then
-        read -p "Clone Bitbucket Project                       : " PRJ
+        read -p "Git Project Name                             : " PRJ
     fi
 fi
 
@@ -152,7 +152,7 @@ echo "installing Fuzzy Finder"
 wget https://github.com/junegunn/fzf/raw/master/install
 mv install fzf-install.sh
 chmod a+x fzf-install.sh
-echo "\n\n\n" | ./fzf-install.sh
+echo "yes\nyes\nyes\n\n" | ./fzf-install.sh
 
 echo "installing micro editor"
 MICRO_DIR=micro-1.2.0
@@ -179,9 +179,9 @@ if [ "$IP1" != "" ]; then
     domainjoin-cli join $DOMAIN $DOMAIN_USER
 
     echo "connect network share drives"
-    IP1 = ${IP1:-//XX.XX.XX.XX}
-    USER1 = ${USER1:-XX}
-    SHARE1 = ${SHARE1:-XXXX}
+    IP1=${IP1:-//XX.XX.XX.XX}
+    USER1=${USER1:-XX}
+    SHARE1=${SHARE1:-XXXX}
 
     sudo mkdir /media/$SHARE1
     echo "sudo mount -t cifs -o username=$USER1,gid=$USER,uid=$USER $IP1/$SHARE1 /media/$SHARE1/" > bin/mount-$SHARE1.sh
@@ -199,7 +199,8 @@ if [ "$REPO" != "" ]; then
     echo "get git projects"
     REPO=${REPO:-XXXX}
     PRJ=${PRJ:-XXX}
-    git clone https://bitbucket.org/$REPO/$PRJ.git workspace/$PRJ
+    #git clone https://bitbucket.org/$REPO/$PRJ.git workspace/$PRJ
+    git clone $REPO workspace/$PRJ
     pip install -r workspace/$PRJ/requirements.txt
     cd workspace/$PRJ
     subl
