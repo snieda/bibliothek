@@ -203,7 +203,7 @@ if [ "$REPO" != "" ]; then
     git clone $REPO workspace/$PRJ
     pip install -r workspace/$PRJ/requirements.txt
     cd workspace/$PRJ
-    subl
+    subl ./
 fi
 
 if [ "$VB_VERSION" != "" ]; then
