@@ -98,7 +98,7 @@ find -type f -regextype "sed" -regex ".*^(cache).*" -mmin -120
 ## install terminal tools
 	sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff w3m rar p7zip ntp ne xcompmgr tcpdump links2 tmux inotify-tools fzf
 
-##cygwin
+## cygwin
 console package installer:
 
 	wget https://raw.githubusercontent.com/transcode-open/apt-cyg/master/apt-cyg
@@ -189,3 +189,10 @@ ansi2html
 ## FILE CONCATENATE
 
 	ls | xargs cat | tee output.txt
+
+## TightVNC
+
+~/.vnc/xstartup:
+lxterminal & /usr/bin/lxsession -s Lubuntu &
+
+tightvncserver -geometry 1920x1080
