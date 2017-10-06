@@ -148,6 +148,18 @@ Vergleich mybranch --> master
 	
 	git diff --color-words -w mybranch...master
 	
+	formatierte html-diff erstellen mit z.B. icdiff und ansi2html
+		pip install git+https://github.com/jeffkaufman/icdiff.git
+	in .gitconfig folgendes hinzufügen:
+		[diff]
+      		tool = icdiff
+    		[difftool]
+      		prompt = false
+    		[difftool "icdiff"]
+      		cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+		
+	git difftool develop..'develop@{2 weeks ago}' | ansi2html.sh > diff-develop-test.html
+	
 Eigene Änderungen komplett überschreiben
 
 	git clean -dfx
