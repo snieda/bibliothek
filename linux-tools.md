@@ -184,6 +184,14 @@ bestimmte Dateien aus anderem branch übernehmen
 
 	git checkout <BRANCH> -- <FILE-PATH>
 
+Statistics
+
+	git log --numstat | grep java > numstat.txt
+	q -t "select sum(c1), sum(c2), c3 from numstat.txt group by c3 order by 1,2,3" > numstat-q.txt
+
+
+
+
 ## TEXT
 
 vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
@@ -198,6 +206,8 @@ suplemon: https://github.com/richrd/suplemon
 icdiff
 ansi2html
 
+AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
+
 ## FILE CONCATENATE
 
 	ls | xargs cat | tee output.txt
@@ -208,3 +218,13 @@ ansi2html
 lxterminal & /usr/bin/lxsession -s Lubuntu &
 
 tightvncserver -geometry 1920x1080
+
+## TMUX + fzf
+
+tmux display-message -p -F "#{pane_current_path}" -t0
+https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
+myVar=$(grep -Po "(?<=^HereIsAKey ).*" file)
+
+## WINDOWS TOOLS
+
+windows system tools http://www.nirsoft.net/x64_download_package.html
