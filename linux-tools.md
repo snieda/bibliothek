@@ -91,6 +91,9 @@ find -type f -mmin -120
 ### search files created maximum 120 minutes ago without cache files
 find -type f -regextype "sed" -regex ".*^(cache).*" -mmin -120
 
+### convert files in a tree from iso8859-1 to utf-8
+find . -name "*.properties" -or -name "*.java" -type f -exec bash -c 'iconv {} -f ASCII//TRANSLIT -t UTF8 -o {}' \;
+
 ## file renaming
 
 	for f in abc*.txt do mv -- "$f" "${abc/nix}"; done
