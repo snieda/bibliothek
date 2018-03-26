@@ -29,6 +29,12 @@ letzten build auf result abfragen:
 
 	curl --silent -X POST https://jenkins.....de/job/projekt/view/gustav_flyway_environments/job/5_MYDB/lastBuild/api/xml?xpath=/*/result --user '<myname>:<meinpasswort>' --insecure 
 
+## rsync
+
+syncronize source and remote destination directories:
+
+	rsync -avzhu --progress /source /destination
+
 ## linux monitors
 
 netstat
