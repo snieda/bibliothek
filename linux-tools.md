@@ -199,7 +199,18 @@ Statistics
 	q -t "select sum(c1), sum(c2), c3 from numstat.txt group by c3 order by 1,2,3" > numstat-q.txt
 
 
+Zurücksetzen auf master und holen von commits von remote oder anderem branch
+	
+	git reset --hard origin/master
+	for commit in $(git log --reverse --since=yesterday --pretty=%H);
+	do
+    		git cherry-pick $commit
+	done	
 
+	ODER
+	
+	git rebase --onto branch~5 branch~3 branch
+	# 5: start to remove, 3: start to rebase on further
 
 ## TEXT
 
