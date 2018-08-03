@@ -126,6 +126,11 @@ oder
 
 	cat ~/.ssh/id_rsa.pub | xclip -sel clip
 
+## progressbar
+
+pv
+bar
+
 ## git
 
 Um den aktuellen Stand vom remote master in den eigenen branch zu mergen gibt es zwei Möglichkeiten:
@@ -211,6 +216,11 @@ Zurücksetzen auf master und holen von commits von remote oder anderem branch
 	
 	git rebase --onto branch~5 branch~3 branch
 	# 5: start to remove, 3: start to rebase on further
+
+### git cosmetics
+
+	git commit --amend
+	git rebase --interactive <-- squash, pick, edit, amend,...
 
 ## TEXT
 
