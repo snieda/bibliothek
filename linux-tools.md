@@ -222,6 +222,12 @@ Zurücksetzen auf master und holen von commits von remote oder anderem branch
 	git commit --amend
 	git rebase --interactive <-- squash, pick, edit, amend,...
 
+### git auto merge conflicts
+
+	grep -l -R --include *.java '<<<<<<<' . | xargs git checkout --theirs
+	or
+	grep -lr '<<<<<<<' . | xargs git checkout --yours
+
 ## TEXT
 
 vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
