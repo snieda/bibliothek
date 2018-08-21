@@ -223,7 +223,8 @@ Zurücksetzen auf master und holen von commits von remote oder anderem branch
 	git rebase --interactive <-- squash, pick, edit, amend,...
 
 ### git auto merge conflicts
-
+	git checkout --theirs PATH/FILE
+	
 	grep -l -R --include *.java '<<<<<<<' . | xargs git checkout --theirs
 	or
 	grep -lr '<<<<<<<' . | xargs git checkout --yours
