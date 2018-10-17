@@ -265,3 +265,11 @@ myVar=$(grep -Po "(?<=^HereIsAKey ).*" file)
 ## WINDOWS TOOLS
 
 windows system tools http://www.nirsoft.net/x64_download_package.html
+
+##  Eclilpse Dark Theme
+
+http://www.eclipsecolorthemes.org/?view=theme&id=55501
+
+## Visual Studio Code Plugins
+
+https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
