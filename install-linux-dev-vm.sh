@@ -26,9 +26,14 @@ EOM
 # ----------------------------------------------------
 # system preparations
 # ----------------------------------------------------
+echo -------------------------------------------------------
+echo Thomas Schneider / 2015 (refreshed 2018-11)
+echo -------------------------------------------------------
+echo
+
 DO_FORMAT=no
-read -p  "Prepare (part, format) new disc /dev/sda (y|N): " DO_FORMAT
-if [ "$DO_FORMAT" == "y" ]; then
+read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
+if [ "$DO_FORMAT" == "yes" ]; then
     echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
     sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
     echo "Please restart the VM to include the formatted drive!"
@@ -39,7 +44,7 @@ if [ "$DO_FORMAT" == "y" ]; then
     exit
 fi
 
-echo "Installing development like Java+Netbeans, Python+Anaconda and Sublime-Text"
+echo "Installing development like Java+Netbeans, Eclipse, VS Code, Python+Anaconda and Sublime-Text"
 
 read -ep "Linux System Bit-width (32|64)                : " -i "64" BITS
 read -ep "Virtualbox Version                            : " -i 5.1.6 VB_VERSION
@@ -54,7 +59,11 @@ if [ "$IP1" != "" ]; then
 fi
 
 read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
-read -p "Install python-anaconda 3.4             (Y|n) : " INST_ANACONDA
+read -p "Install java8                           (Y|n) : " INST_JAVA
+read -p "Install visual studio code              (Y|n) : " INST_VSCODE
+read -p "Install eclipse 2018-09                 (Y|n) : " INST_ECLIPSE
+read -p "Install sublimetext+plugins             (Y|n) : " INST_SUBLIMETEXT
+read -p "Install python+anaconda 5.3             (Y|n) : " INST_PYTHON_ANACONDA
 read -p "Install resilio sync                    (y|N) : " INST_RESILIO_SYNC
 
 echo "do some updates..."
@@ -64,7 +73,7 @@ echo "install system tools (~83MB)..."
 sudo apt-get -y install mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
 
 echo "install console text tools..."
-sudo apt-get -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin
+sudo apt-get -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar
 
 echo "install networking tools..."
 sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
@@ -91,14 +100,49 @@ if [ "$INST_NETBEANS" != "n" ]; then
     wget http://plugins.netbeans.org/download/plugin/3380
 fi
 
-echo "install sublime-text + plugins..."
-wget https://download.sublimetext.com/sublime-text_build-3126_amd$BITS.deb
-sudo dpkg-deb -x sublime-text_build-3126_amd$BITS.deb /
-rm sublime-text_build-3126_amd$BITS.deb
-# start sublime-text to create the directory structure
-subl
-wget  https://packagecontrol.io/Package%20Control.sublime-package
-cp "Package Control".sublime-package ~/.config/sublime-text-3/"Installed Packages"
+if [ "$INST_JAVA" != "n" ]; then
+    echo "install java+netbeans..."
+    # wget http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
+    wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x$BITS.tar.gz
+	sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
+	sudo ln -s java jdk1.8.0_191
+	ls -l /usr/local/sbin/
+fi
+
+if [ "$INST_VSCODE" != "n" ]; then
+    echo "install visual studio code..."
+	# old version
+	#sudo add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+	#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
+	
+	# Install key
+	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+	sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+	# Install repo
+	sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+	# Update apt-get
+	sudo apt-get update
+	# Install
+	sudo apt-get install code # or code-insiders
+fi
+
+if [ "$INST_ECLIPSE" != "n" ]; then
+    echo "install eclipse..."
+	wget http://ftp.fau.de/eclipse/technology/epp/downloads/release/2018-09/R/eclipse-jee-2018-09-linux-gtk-x86_64.tar.gz
+	sudo tar xfz eclipse-jee-2018-09-linux-gtk-x86_$BITS.tar.gz
+	sudo ln -s /eclipse/eclipse /usr/local/sbin/eclipse
+	ls -l /usr/local/sbin/
+fi
+
+if [ "$INST_SUBLIMETEXT" != "n" ]; then
+	echo "install sublime-text + plugins..."
+	wget https://download.sublimetext.com/sublime-text_build-3126_amd$BITS.deb
+	sudo dpkg-deb -x sublime-text_build-3126_amd$BITS.deb /
+	rm sublime-text_build-3126_amd$BITS.deb
+	# start sublime-text to create the directory structure
+	subl
+	wget  https://packagecontrol.io/Package%20Control.sublime-package
+	cp "Package Control".sublime-package ~/.config/sublime-text-3/"Installed Packages"
 cat <<EOM >> ~/.config/sublime-text-3/Packages/User/"Package Control".sublime-settings
 {
    "installed_packages":
@@ -127,18 +171,19 @@ cat <<EOM >> ~/.config/sublime-text-3/Packages/User/"Package Control".sublime-se
     ]
 }
 EOM
-
-if [ "$INST_ANACONDA" != "n" ]; then
-    echo "install python-anaconda..."
-    wget https://repo.continuum.io/archive/Anaconda3-4.2.0-Linux-x86_$BITS.sh
-    #sudo rm -rf anaconda3
-    # the bash script provides -b for non-interactive - but with unwanted defaults
-    echo -e "\n yes\n\nyes\n" | bash Anaconda3-4.2.0-Linux-x86_$BITS.sh
-    rm Anaconda3-4.2.0-Linux-x86_$BITS.sh
 fi
 
-#sudo apt -y install python3 python3-pip python3-nose
-sudo apt install python-pip
+if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
+    echo "install python+anaconda..."
+	#sudo apt -y install python3 python3-pip python3-nose
+	sudo apt install python-pip
+
+    wget https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    #sudo rm -rf anaconda3
+    # the bash script provides -b for non-interactive - but with unwanted defaults
+    echo -e "\n yes\n\nyes\n" | bash Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    rm Anaconda3-5.3.0-Linux-x86_$BITS.sh
+fi
 
 # ----------------------------------------------------
 # additional terminal tools
@@ -152,8 +197,8 @@ chmod a+x fzf-install.sh
 echo "yes\nyes\nyes\n\n" | ./fzf-install.sh
 
 echo "installing micro editor"
-MICRO_DIR=micro-1.2.0
-wget https://github.com/zyedidia/micro/releases/download/v1.2.0/$MICRO_DIR-linux$BITS.tar.gz
+MICRO_DIR=micro-1.4.1
+wget https://github.com/zyedidia/micro/releases/tag/v1.4.1/$MICRO_DIR-linux$BITS.tar.gz
 tar -xvf $MICRO_NAME-linux$BITS.tar.gz
 cp $MICRO_DIR/micro bin/
 
