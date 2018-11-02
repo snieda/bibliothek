@@ -27,7 +27,7 @@ EOM
 # system preparations
 # ----------------------------------------------------
 echo -------------------------------------------------------
-echo "Thomas Schneider / 2015 (refreshed 2018-11)"
+echo Thomas Schneider / 2015 (refreshed 2018-11)
 echo -------------------------------------------------------
 echo
 
@@ -44,11 +44,12 @@ if [ "$DO_FORMAT" == "yes" ]; then
     exit
 fi
 
-echo "Installing development like Java+Netbeans, Eclipse, VS Code, Python+Anaconda and Sublime-Text"
+echo "System and VirtualBox informations:"
 
+read -p "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                : " -i "64" BITS
 read -ep "Virtualbox Version                            : " -i 5.1.6 VB_VERSION
-read -p "Mount network-drive on IP                     : " IP1
+read -p "Mount network-drive on IP (+git-clone)         : " IP1
 if [ "$IP1" != "" ]; then
     read -p "Mount network-drive on PATH                   : " SHARE1
     read -p "Mount network-drive on USER                   : " USER1
@@ -58,17 +59,27 @@ if [ "$IP1" != "" ]; then
     fi
 fi
 
+echo "Install Standard Office Applications:"
+read -p "Install firefox                         (Y|n) : " INST_FIREFOX
+read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
+read -p "Install vlc                             (Y|n) : " INST_VLC
+
+echo "Install development like Java+Netbeans, Eclipse, VS Code, Python+Anaconda and Sublime-Text:"
 read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 read -p "Install java8                           (Y|n) : " INST_JAVA
 read -p "Install visual studio code              (Y|n) : " INST_VSCODE
 read -p "Install eclipse 2018-09                 (Y|n) : " INST_ECLIPSE
 read -p "Install sublimetext+plugins             (Y|n) : " INST_SUBLIMETEXT
 read -p "Install python+anaconda 5.3             (Y|n) : " INST_PYTHON_ANACONDA
+read -p "Install squirrel                        (Y|n) : " INST_SQUIRREL
 read -p "Install resilio sync                    (y|N) : " INST_RESILIO_SYNC
 
 echo "do some updates..."
 sudo apt-get update
-# sudo apt-get upgrade
+if [ "$INST_UPGRADE" != "n" ]; then
+	sudo apt-get -y upgrade
+fi
+
 echo "install system tools (~83MB)..."
 sudo apt-get -y install mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
 
@@ -89,6 +100,26 @@ if [ "$VB_VERSION" != "" ]; then
 	rm VBoxGuestAdditions_$VB_VERSION.iso
 	sudo umount /media/VBoxGuestAdditions
 	sudo rmdir /media/VBoxGuestAdditions
+fi
+
+if [ "$INST_FIREFOX" != "n" ]; then
+    echo "install firefox..."
+	sudo apt install firefox
+fi
+
+if [ "$INST_LIBREOFFICE" != "n" ]; then
+    echo "install libreoffice..."
+#	wget https://www.libreoffice.org/donate/dl/deb-x86_64/6.1.2/de/LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
+#	tar -xvf LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
+#	cd debs
+#	sudo dpkg -i *.deb
+#	cd ..
+	sudo apt install libreoffice-common
+fi
+
+if [ "$INST_VLC" != "n" ]; then
+    echo "install vlc..."
+	sudo apt install vlc-nox
 fi
 
 if [ "$INST_NETBEANS" != "n" ]; then
