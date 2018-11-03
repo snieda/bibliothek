@@ -48,6 +48,7 @@ echo "System and VirtualBox informations:"
 
 read -p "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                : " -i "64" BITS
+read -p "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
 read -ep "Virtualbox Version                            : " -i 5.1.6 VB_VERSION
 read -p "Mount network-drive on IP (+git-clone)         : " IP1
 if [ "$IP1" != "" ]; then
@@ -64,15 +65,15 @@ read -p "Install firefox                         (Y|n) : " INST_FIREFOX
 read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
 read -p "Install vlc                             (Y|n) : " INST_VLC
 
-echo "Install development like Java+Netbeans, Eclipse, VS Code, Python+Anaconda and Sublime-Text:"
+echo "Install development IDE+Tools:"
 read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 read -p "Install java8                           (Y|n) : " INST_JAVA
-read -p "Install visual studio code              (Y|n) : " INST_VSCODE
-read -p "Install eclipse 2018-09                 (Y|n) : " INST_ECLIPSE
-read -p "Install sublimetext+plugins             (Y|n) : " INST_SUBLIMETEXT
-read -p "Install python+anaconda 5.3             (Y|n) : " INST_PYTHON_ANACONDA
-read -p "Install squirrel                        (Y|n) : " INST_SQUIRREL
-read -p "Install resilio sync                    (y|N) : " INST_RESILIO_SYNC
+read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
+read -p "Install eclipse 2018-09 (~300MB)        (Y|n) : " INST_ECLIPSE
+read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
+read -p "Install python3.x+anaconda 5.3          (Y|n) : " INST_PYTHON_ANACONDA
+read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
+read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
 echo "do some updates..."
 sudo apt-get update
@@ -89,6 +90,11 @@ sudo apt-get -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff 
 echo "install networking tools..."
 sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
 
+if [ "$INST_LXDE" != "n" ]; then
+    echo "install lxde..."
+	sudo apt install -y lxde lxde-core
+fi
+
 if [ "$VB_VERSION" != "" ]; then
 	echo "install virtualbox guest additions"
 	#sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
@@ -104,7 +110,7 @@ fi
 
 if [ "$INST_FIREFOX" != "n" ]; then
     echo "install firefox..."
-	sudo apt install firefox
+	sudo apt install -y firefox
 fi
 
 if [ "$INST_LIBREOFFICE" != "n" ]; then
@@ -119,7 +125,7 @@ fi
 
 if [ "$INST_VLC" != "n" ]; then
     echo "install vlc..."
-	sudo apt install vlc-nox
+	sudo apt install -y vlc-nox
 fi
 
 if [ "$INST_NETBEANS" != "n" ]; then
@@ -142,10 +148,11 @@ fi
 
 if [ "$INST_VSCODE" != "n" ]; then
     echo "install visual studio code..."
-	# old version
-	#sudo add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-	#sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
+	# old version (try both...)
+	sudo add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
 	
+	# new version (try both...)
 	# Install key
 	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 	sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
