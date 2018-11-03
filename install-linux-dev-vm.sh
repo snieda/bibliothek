@@ -223,6 +223,10 @@ if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
     rm Anaconda3-5.3.0-Linux-x86_$BITS.sh
 fi
 
+if [ "$INST_SQUIRREL" != "n" ]; then
+	wget https://sourceforge.net/projects/squirrel-sql/files/1-stable/3.8.1/squirrel-sql-3.8.1-standard.jar/download
+fi
+
 # ----------------------------------------------------
 # additional terminal tools
 # ----------------------------------------------------
