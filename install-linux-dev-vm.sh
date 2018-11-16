@@ -299,3 +299,6 @@ if [ "$VB_VERSION" != "" ]; then
 	sudo rm -f /EMPTY
 	#sudo shutdown -h now
 fi
+
+echo 'PATH="$HOME/bin:$HOME/.local/bin:$JAVA_HOME/bin:$PATH' >> .profile
+echo 'export DISPLAY=0:0' >> .profile
