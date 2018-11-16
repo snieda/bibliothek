@@ -91,7 +91,7 @@ echo "install networking tools..."
 sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
 
 if [ "$INST_LXDE" != "n" ]; then
-    echo "install lxde..."
+	echo "install lxde..."
 	sudo apt install -y lxde lxde-core
 fi
 
@@ -99,7 +99,7 @@ if [ "$VB_VERSION" != "" ]; then
 	echo "install virtualbox guest additions"
 	#sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
 	sudo apt-get -y install linux-headers-$(uname -r) build-essential dkms
-	wget -N http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
+	wget -nc http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
 	sudo mkdir /media/VBoxGuestAdditions
 	sudo mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
 	sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
@@ -109,13 +109,13 @@ if [ "$VB_VERSION" != "" ]; then
 fi
 
 if [ "$INST_FIREFOX" != "n" ]; then
-    echo "install firefox..."
+	echo "install firefox..."
 	sudo apt install -y firefox
 fi
 
 if [ "$INST_LIBREOFFICE" != "n" ]; then
     echo "install libreoffice..."
-#	wget -N https://www.libreoffice.org/donate/dl/deb-x86_64/6.1.2/de/LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
+#	wget -nc https://www.libreoffice.org/donate/dl/deb-x86_64/6.1.2/de/LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
 #	tar -xvf LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
 #	cd debs
 #	sudo dpkg -i *.deb
@@ -124,14 +124,14 @@ if [ "$INST_LIBREOFFICE" != "n" ]; then
 fi
 
 if [ "$INST_VLC" != "n" ]; then
-    echo "install vlc..."
+	echo "install vlc..."
 	sudo apt install -y vlc-nox
 fi
 
 if [ "$INST_NETBEANS" != "n" ]; then
     echo "install java+netbeans..."
-    # wget -N http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    wget -N --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/jdk-8u111-nb-8_2-linux-x$BITS.sh
+    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
+    wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/jdk-8u111-nb-8_2-linux-x$BITS.sh
     sudo bash jdk-8u111-nb-8_2-linux-x$BITS.sh --silent &
     jdk-8u111-nb-8_2-linux-x$BITS.sh
     wget http://plugins.netbeans.org/download/plugin/3380
@@ -139,8 +139,8 @@ fi
 
 if [ "$INST_JAVA" != "n" ]; then
     echo "install java+netbeans..."
-    # wget -N http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    wget -N --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x$BITS.tar.gz
+    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
+    wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x$BITS.tar.gz
 	sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
 	sudo ln -s java jdk1.8.0_191
 	ls -l /usr/local/sbin/
@@ -166,7 +166,7 @@ fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
     echo "install eclipse..."
-	wget -N http://ftp.fau.de/eclipse/technology/epp/downloads/release/2018-09/R/eclipse-jee-2018-09-linux-gtk-x86_64.tar.gz
+	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2018-09/R/eclipse-jee-2018-09-linux-gtk-x86_64.tar.gz
 	sudo tar xfz eclipse-jee-2018-09-linux-gtk-x86_$BITS.tar.gz
 	sudo ln -s /eclipse/eclipse /usr/local/sbin/eclipse
 	ls -l /usr/local/sbin/
@@ -174,12 +174,12 @@ fi
 
 if [ "$INST_SUBLIMETEXT" != "n" ]; then
 	echo "install sublime-text + plugins..."
-	wget -N https://download.sublimetext.com/sublime-text_build-3126_amd$BITS.deb
+	wget -nc https://download.sublimetext.com/sublime-text_build-3126_amd$BITS.deb
 	sudo dpkg-deb -x sublime-text_build-3126_amd$BITS.deb /
 	rm sublime-text_build-3126_amd$BITS.deb
 	# start sublime-text to create the directory structure
 	subl
-	wget  -N https://packagecontrol.io/Package%20Control.sublime-package
+	wget  -nc https://packagecontrol.io/Package%20Control.sublime-package
 	cp "Package Control".sublime-package ~/.config/sublime-text-3/"Installed Packages"
 cat <<EOM >> ~/.config/sublime-text-3/Packages/User/"Package Control".sublime-settings
 {
@@ -216,7 +216,7 @@ if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
 	#sudo apt -y install python3 python3-pip python3-nose
 	sudo apt install python-pip
 
-    wget -N https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    wget -nc https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_$BITS.sh
     #sudo rm -rf anaconda3
     # the bash script provides -b for non-interactive - but with unwanted defaults
     echo -e "\n yes\n\nyes\n" | bash Anaconda3-5.3.0-Linux-x86_$BITS.sh
@@ -224,7 +224,7 @@ if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
 fi
 
 if [ "$INST_SQUIRREL" != "n" ]; then
-	wget https://sourceforge.net/projects/squirrel-sql/files/1-stable/3.8.1/squirrel-sql-3.8.1-standard.jar/download
+	wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download -O squirrel-sql-client.jar
 fi
 
 # ----------------------------------------------------
@@ -233,16 +233,18 @@ fi
 mkdir bin
 
 echo "installing Fuzzy Finder"
-wget -N https://github.com/junegunn/fzf/raw/master/install
+wget -nc https://github.com/junegunn/fzf/raw/master/install
 mv install fzf-install.sh
 chmod a+x fzf-install.sh
 echo "yes\nyes\nyes\n\n" | ./fzf-install.sh
 
 echo "installing micro editor"
-MICRO_DIR=micro-1.4.1
-wget -N https://github.com/zyedidia/micro/releases/tag/v1.4.1/$MICRO_DIR-linux$BITS.tar.gz
-tar -xvf $MICRO_NAME-linux$BITS.tar.gz
-cp $MICRO_DIR/micro bin/
+#MICRO_DIR=micro-1.4.1
+#wget -nc https://github.com/zyedidia/micro/releases/tag/v1.4.1/$MICRO_DIR-linux$BITS.tar.gz
+#tar -xvf $MICRO_DIR-linux$BITS.tar.gz
+#cp $MICRO_DIR/micro bin/
+curl https://getmic.ro | bash
+cp micro bin/
 
 # ----------------------------------------------------
 # user/project dependent installations
@@ -250,14 +252,14 @@ cp $MICRO_DIR/micro bin/
 
 if [ "$INST_RESILIO_SYNC" == "y" ]; then
     echo "install/run bittorrent-sync. use localhost:8888 to configure it"
-    wget -N https://download-cdn.resilio.com/stable/linux-x$BITS/resilio-sync_x$BITS.tar.gz
+    wget -nc https://download-cdn.resilio.com/stable/linux-x$BITS/resilio-sync_x$BITS.tar.gz
     tar -xf resilio-sync_x$BITS.tar.gz
     ./rslsync
 fi
 
 if [ "$IP1" != "" ]; then
     echo "domain"
-    wget -N http://download.beyondtrust.com/PBISO/8.0.0.2016/linux.deb.x$BITS/pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
+    wget -nc http://download.beyondtrust.com/PBISO/8.0.0.2016/linux.deb.x$BITS/pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
     chmod +x pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
     sudo ./pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
     domainjoin-cli join $DOMAIN $DOMAIN_USER
