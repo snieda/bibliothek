@@ -44,7 +44,7 @@ if [ "$DO_FORMAT" == "yes" ]; then
     exit
 fi
 
-echo "System and VirtualBox informations:"
+echo "================ System and VirtualBox informations ================"
 
 read -p "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                : " -i "64" BITS
@@ -60,12 +60,12 @@ if [ "$IP1" != "" ]; then
     fi
 fi
 
-echo "Install Standard Office Applications:"
+echo    "================ Standard Office Applications ================"
 read -p "Install firefox                         (Y|n) : " INST_FIREFOX
 read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
 read -p "Install vlc                             (Y|n) : " INST_VLC
 
-echo "Install development IDE+Tools:"
+echo     "================ development IDE+Tools ================"
 read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 read -p "Install java8                           (Y|n) : " INST_JAVA
 read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
