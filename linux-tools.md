@@ -235,6 +235,9 @@ vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-codin
 	vjde (code completition)
 	filled .vimrc
 	exuberant-ctags (index for java-docs) 
+	vim-plug: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+	.vimrc  : https://gist.githubusercontent.com/facundovictor/42733b014bcc479f5cd8/raw/e53816453a21de40653906731ddb079d710b1531/.vimrc
+	eclim   : wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
 
 slap:     https://github.com/slap-editor/slap
 micro:    https://github.com/zyedidia/micro/releases
