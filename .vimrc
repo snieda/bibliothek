@@ -25,11 +25,13 @@ call plug#begin('~/.vim/plugged')
 "    \ 'Completion': 'completefunc',
 "    \}
 
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomtom/tcomment_vim'
 Plug 'thaerkh/vim-workspace'
 Plug 'bagrat/vim-workspace'
-
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'idanarye/vim-vebugger'
+Plug 'Dica-Developer/vim-jdb'
+Plug 'ryanoasis/vim-devicons'
+Plug 'terryma/vim-multiple-cursors' 
 Plug 'scrooloose/nerdtree'
 Plug 'w0rp/ale'
 Plug 'tomtom/tcomment_vim'
