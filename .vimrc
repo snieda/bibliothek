@@ -1,9 +1,9 @@
 " http://vimdoc.sourceforge.net/htmldoc/usr_41.html#vim-script-intro:
 
 " FIX ISSUE: http://unix.stackexchange.com/questions/305415/enabling-python3-on-vim-in-fedora-24
-if exists('py2') && has('python')
-elseif has('python3')
-endif
+"if exists('py2') && has('python')
+"elseif has('python3')
+"endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call plug#begin('~/.vim/plugged')
@@ -25,32 +25,54 @@ call plug#begin('~/.vim/plugged')
 "    \ 'Completion': 'completefunc',
 "    \}
 
-Plug 'thaerkh/vim-workspace'
-Plug 'bagrat/vim-workspace'
-Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'idanarye/vim-vebugger'
-Plug 'Dica-Developer/vim-jdb'
+" layout and coloring
+Plug 'altercation/vim-colors-solarized'
 Plug 'ryanoasis/vim-devicons'
-Plug 'terryma/vim-multiple-cursors' 
+"Plug 'vim-airline/vim-airline'
+"Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+
+" utils
 Plug 'scrooloose/nerdtree'
-Plug 'w0rp/ale'
-Plug 'tomtom/tcomment_vim'
-
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-
-" Fuzzy file, buffer, mru, tag, etc finder.
 Plug 'ctrlpvim/ctrlp.vim'
 
-" FZF =)
 Plug '/opt/fzf' | Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
-" TagBar: Class browser
 Plug 'majutsushi/tagbar'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-vinegar'
+Plug 'wincent/command-t'
+Plug 'fisadev/vim-ctrlp-cmdpalette'
+"Plug 'vim-scripts/unmswin.vim'
+Plug 'tomtom/tcomment_vim'
 
-" Git conflict - mergetool
+" workspace / project
+" Plug 'thaerkh/vim-workspace'
+" Plug 'bagrat/vim-workspace'
+Plug 'powerman/vim-plugin-autosess'
+
+" git
 Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+" develop
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
+Plug 'vim-syntastic/syntastic'
+Plug 'w0rp/ale'
+
+"debugging
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
+Plug 'idanarye/vim-vebugger'
+Plug 'Dica-Developer/vim-jdb'
+
+" java
+Plug 'bam9523/vim-decompile'
+
+" python
+"Plug 'nvie/vim-flake8'
+Plug 'SkyLeach/pudb.vim'
+Plug 'tell-k/vim-autopep8'
 
 " CoffeeScript
 Plug 'kchmck/vim-coffee-script'
@@ -76,7 +98,6 @@ Plug 'mxw/vim-jsx'
 Plug 'guns/xterm-color-table.vim'
 
 " Autocompletion
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
 " Load on nothing
@@ -99,7 +120,7 @@ let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
 " Groovy ----------------------------------------------------------------------
 " Reference: http://www.vim.org/scripts/script.php?script_id=945
-source ~/.vim/syntax/groovy.vim
+" source ~/.vim/syntax/groovy.vim
 " Recognize groovy
 au BufNewFile,BufRead *.groovy  setf groovy
 au BufNewFile,BufRead Jenkinsfile*  setf groovy
@@ -294,7 +315,7 @@ let g:ctrlp_lazy_update = 2
 " The Silver Searcher
 if executable('ag')
     " Use ag in CtrlP for listing files, lightning fast.
-    let ignores = '--ignore ".git/" --ignore ".hg/" --ignore ".svn/"'  " dirs
+    let ignores = '--ignore ".git/" --ignore ".hg/" --ignore ".svn/" --ignore "target" -- ignore "bin"'  " dirs
     let ignores .= ' --ignore "*.pyc" --ignore "*.pyo"'                " files
     let g:ctrlp_user_command = 'ag %s -l --skip-vcs-ignores --nocolor -g "" ' . ignores
 
@@ -324,25 +345,25 @@ set laststatus=2
 " Use 256 colors
 set t_Co=256
 
-call airline#parts#define_function('ALE', 'ALEGetStatusLine')
-call airline#parts#define_condition('ALE', 'exists("*ALEGetStatusLine")')
-let g:airline_section_error = airline#section#create_right(['ALE'])
+"call airline#parts#define_function('ALE', 'ALEGetStatusLine')
+"call airline#parts#define_condition('ALE', 'exists("*ALEGetStatusLine")')
+"let g:airline_section_error = airline#section#create_right(['ALE'])
 " let g:airline_theme='durant'
 " let g:airline_theme='powerlineish'
 " let g:airline_theme='simple'
 " let g:airline_theme='term'
-let g:airline_theme='jellybeans'
+"let g:airline_theme='jellybeans'
 
-let g:airline_powerline_fonts = 1
+"let g:airline_powerline_fonts = 1
 
 " powerline symbols
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
+"let g:airline_left_sep = ''
+"let g:airline_left_alt_sep = ''
+"let g:airline_right_sep = ''
+"let g:airline_right_alt_sep = ''
+"let g:airline_symbols.branch = ''
+"let g:airline_symbols.readonly = ''
+"let g:airline_symbols.linenr = ''
 
 
 " Syntastic Configuration -----------------------------------------------------
@@ -501,3 +522,36 @@ cabbrev bonly WSBufOnly
 cnoremap <C-O> source ~/.vim-session
 cnoremap <C-S> mksession! ~/.vim-session
 nnoremap <silent> <C-S><C-S> :mksession! ~/.vim-session <CR>
+let g:vebugger_leader='<Leader>d'
+
+" /vim -b : edit binary using xxd-format!
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
+
+let g:decomp_jar = 'cfr_0_115.jar'
+let python_highlight_all=1
+syntax on
+autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
+let g:autopep8_max_line_length=120
+let g:autopep8_indent_size=2
+let g:autopep8_disable_show_diff=1
+let g:autopep8_on_save = 1
+
+" use windows shortcuts
+set nocompatible
+source $VIMRUNTIME/mswin.vim
+behave mswin
+
+noremap <S-P> :CtrlPCmdPalette
+noremap <C-M> :only
+let g:ycm_error_symbol = '**'
+let g:ycm_add_preview_to_completeopt = 1
+
