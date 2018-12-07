@@ -554,4 +554,6 @@ noremap <S-P> :CtrlPCmdPalette
 noremap <C-M> :only
 let g:ycm_error_symbol = '**'
 let g:ycm_add_preview_to_completeopt = 1
+set encoding=utf-8
+
 
