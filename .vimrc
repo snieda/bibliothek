@@ -42,7 +42,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'majutsushi/tagbar'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-vinegar'
-Plug 'wincent/command-t'
+" Plug 'wincent/command-t' " Needs Ruby compilation
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 "Plug 'vim-scripts/unmswin.vim'
 Plug 'tomtom/tcomment_vim'
@@ -55,6 +55,7 @@ Plug 'powerman/vim-plugin-autosess'
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+" Plug 'junegunn/vim-github-dashboard' "Needs Ruby compilation 
 
 " develop
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
