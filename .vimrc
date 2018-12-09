@@ -111,6 +111,8 @@ au BufNewFile,BufRead Jenkinsfile*  setf groovy
 " General configuration -------------------------------------------------------
 set number
 set ruler
+set cursorcolumn 
+hi CursorColumn ctermbg=8
 
 filetype plugin indent on
 " show existing tab with 4 spaces width
@@ -539,7 +541,3 @@ let g:ycm_error_symbol = '**'
 let g:ycm_add_preview_to_completeopt = 1
 set encoding=utf-8
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
-
-set cursorcolumn 
-hi CursorColumn ctermbg=8
-
