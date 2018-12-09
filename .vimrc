@@ -23,6 +23,9 @@ Plug 'fisadev/vim-ctrlp-cmdpalette'
 Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 
+" install 'BurntSushi/ripgrep' "multifile search command line tool
+Plug 'wincent/ferret'
+
 " workspace / project
 " Plug 'thaerkh/vim-workspace'
 " Plug 'bagrat/vim-workspace'
