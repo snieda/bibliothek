@@ -1,29 +1,4 @@
-" http://vimdoc.sourceforge.net/htmldoc/usr_41.html#vim-script-intro:
-
-" FIX ISSUE: http://unix.stackexchange.com/questions/305415/enabling-python3-on-vim-in-fedora-24
-"if exists('py2') && has('python')
-"elseif has('python3')
-"endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 call plug#begin('~/.vim/plugged')
-
-"Plug 'natebosch/vim-lsc'
-"let g:lsc_auto_map = v:true
-" Use defaults ... or set only the keys you want mapped, defaults are:
-"let g:lsc_auto_map = {
-"    \ 'GoToDefinition': '<C-]>',
-"    \ 'FindReferences': 'gr',
-"    \ 'NextReference': '<C-n>',
-"    \ 'PreviousReference': '<C-p>',
-"    \ 'FindImplementations': 'gI',
-"    \ 'FindCodeActions': 'ga',
-"    \ 'DocumentSymbol': 'go',
-"    \ 'WorkspaceSymbol': 'gS',
-"    \ 'ShowHover': 'v:true',
-"    \ 'SignatureHelp', '<C-m>',
-"    \ 'Completion': 'completefunc',
-"    \}
 
 " layout and coloring
 Plug 'altercation/vim-colors-solarized'
@@ -65,6 +40,7 @@ Plug 'Shougo/deoplete.nvim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
 Plug 'vim-syntastic/syntastic'
 Plug 'w0rp/ale'
+"Plug 'natebosch/vim-lsc'
 
 "debugging
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
