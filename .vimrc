@@ -46,11 +46,14 @@ Plug 'tpope/vim-vinegar'
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 "Plug 'vim-scripts/unmswin.vim'
 Plug 'tomtom/tcomment_vim'
+Plug 'jiangmiao/auto-pairs'
 
 " workspace / project
 " Plug 'thaerkh/vim-workspace'
 " Plug 'bagrat/vim-workspace'
 Plug 'powerman/vim-plugin-autosess'
+Plug 'zefei/vim-wintabs'
+Plug 'zefei/vim-wintabs-powerline'
 
 " git
 Plug 'tpope/vim-fugitive'
@@ -58,6 +61,7 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'junegunn/vim-github-dashboard' "Needs Ruby compilation 
 
 " develop
+Plug 'Shougo/deoplete.nvim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
 Plug 'vim-syntastic/syntastic'
 Plug 'w0rp/ale'
@@ -68,6 +72,8 @@ Plug 'idanarye/vim-vebugger'
 Plug 'Dica-Developer/vim-jdb'
 
 " java
+" add javacomplete2 only, if YCM and deoplete are not working
+Plug 'artur-shaik/vim-javacomplete2'
 Plug 'bam9523/vim-decompile'
 
 " python
@@ -537,7 +543,7 @@ augroup Binary
   au BufWritePost *.bin set nomod | endif
 augroup END
 
-let g:decomp_jar = 'cfr_0_115.jar'
+let g:decomp_jar = '$TOOLS/cfr_0_115.jar'
 let python_highlight_all=1
 syntax on
 autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
@@ -556,5 +562,8 @@ noremap <C-M> :only
 let g:ycm_error_symbol = '**'
 let g:ycm_add_preview_to_completeopt = 1
 set encoding=utf-8
+"autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
+set cursorcolumn 
+hi CursorColumn ctermbg=8
 
