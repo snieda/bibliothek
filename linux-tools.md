@@ -179,6 +179,10 @@ Eigene Änderungen komplett überschreiben
 	git clean -dfx
 	git reset --hard HEAD
 
+Auf einen früheren commit zurücksetzen
+
+	git reset --hard <sha1-commit-id>
+	
 diff output als patch einfuegen
 
 	# erzeuge patch fuer changes und new files
