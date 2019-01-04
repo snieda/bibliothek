@@ -15,6 +15,14 @@
 	--content-disposition tries to find extension through content
 	wget -mpk --follow-ftp --ignore-length -e robots=off --exclude forum
 
+## tar
+
+pack:
+tar -czvf archive.tar.tgz /home/ubuntu --exclude=*.mp4
+
+unpack:
+tar -xvf archive.tar.tgz
+
 ## nmap
 
 	nmap -p 8000-9000 -v  xxx.xxx.xxx.xxx
