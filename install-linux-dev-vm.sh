@@ -88,14 +88,16 @@ if [ "$INST_UPGRADE" != "n" ]; then
 fi
 
 echo "install system tools (~83MB)..."
-$INST mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
-for i in mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux; do $INST $i; done
+for i in mc tree ytree htop git conky mupdf abiword antiword fim cifs-utils  rar p7zip ntp tmux; do $INST $i; done
 
 echo "install console text tools..."
 for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep; do $INST $i; done
 
 echo "install networking tools..."
 for i in nmap git curl wget openssh-server openvpn links2 w3m tightvncserver; do $INST $i; done
+
+echo "echo install xwin-system tools"
+$INST xclip xcompmgr
 
 echo "vim plugin dependencies"
 sudo apt make cmake gcc silversearcher-ag exuberant-ctags
