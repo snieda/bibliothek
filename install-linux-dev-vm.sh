@@ -89,12 +89,13 @@ fi
 
 echo "install system tools (~83MB)..."
 $INST mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
+for i in mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux; do $INST $i; done
 
 echo "install console text tools..."
-$INST vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep
+for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep; do $INST $i; done
 
 echo "install networking tools..."
-$INST nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
+for i in nmap git curl wget openssh-server openvpn links2 w3m tightvncserver; do $INST $i; done
 
 echo "vim plugin dependencies"
 sudo apt make cmake gcc silversearcher-ag exuberant-ctags
