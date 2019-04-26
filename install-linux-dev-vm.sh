@@ -89,10 +89,24 @@ echo "install system tools (~83MB)..."
 sudo apt -y install mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
 
 echo "install console text tools..."
-sudo apt-get -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar
+sudo apt -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar
 
 echo "install networking tools..."
-sudo apt-get -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
+sudo apt -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
+
+echo "vim plugin dependencies"
+sudo apt make cmake gcc silversearcher-ag exuberant-ctags
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/install-linux-dev-vm.sh
+#wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
+#chmod a+x eclim_2.8.0.bin
+
+echo "python3"
+sudo apt python3 python3-pip flake8
+pip install autopep8 pudb
+
+echo "installing all plugins for our vim-ide"
+vim +'PlugInstall --sync' +qa
 
 if [ "$INST_LXDE" != "n" ]; then
 	echo "install lxde..."
