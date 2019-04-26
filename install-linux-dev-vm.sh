@@ -31,8 +31,10 @@ echo "Thomas Schneider / 2016 (refreshed 2018-11)"
 echo -------------------------------------------------------
 echo
 
+INST=sudo apt -y install
 apt install sudo > /dev/nul
 DO_FORMAT=no
+
 read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
 if [ "$DO_FORMAT" == "yes" ]; then
     echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
@@ -82,27 +84,27 @@ read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 echo "do some updates..."
 sudo apt update
 if [ "$INST_UPGRADE" != "n" ]; then
-	sudo apt-get -y upgrade
+	sudo apt -y upgrade
 fi
 
 echo "install system tools (~83MB)..."
-sudo apt -y install mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
+$INST mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
 
 echo "install console text tools..."
-sudo apt -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar
+$INST vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep
 
 echo "install networking tools..."
-sudo apt -y install nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
+$INST nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
 
 echo "vim plugin dependencies"
 sudo apt make cmake gcc silversearcher-ag exuberant-ctags
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/install-linux-dev-vm.sh
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
 #chmod a+x eclim_2.8.0.bin
 
 echo "python3"
-sudo apt python3 python3-pip flake8
+$INST python3 python3-pip flake8
 pip install autopep8 pudb
 
 echo "installing all plugins for our vim-ide"
@@ -110,13 +112,13 @@ vim +'PlugInstall --sync' +qa
 
 if [ "$INST_LXDE" != "n" ]; then
 	echo "install lxde..."
-	sudo apt install -y lxde lxde-core
+	$INST lxde lxde-core
 fi
 
 if [ "$VB_VERSION" != "" ]; then
 	echo "install virtualbox guest additions"
-	#sudo apt-get -y install virtualbox-guest-utils virtualbox-guest-x11
-	sudo apt-get -y install linux-headers-$(uname -r) build-essential dkms
+	#$INST virtualbox-guest-utils virtualbox-guest-x11
+	$INST linux-headers-$(uname -r) build-essential dkms
 	wget -nc http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
 	sudo mkdir /media/VBoxGuestAdditions
 	sudo mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
@@ -128,7 +130,7 @@ fi
 
 if [ "$INST_FIREFOX" != "n" ]; then
 	echo "install firefox..."
-	sudo apt install -y firefox
+	$INST firefox
 fi
 
 if [ "$INST_LIBREOFFICE" != "n" ]; then
@@ -138,12 +140,12 @@ if [ "$INST_LIBREOFFICE" != "n" ]; then
 #	cd debs
 #	sudo dpkg -i *.deb
 #	cd ..
-	sudo apt install -y libreoffice-common
+	$INST libreoffice-common
 fi
 
 if [ "$INST_VLC" != "n" ]; then
 	echo "install vlc..."
-	sudo apt install -y vlc-nox
+	$INST vlc-nox
 fi
 
 if [ "$INST_NETBEANS" != "n" ]; then
@@ -177,9 +179,9 @@ if [ "$INST_VSCODE" != "n" ]; then
 	# Install repo
 	sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 	# Update apt-get
-	sudo apt-get update
+	sudo apt update
 	# Install
-	sudo apt-get install -y code # or code-insiders
+	$INST code # or code-insiders
 fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
@@ -232,7 +234,7 @@ fi
 if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
     echo "install python+anaconda..."
 	#sudo apt -y install python3 python3-pip python3-nose
-	sudo apt install python-pip
+	$INST python-pip
 
     wget -nc https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_$BITS.sh
     #sudo rm -rf anaconda3
