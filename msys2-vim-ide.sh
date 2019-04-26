@@ -18,7 +18,7 @@ $INST nmap git curl wget openssh-server openvpn links2 w3m tightvncserver
 echo "vim plugin dependencies"
 $INST make cmake gcc silversearcher-ag exuberant-ctags
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/install-linux-dev-vm.sh
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
 #chmod a+x eclim_2.8.0.bin
 
