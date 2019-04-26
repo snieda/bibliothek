@@ -3,8 +3,8 @@
 # Please download and install/extract http://repo.msys2.org/distrib/x86_64/msys2-x86_64-20180531.exe
 # Then start msys2.exe and start this script!
 
-INST=pacman -S --noconfirm
-#INST=sudo apt -y install
+INST="pacman -S --noconfirm"
+#INST="sudo apt -y --ignore-missing install"
 
 echo "install system tools (~83MB)..."
 $INST mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
