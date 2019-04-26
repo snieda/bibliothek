@@ -31,6 +31,7 @@ echo "Thomas Schneider / 2016 (refreshed 2018-11)"
 echo -------------------------------------------------------
 echo
 
+apt install sudo > /dev/nul
 DO_FORMAT=no
 read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
 if [ "$DO_FORMAT" == "yes" ]; then
@@ -43,6 +44,9 @@ if [ "$DO_FORMAT" == "yes" ]; then
     fi
     exit
 fi
+
+#adduser dev
+#usermod -aG sudo dev
 
 echo "================ System and VirtualBox informations ================"
 
@@ -76,13 +80,13 @@ read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
 read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
 echo "do some updates..."
-sudo apt-get update
+sudo apt update
 if [ "$INST_UPGRADE" != "n" ]; then
 	sudo apt-get -y upgrade
 fi
 
 echo "install system tools (~83MB)..."
-sudo apt-get -y install mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
+sudo apt -y install mc tree ytree htop git conky mupdf abiword antiword xclip fim cifs-utils  rar p7zip ntp xcompmgr tmux
 
 echo "install console text tools..."
 sudo apt-get -y install vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar
@@ -300,5 +304,5 @@ if [ "$VB_VERSION" != "" ]; then
 	#sudo shutdown -h now
 fi
 
-echo 'PATH='$HOME/bin:$HOME/.local/bin:$JAVA_HOME/bin:$PATH' >> .profile
+echo "PATH='$HOME/bin:$HOME/.local/bin:$JAVA_HOME/bin:$PATH'" >> .profile
 echo 'export DISPLAY=0:0' >> .profile
