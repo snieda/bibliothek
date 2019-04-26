@@ -31,7 +31,7 @@ echo "Thomas Schneider / 2016 (refreshed 2018-11)"
 echo -------------------------------------------------------
 echo
 
-INST=sudo apt -y install
+INST="sudo apt -y install"
 apt install sudo > /dev/nul
 DO_FORMAT=no
 
