@@ -32,7 +32,7 @@ echo -------------------------------------------------------
 echo
 
 INST="sudo apt -y --ignore-missing install"
-apt install sudo > /dev/nul
+apt install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
 DO_FORMAT=no
 
 read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
@@ -47,14 +47,17 @@ if [ "$DO_FORMAT" == "yes" ]; then
     exit
 fi
 
-#adduser dev
-#usermod -aG sudo dev
+read -p  "Create new user (empty for current) with name  : " DEV
+if [ "$IP1" != "" ]; then
+	sudo adduser --disabled-password --gecos "" dev
+	sudo usermod -aG sudo dev
+	sudo login -f dev
+fi
 
 echo "================ System and VirtualBox informations ================"
 
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
-read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
 read -ep "Virtualbox Version                             : " -i 5.1.6 VB_VERSION
 read -p  "Mount network-drive on IP (+git-clone)         : " IP1
 if [ "$IP1" != "" ]; then
@@ -65,20 +68,24 @@ if [ "$IP1" != "" ]; then
         read -p "Git Project Name                             : " PRJ
     fi
 fi
-
-echo    "================ Standard Office Applications ================"
-read -p "Install firefox                         (Y|n) : " INST_FIREFOX
-read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
-read -p "Install vlc                             (Y|n) : " INST_VLC
-
+read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
+if [ "$CONSOLE_ONLY" == "n" ]; then
+	read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
+	echo    "================ Standard Office Applications ================"
+	read -p "Install firefox                         (Y|n) : " INST_FIREFOX
+	read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
+	read -p "Install vlc                             (Y|n) : " INST_VLC
+fi
 echo     "================ development IDE+Tools ================"
-read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 read -p "Install java8                           (Y|n) : " INST_JAVA
-read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
-read -p "Install eclipse 2018-09 (~300MB)        (Y|n) : " INST_ECLIPSE
-read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
+if [ "$CONSOLE_ONLY" == "n" ]; then
+	read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
+	read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
+	read -p "Install eclipse 2018-09 (~300MB)        (Y|n) : " INST_ECLIPSE
+	read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
+	read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
+fi
 read -p "Install python3.x+anaconda 5.3          (Y|n) : " INST_PYTHON_ANACONDA
-read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
 read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
 echo "do some updates..."
@@ -96,8 +103,10 @@ for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorize
 echo "install networking tools..."
 for i in nmap git curl wget openssh-server openvpn links2 w3m tightvncserver; do $INST $i; done
 
-echo "echo install xwin-system tools"
-$INST xclip xcompmgr
+if [ "$CONSOLE_ONLY" == "n" ]; then
+	echo "echo install xwin-system tools"
+	$INST xclip xcompmgr
+fi
 
 #echo "echo Hetzner NTP WARNING: enables DDOS attacks!"
 #$INST ntp
