@@ -95,7 +95,7 @@ if [ "$INST_UPGRADE" != "n" ]; then
 fi
 
 echo "install system tools (~83MB)..."
-for i in mc tree ytree htop git conky mupdf abiword antiword fim cifs-utils  rar p7zip tmux; do $INST $i; done
+for i in mc tree ytree htop git conky mupdf abiword antiword fim rar p7zip tmux; do $INST $i; done
 
 echo "install console text tools..."
 for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep; do $INST $i; done
@@ -108,8 +108,10 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	$INST xclip xcompmgr
 fi
 
-#echo "echo Hetzner NTP WARNING: enables DDOS attacks!"
+#echo "Hetzner NTP WARNING: enables DDOS attacks!"
 #$INST ntp
+#echo "CIFS contains main server of SAMBA-4: smbd, nmbd (network access on windows filesystem and printers)"
+#$INST cifs-utils
 
 echo "vim plugin dependencies"
 sudo apt make cmake gcc silversearcher-ag exuberant-ctags
