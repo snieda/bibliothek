@@ -31,7 +31,7 @@ echo "Thomas Schneider / 2016 (refreshed 2018-11)"
 echo -------------------------------------------------------
 echo
 
-INST="sudo apt -y --ignore-missing install"
+INST="sudo apt install -y --ignore-missing"
 apt install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
 DO_FORMAT=no
 
