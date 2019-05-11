@@ -115,7 +115,7 @@ fi
 #$INST cifs-utils
 
 echo "tool configurations (mc, tmux, etc...)
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/tmux.conf > tmux.conf
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/config-mc-ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/config-mc-panels.ini > .config/mc/panels.ini
 
@@ -205,6 +205,7 @@ if [ "$INST_VSCODE" != "n" ]; then
 	sudo apt update
 	# Install
 	$INST code # or code-insiders
+	# https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
 fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
