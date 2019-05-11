@@ -82,6 +82,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 	read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
 	read -p "Install eclipse 2018-09 (~300MB)        (Y|n) : " INST_ECLIPSE
+	read -p "Install fman (Ctrl+p filemanager)       (Y|n) : " INST_FMAN
 	read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
 	read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
 fi
@@ -112,6 +113,11 @@ fi
 #$INST ntp
 #echo "CIFS contains main server of SAMBA-4: smbd, nmbd (network access on windows filesystem and printers)"
 #$INST cifs-utils
+
+echo "tool configurations (mc, tmux, etc...)
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/tmux.conf > tmux.conf
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/config-mc-ini > .config/mc/ini
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/config-mc-panels.ini > .config/mc/panels.ini
 
 echo "vim plugin dependencies"
 sudo apt make cmake gcc silversearcher-ag exuberant-ctags
@@ -207,6 +213,14 @@ if [ "$INST_ECLIPSE" != "n" ]; then
 	sudo tar xfz eclipse-jee-2018-09-linux-gtk-x86_$BITS.tar.gz
 	sudo ln -s /eclipse/eclipse /usr/local/sbin/eclipse
 	ls -l /usr/local/sbin/
+fi
+
+if [ "$INST_FMAN" != "n" ]; then
+	echo "install fman..."
+	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
+	sudo apt-get install apt-transport-https
+	echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | sudo tee /etc/apt/sources.list.d/fman.list
+	sudo apt-get install fman
 fi
 
 if [ "$INST_SUBLIMETEXT" != "n" ]; then
