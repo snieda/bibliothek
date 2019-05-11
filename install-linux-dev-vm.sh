@@ -116,8 +116,8 @@ fi
 
 echo "tool configurations (mc, tmux, etc...)
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/config-mc-ini > .config/mc/ini
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/config-mc-panels.ini > .config/mc/panels.ini
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
 
 echo "vim plugin dependencies"
 sudo apt make cmake gcc silversearcher-ag exuberant-ctags
