@@ -96,7 +96,7 @@ if [ "$INST_UPGRADE" != "n" ]; then
 fi
 
 echo "install system tools (~83MB)..."
-for i in mc tree ytree htop git conky mupdf abiword antiword fim zip rar p7zip tmux; do $INST $i; done
+for i in mc tree ytree htop git mupdf abiword antiword fim zip rar p7zip tmux; do $INST $i; done
 
 echo "install console text tools..."
 for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep; do $INST $i; done
@@ -106,7 +106,7 @@ for i in nmap git curl wget openssh-server openvpn links2 w3m tightvncserver; do
 
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo "echo install xwin-system tools"
-	$INST xclip xcompmgr
+	$INST xclip xcompmgr conky 
 fi
 
 #echo "Hetzner NTP WARNING: enables DDOS attacks!"
