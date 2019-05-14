@@ -205,7 +205,9 @@ if [ "$INST_VSCODE" != "n" ]; then
 	sudo apt update
 	# Install
 	$INST code # or code-insiders
-	# https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
+	mkdir workspace
+	echo "https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895" > workspace/settings-sync-gist.txt 
+	code --install-extension Shan.code-settings-sync -a workspace &
 fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
