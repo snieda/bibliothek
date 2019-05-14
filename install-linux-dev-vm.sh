@@ -71,6 +71,7 @@ fi
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
+	read -p "Install wine (~400MB)                     (Y|n) : " INST_WINE
 	echo    "================ Standard Office Applications ================"
 	read -p "Install firefox                         (Y|n) : " INST_FIREFOX
 	read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
@@ -136,6 +137,11 @@ vim +'PlugInstall --sync' +qa
 if [ "$INST_LXDE" != "n" ]; then
 	echo "install lxde..."
 	$INST lxde lxde-core
+fi
+
+if [ "$INST_WINE" != "n" ]; then
+	echo "install wine-hq..."
+	$INST wine-hq
 fi
 
 if [ "$VB_VERSION" != "" ]; then
