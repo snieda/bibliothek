@@ -105,6 +105,9 @@ for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorize
 echo "install networking tools..."
 for i in nmap git curl wget openssh-server openvpn links2 w3m tightvncserver; do $INST $i; done
 
+echo "install printer drivers..."
+$INST printer-driver-cups-pdf
+
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo "echo install xwin-system tools"
 	$INST xclip xcompmgr conky abiword 
