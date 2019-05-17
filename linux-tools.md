@@ -288,3 +288,14 @@ http://www.eclipsecolorthemes.org/?view=theme&id=55501
 ## Visual Studio Code Plugins
 
 https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
+
+# Hibernation
+
+pm-hibernate
+
+on problems (swap-partition must be active!):
+cat /etc/fstab
+sudo blkid
+cat /var/log/pm-suspend.log
+
+sudo update-initramfs -u
