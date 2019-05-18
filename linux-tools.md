@@ -299,3 +299,5 @@ sudo blkid
 cat /var/log/pm-suspend.log
 
 sudo update-initramfs -u
+
+see https://www.reddit.com/r/Ubuntu/comments/61xfzk/hibernation_ubuntu_1604_unencrypted_swap/
