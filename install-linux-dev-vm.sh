@@ -229,6 +229,7 @@ fi
 
 if [ "$INST_FMAN" != "n" ]; then
 	echo "install fman..."
+	#curl https://fman.io/download/thank-you?os=Linux&distribution=Ubuntu
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
 	sudo apt-get install apt-transport-https
 	echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | sudo tee /etc/apt/sources.list.d/fman.list
