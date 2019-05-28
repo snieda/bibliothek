@@ -118,7 +118,7 @@ fi
 #echo "CIFS contains main server of SAMBA-4: smbd, nmbd (network access on windows filesystem and printers)"
 #$INST cifs-utils
 
-echo "tool configurations (mc, tmux, etc...)
+echo "tool configurations (mc, tmux, etc...)"
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
