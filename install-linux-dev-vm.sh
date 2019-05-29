@@ -58,7 +58,7 @@ echo "================ System and VirtualBox informations ================"
 
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
-read -ep "Virtualbox Version                             : " -i 5.1.6 VB_VERSION
+read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
 read -p  "Mount network-drive on IP (+git-clone)         : " IP1
 if [ "$IP1" != "" ]; then
     read -p "Mount network-drive on PATH                   : " SHARE1
@@ -76,6 +76,9 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install firefox                         (Y|n) : " INST_FIREFOX
 	read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
 	read -p "Install vlc                             (Y|n) : " INST_VLC
+	read -p "Install citrix-workspace-app            (Y|n) : " INST_CITRIX
+	read -p "Install virtual box                     (Y|n) : " INST_VIRTUALBOX
+	read -p "Install gparted                         (Y|n) : " INST_GPARTED
 fi
 echo     "================ development IDE+Tools ================"
 read -p "Install java8                           (Y|n) : " INST_JAVA
@@ -144,7 +147,17 @@ fi
 
 if [ "$INST_WINE" != "n" ]; then
 	echo "install wine-hq..."
-	$INST wine-hq
+	$INST wine-hq wine-stable
+fi
+
+if [ "$INST_VIRTUALBOX" != "n" ]; then
+	echo "install virtualbox..."
+	$INST virtualbox
+fi
+
+if [ "$INST_GPARTED" != "n" ]; then
+	echo "install gparted..."
+	$INST gparted
 fi
 
 if [ "$VB_VERSION" != "" ]; then
@@ -175,9 +188,16 @@ if [ "$INST_LIBREOFFICE" != "n" ]; then
 	$INST libreoffice-common
 fi
 
+if [ "$INST_CITRIX" != "n" ]; then
+    echo "install citrix workspace app..."
+    curl https://downloads.citrix.com/15918/icaclientWeb_19.3.0.5_amd64.deb?__gda__=1559119272_306742992bda3763209252a64a4541cd
+    sudo dpkg -i *.deb
+fi
+
+
 if [ "$INST_VLC" != "n" ]; then
 	echo "install vlc..."
-	$INST vlc-nox
+	$INST vlc-nox vlc
 fi
 
 if [ "$INST_NETBEANS" != "n" ]; then
@@ -196,6 +216,7 @@ if [ "$INST_JAVA" != "n" ]; then
 	sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
 	sudo ln -s java jdk1.8.0_191
 	ls -l /usr/local/sbin/
+	export JAVA_HOME=~/java
 fi
 
 if [ "$INST_VSCODE" != "n" ]; then
@@ -365,4 +386,7 @@ if [ "$VB_VERSION" != "" ]; then
 fi
 
 echo "PATH='$HOME/bin:$HOME/.local/bin:$JAVA_HOME/bin:$PATH'" >> .profile
-echo 'export DISPLAY=0:0' >> .profile
+if [ "$CONSOLE_ONLY" == "n" ]; then
+elif
+	echo 'export DISPLAY=0:0' >> .profile
+fi
