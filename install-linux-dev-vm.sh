@@ -210,13 +210,15 @@ if [ "$INST_NETBEANS" != "n" ]; then
 fi
 
 if [ "$INST_JAVA" != "n" ]; then
-    echo "install java+netbeans..."
+    echo "install java openjdk-8-jdk..."
     # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz
-	sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
-	sudo ln -s java jdk1.8.0_191
-	ls -l /usr/local/sbin/
-	export JAVA_HOME=~/java
+    #wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz
+	#sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
+	#sudo ln -s java jdk1.8.0_191
+	#ls -l /usr/local/sbin/
+	#export JAVA_HOME=~/java
+	$INST openjdk-8-jdk
+	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
 fi
 
 if [ "$INST_VSCODE" != "n" ]; then
