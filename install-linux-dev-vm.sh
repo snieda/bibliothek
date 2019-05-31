@@ -217,7 +217,7 @@ if [ "$INST_JAVA" != "n" ]; then
 	#sudo ln -s java jdk1.8.0_191
 	#ls -l /usr/local/sbin/
 	#export JAVA_HOME=~/java
-	$INST openjdk-8-jdk
+	$INST openjdk-8-jdk maven
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
 fi
 
