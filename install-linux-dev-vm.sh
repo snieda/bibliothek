@@ -212,7 +212,7 @@ fi
 if [ "$INST_JAVA" != "n" ]; then
     echo "install java+netbeans..."
     # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-x$BITS.tar.gz
+    wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz
 	sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
 	sudo ln -s java jdk1.8.0_191
 	ls -l /usr/local/sbin/
@@ -242,7 +242,7 @@ fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
     echo "install eclipse..."
-	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2018-09/R/eclipse-jee-2018-09-linux-gtk-x86_64.tar.gz
+	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-03/R/eclipse-jee-2019-03-R-linux-gtk-x86_64.tar.gz
 	sudo tar xfz eclipse-jee-2018-09-linux-gtk-x86_$BITS.tar.gz
 	sudo ln -s /eclipse/eclipse /usr/local/sbin/eclipse
 	ls -l /usr/local/sbin/
