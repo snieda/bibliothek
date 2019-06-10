@@ -100,7 +100,7 @@ if [ "$INST_UPGRADE" != "n" ]; then
 fi
 
 echo "install system tools (~83MB)..."
-for i in mc tree ytree htop git mupdf antiword fim zip rar p7zip tmux; do $INST $i; done
+for i in mc tree ytree htop git mupdf antiword fim zip rar p7zip tmux exfat-fuse; do $INST $i; done
 
 echo "install console text tools..."
 for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep; do $INST $i; done
