@@ -123,7 +123,7 @@ fi
 
 echo "tool configurations (mc, tmux, etc...)"
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
-mkdir -p .config/mc/ini
+mkdir -p .config/mc
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
 
