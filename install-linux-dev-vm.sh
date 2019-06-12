@@ -113,7 +113,7 @@ $INST printer-driver-cups-pdf
 
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo "echo install xwin-system tools"
-	$INST xclip xcompmgr conky abiword 
+	$INST xclip xcompmgr conky abiword pm-utils 
 fi
 
 #echo "Hetzner NTP WARNING: enables DDOS attacks!"
@@ -127,7 +127,7 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini >
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
 
 echo "vim plugin dependencies"
-sudo apt make cmake gcc silversearcher-ag exuberant-ctags
+for i in make cmake gcc silversearcher-ag exuberant-ctags; do $INST $i; done
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
@@ -190,7 +190,7 @@ fi
 
 if [ "$INST_CITRIX" != "n" ]; then
     echo "install citrix workspace app..."
-    curl https://downloads.citrix.com/15918/icaclientWeb_19.3.0.5_amd64.deb?__gda__=1559119272_306742992bda3763209252a64a4541cd
+    wget https://downloads.citrix.com/15918/linuxx64-19.3.0.5.tar.gz?__gda__=1560365066_f53cf2cdbacbfbb07d9baecb77691004
     sudo dpkg -i *.deb
 fi
 
@@ -254,9 +254,9 @@ if [ "$INST_FMAN" != "n" ]; then
 	echo "install fman..."
 	#curl https://fman.io/download/thank-you?os=Linux&distribution=Ubuntu
 	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
-	sudo apt-get install apt-transport-https
+	$INST apt-transport-https
 	echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | sudo tee /etc/apt/sources.list.d/fman.list
-	sudo apt-get install fman
+	$INST fman
 fi
 
 if [ "$INST_SUBLIMETEXT" != "n" ]; then
