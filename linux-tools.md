@@ -292,6 +292,7 @@ https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
 # Hibernation
 
 pm-hibernate
+GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=<SWAP-UUID>"
 
 on problems (swap-partition must be active!):
 cat /etc/fstab
@@ -301,3 +302,13 @@ cat /var/log/pm-suspend.log
 sudo update-initramfs -u
 
 see https://www.reddit.com/r/Ubuntu/comments/61xfzk/hibernation_ubuntu_1604_unencrypted_swap/
+
+# AntiVir / Trojan
+
+sudo apt install clamav
+sudo freshclam
+sudo clamscan -r --bell -i /
+
+sudo rkhunter --update
+sudo rkhunter --propupd
+sudo rkhunter --check
