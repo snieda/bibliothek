@@ -59,6 +59,7 @@ echo "================ System and VirtualBox informations ================"
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
 read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
+read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
 read -p  "Mount network-drive on IP (+git-clone)         : " IP1
 if [ "$IP1" != "" ]; then
     read -p "Mount network-drive on PATH                   : " SHARE1
@@ -113,7 +114,7 @@ $INST printer-driver-cups-pdf
 
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo "echo install xwin-system tools"
-	$INST xclip xcompmgr conky abiword pm-utils 
+	for i in xclip xcompmgr conky abiword pm-utils; do $INST $i; done
 fi
 
 #echo "Hetzner NTP WARNING: enables DDOS attacks!"
@@ -126,6 +127,11 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tm
 mkdir -p .config/mc
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
+
+if [ "$INST_ANTIVIR" != "n" ]; then
+	echo "install antiviren (clam-av, rk-hunter..."
+	$INST clamav rkhunter
+fi
 
 echo "vim plugin dependencies"
 for i in make cmake gcc silversearcher-ag exuberant-ctags; do $INST $i; done
@@ -147,8 +153,8 @@ if [ "$INST_LXDE" != "n" ]; then
 fi
 
 if [ "$INST_WINE" != "n" ]; then
-	echo "install wine-hq..."
-	$INST wine-hq wine-stable
+	echo "install wine-hq..." # only one of the is available!
+	for i in  wine-hq wine-stable wine; do $INST $i; done
 fi
 
 if [ "$INST_VIRTUALBOX" != "n" ]; then
