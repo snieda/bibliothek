@@ -312,3 +312,7 @@ sudo clamscan -r --bell -i /
 sudo rkhunter --update
 sudo rkhunter --propupd
 sudo rkhunter --check
+
+# stop a named process
+
+ps -uax | grep '[t]sl2' | tee | awk '{print $2}' | xargs kill
