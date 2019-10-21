@@ -289,7 +289,7 @@ http://www.eclipsecolorthemes.org/?view=theme&id=55501
 
 https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
 
-# Hibernation
+## Hibernation
 
 pm-hibernate
 GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=<SWAP-UUID>"
@@ -303,7 +303,7 @@ sudo update-initramfs -u
 
 see https://www.reddit.com/r/Ubuntu/comments/61xfzk/hibernation_ubuntu_1604_unencrypted_swap/
 
-# AntiVir / Trojan
+## AntiVir / Trojan
 
 sudo apt install clamav
 sudo freshclam
@@ -313,12 +313,15 @@ sudo rkhunter --update
 sudo rkhunter --propupd
 sudo rkhunter --check
 
-# stop a named process
+## stop a named process
 
 ps -uax | grep '[t]sl2' | tee | awk '{print $2}' | xargs kill
 
-# citrix problem with certificate: "Verbindung mit 0.0.0.2 Desktop kann nicht hergestellt werden"
+## citrix problem with certificate: "Verbindung mit 0.0.0.2 Desktop kann nicht hergestellt werden"
 
 sudo ln -s /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/
 sudo c_rehash /opt/Citrix/ICAClient/keystore/cacerts/
 
+## Windows in Linux: Wine in Docker with x11docker
+
+https://hub.docker.com/r/x11docker/lxde
