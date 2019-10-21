@@ -316,3 +316,9 @@ sudo rkhunter --check
 # stop a named process
 
 ps -uax | grep '[t]sl2' | tee | awk '{print $2}' | xargs kill
+
+# citrix problem with certificate: "Verbindung mit 0.0.0.2 Desktop kann nicht hergestellt werden"
+
+sudo ln -s /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/
+sudo c_rehash /opt/Citrix/ICAClient/keystore/cacerts/
+
