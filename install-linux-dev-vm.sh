@@ -39,7 +39,7 @@ if [ "$(whereis sudo)" != "sudo:" ]; then
 	SUDO="sudo"
 fi
 
-INST="$SUDO $PKG install -y --ignore-missing"
+INST="$SUDO $PKG install -y --ignore-missing $*"
 DO_FORMAT=no
 
 read -ep "Package Install Command                        : " -i $INST INST
