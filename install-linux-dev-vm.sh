@@ -45,7 +45,7 @@ DO_FORMAT=no
 read -ep "Package Install Command                        : " -i "$INST" INST
 
 if [ $SUDO == "sudo" ]; then
-	read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
+	read -p  "Prepare (part,format) new disc /dev/sda (yes|N): " DO_FORMAT
 	if [ "$DO_FORMAT" == "yes" ]; then
 	    echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
 	    sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
