@@ -71,11 +71,11 @@ read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
 read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
 read -p  "Mount network-drive on IP (+git-clone)         : " IP1
 if [ "$IP1" != "" ]; then
-    read -p "Mount network-drive on PATH                   : " SHARE1
-    read -p "Mount network-drive on USER                   : " USER1
-    read -p "Clone GIT Repository                          : " REPO
+    read -p "Mount network-drive on PATH                    : " SHARE1
+    read -p "Mount network-drive on USER                    : " USER1
+    read -p "Clone GIT Repository                           : " REPO
     if [ "$REP0" != "" ]; then
-        read -p "Git Project Name                             : " PRJ
+        read -p "Git Project Name                              : " PRJ
     fi
 fi
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
@@ -104,6 +104,10 @@ fi
 read -p "Install python3.x+anaconda 5.3          (Y|n) : " INST_PYTHON_ANACONDA
 read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
+read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (y|N) : " START
+if [ "$START" == "n" ]; then
+	exit
+fi
 echo "do some updates..."
 sudo apt update
 if [ "$INST_UPGRADE" != "n" ]; then
