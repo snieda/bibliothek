@@ -42,7 +42,7 @@ fi
 INST="$SUDO $PKG install -y --ignore-missing $*"
 DO_FORMAT=no
 
-read -ep "Package Install Command                        : " -i $INST INST
+read -ep "Package Install Command                        : " -i "$INST" INST
 
 if [ $SUDO == "sudo" ]; then
 	read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
