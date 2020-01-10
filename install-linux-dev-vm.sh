@@ -31,7 +31,7 @@ echo "Thomas Schneider / 2016 (refreshed 2020-01)"
 echo -------------------------------------------------------
 echo
 
-read -ep "Package Installer (apt,pacman,pkg,yast)        : " -i "apt" $PKG
+read -ep "Package Installer (apt,pacman,pkg,yast)        : " -i "apt" PKG
 
 $PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
 if [ "$?" == "0" ]; then
