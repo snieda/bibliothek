@@ -27,33 +27,43 @@ EOM
 # system preparations
 # ----------------------------------------------------
 echo -------------------------------------------------------
-echo "Thomas Schneider / 2016 (refreshed 2018-11)"
+echo "Thomas Schneider / 2016 (refreshed 2020-01)"
 echo -------------------------------------------------------
 echo
 
-INST="sudo apt install -y --ignore-missing"
-apt install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
+read -ep "Package Installer (apt,pacman,pkg,yast)        : " -i "apt" $PKG
+
+$PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
+SUDO=''
+if [ "$(whereis sudo)" != "sudo:" ]; then
+	SUDO="sudo"
+fi
+
+INST="$SUDO $PKG install -y --ignore-missing"
 DO_FORMAT=no
 
-read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
-if [ "$DO_FORMAT" == "yes" ]; then
-    echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
-    sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
-    echo "Please restart the VM to include the formatted drive!"
-    read -p "Restart now (Y|n) ? " RESTART_NOW
-    if [ "$RESTART_NOW" == "" ] || [ "$RESTART_NOW" == "y" ]; then
-	sudo halt --reboot
-    fi
-    exit
-fi
+read -ep "Package Install Command                        : " -i $INST INST
 
-read -p  "Create new user (empty for current) with name  : " DEV
-if [ "$IP1" != "" ]; then
-	sudo adduser --disabled-password --gecos "" dev
-	sudo usermod -aG sudo dev
-	sudo login -f dev
-fi
+if [ $SUDO == "sudo" ]; then
+	read -p  "Prepare (part, format) new disc /dev/sda (yes|N): " DO_FORMAT
+	if [ "$DO_FORMAT" == "yes" ]; then
+	    echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
+	    sudo mkfs.ext4 -F -L "casper-rw" /dev/sda
+	    echo "Please restart the VM to include the formatted drive!"
+	    read -p "Restart now (Y|n) ? " RESTART_NOW
+	    if [ "$RESTART_NOW" == "" ] || [ "$RESTART_NOW" == "y" ]; then
+		sudo halt --reboot
+	    fi
+	    exit
+	fi
 
+	read -p  "Create new user (empty for current) with name  : " DEV
+	if [ "$IP1" != "" ]; then
+		sudo adduser --disabled-password --gecos "" dev
+		sudo usermod -aG sudo dev
+		sudo login -f dev
+	fi
+fi
 echo "================ System and VirtualBox informations ================"
 
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
@@ -71,6 +81,7 @@ if [ "$IP1" != "" ]; then
 fi
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
+	read -p  "Fluxbox (~5MB)                           (Y|n) : " INST_FLUX
 	read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
 	read -p "Install wine (~400MB)                     (Y|n) : " INST_WINE
 	echo    "================ Standard Office Applications ================"
@@ -125,8 +136,13 @@ fi
 echo "tool configurations (mc, tmux, etc...)"
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
 mkdir -p .config/mc
+mkdir -p .termux
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
+curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash > shell/keybindings.bash
+curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash > shell/completion.bash
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.termux/termux.properties > .termux/termux.properties
+echo "alias ll='ls -alF'" >> .profile
 
 if [ "$INST_ANTIVIR" != "n" ]; then
 	echo "install antiviren (clam-av, rk-hunter..."
@@ -150,6 +166,13 @@ vim +'PlugInstall --sync' +qa
 if [ "$INST_LXDE" != "n" ]; then
 	echo "install lxde..."
 	$INST lxde lxde-core
+fi
+
+if [ "$INST_FLUX" != "n" ]; then
+	echo "install flux..."
+	$INST fluxbox
+	mkdir -p .vnc
+	curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vnc/xstartup > .vnc/xstartup
 fi
 
 if [ "$INST_WINE" != "n" ]; then
@@ -191,6 +214,7 @@ if [ "$INST_LIBREOFFICE" != "n" ]; then
 #	tar -xvf LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
 #	cd debs
 #	sudo dpkg -i *.deb
+#	sudo apt-get -f install
 #	cd ..
 	$INST libreoffice-common
 fi
@@ -199,6 +223,7 @@ if [ "$INST_CITRIX" != "n" ]; then
     echo "install citrix workspace app..."
     wget https://downloads.citrix.com/15918/linuxx64-19.3.0.5.tar.gz?__gda__=1560365066_f53cf2cdbacbfbb07d9baecb77691004
     sudo dpkg -i *.deb
+    sudo apt-get -f install
 fi
 
 
@@ -223,7 +248,8 @@ if [ "$INST_JAVA" != "n" ]; then
 	#sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
 	#sudo ln -s java jdk1.8.0_191
 	#ls -l /usr/local/sbin/
-	#export JAVA_HOME=~/java
+	echo "export JAVA_HOME=/usr" >> .profile
+	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
 	$INST openjdk-8-jdk maven
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
 fi
@@ -396,6 +422,7 @@ fi
 
 echo "PATH='$HOME/bin:$HOME/.local/bin:$JAVA_HOME/bin:$PATH'" >> .profile
 if [ "$CONSOLE_ONLY" == "n" ]; then
+	echo "not setting DISPLAY in console mode"
 elif
 	echo 'export DISPLAY=0:0' >> .profile
 fi
