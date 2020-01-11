@@ -34,16 +34,18 @@ echo
 read -ep "Package Installer (apt,pacman,pkg,yast)        : " -i "apt" PKG
 
 $PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
+sudo -h #only to check, if available
 if [ "$?" == "0" ]; then
 	SUDO="sudo"
 fi
+echo
 
 INST="$SUDO $PKG install -y --ignore-missing $*"
 DO_FORMAT=no
 
 read -ep "Package Install Command                        : " -i "$INST" INST
 
-if [ $SUDO == "sudo" ]; then
+if [ "$SUDO" == "sudo" ]; then
 	read -p  "Prepare (part,format) new disc /dev/sda (yes|N): " DO_FORMAT
 	if [ "$DO_FORMAT" == "yes" ]; then
 	    echo -e "o\nn\np\n\n\n\nw" | sudo fdisk /dev/sda
