@@ -82,7 +82,7 @@ if [ "$IP1" != "" ]; then
 fi
 read -p  "Clone GIT Repository                           : " REPO
 if [ "$REPO" != "" ]; then
-	read -p "Git Project Name                              : " PRJ
+	read -p "Git Project Name                               : " PRJ
 fi
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
