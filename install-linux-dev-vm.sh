@@ -166,10 +166,8 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #chmod a+x eclim_2.8.0.bin
 
 echo "python3"
-$INST python python-pip
-$INST python3 python3-pip flake8
+for i in python python-pip python3 python3-pip flake8 autopep8 pudb; do $INST $i; done
 pip install -U pip
-pip install autopep8 pudb
 
 echo "installing all plugins for our vim-ide"
 vim +'PlugInstall --sync' +qa
