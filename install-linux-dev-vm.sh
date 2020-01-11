@@ -34,7 +34,7 @@ echo
 read -ep "Package Installer (apt,pacman,pkg,yast)        : " -i "apt" PKG
 
 $PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
-sudo -h #only to check, if available
+sudo -h > /dev/null #only to check, if available
 if [ "$?" == "0" ]; then
 	SUDO="sudo"
 fi
