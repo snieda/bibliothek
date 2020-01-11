@@ -57,10 +57,10 @@ if [ $SUDO == "sudo" ]; then
 	fi
 
 	read -p  "Create new user (empty for current) with name  : " DEV
-	if [ "$IP1" != "" ]; then
-		sudo adduser --disabled-password --gecos "" dev
-		sudo usermod -aG sudo dev
-		sudo login -f dev
+	if [ "$DEV" != "" ]; then
+		sudo adduser --disabled-password --gecos "" $DEV
+		sudo usermod -aG sudo $DEV
+		sudo login -f $DEV
 	fi
 fi
 echo "================ System and VirtualBox informations ================"
@@ -69,14 +69,18 @@ read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
 read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
 read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
-read -p  "Mount network-drive on IP (+git-clone)         : " IP1
+read -p  "Connect to a Network Domain                    : " DOMAIN
+if [ "$DOMAIN" != "" ]; then
+    read -p "Connect to Domain with user                 : " DOMAIN_USER
+fi
+read -p  "Mount network-drive on IP                      : " IP1
 if [ "$IP1" != "" ]; then
     read -p "Mount network-drive on PATH                    : " SHARE1
     read -p "Mount network-drive on USER                    : " USER1
-    read -p "Clone GIT Repository                           : " REPO
-    if [ "$REP0" != "" ]; then
-        read -p "Git Project Name                              : " PRJ
-    fi
+fi
+read -p  "Clone GIT Repository                           : " REPO
+if [ "$REP0" != "" ]; then
+	read -p "Git Project Name                              : " PRJ
 fi
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
@@ -160,7 +164,9 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #chmod a+x eclim_2.8.0.bin
 
 echo "python3"
+$INST python python-pip
 $INST python3 python3-pip flake8
+pip install -U pip
 pip install autopep8 pudb
 
 echo "installing all plugins for our vim-ide"
@@ -344,6 +350,8 @@ if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
     # the bash script provides -b for non-interactive - but with unwanted defaults
     echo -e "\n yes\n\nyes\n" | bash Anaconda3-5.3.0-Linux-x86_$BITS.sh
     rm Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    # upgrade all python modules
+    pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
 fi
 
 if [ "$INST_SQUIRREL" != "n" ]; then
@@ -380,13 +388,15 @@ if [ "$INST_RESILIO_SYNC" == "y" ]; then
     ./rslsync
 fi
 
-if [ "$IP1" != "" ]; then
+if [ "$DOMAIN" != "" ]; then
     echo "domain"
     wget -nc http://download.beyondtrust.com/PBISO/8.0.0.2016/linux.deb.x$BITS/pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
     chmod +x pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
     sudo ./pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
     domainjoin-cli join $DOMAIN $DOMAIN_USER
+fi
 
+if [ "$IP1" != "" ]; then
     echo "connect network share drives"
     IP1=${IP1:-//XX.XX.XX.XX}
     USER1=${USER1:-XX}
@@ -411,8 +421,9 @@ if [ "$REPO" != "" ]; then
     #git clone https://bitbucket.org/$REPO/$PRJ.git workspace/$PRJ
     git clone $REPO workspace/$PRJ
     pip install -r workspace/$PRJ/requirements.txt
-    cd workspace/$PRJ
-    subl ./
+    #cd workspace/$PRJ
+    mvn -f workspace/$PRJ/pom.xml clean install
+    #subl ./
 fi
 
 if [ "$VB_VERSION" != "" ]; then
