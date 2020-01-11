@@ -73,7 +73,7 @@ read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
 read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
 read -p  "Connect to a Network Domain                    : " DOMAIN
 if [ "$DOMAIN" != "" ]; then
-    read -p "Connect to Domain with user                 : " DOMAIN_USER
+    read -p "Connect to Domain with user                    : " DOMAIN_USER
 fi
 read -p  "Mount network-drive on IP                      : " IP1
 if [ "$IP1" != "" ]; then
