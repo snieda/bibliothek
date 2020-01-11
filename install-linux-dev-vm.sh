@@ -440,3 +440,6 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 else
 	echo 'export DISPLAY=0:0' >> .profile
 fi
+# reload profile
+cd
+source .profile
