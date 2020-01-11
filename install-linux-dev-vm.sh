@@ -115,9 +115,9 @@ if [ "$START" == "n" ]; then
 	exit
 fi
 echo "do some updates..."
-sudo apt update
+$SUDO $PKG update
 if [ "$INST_UPGRADE" != "n" ]; then
-	sudo apt -y upgrade
+	$SUDO $PKG -y upgrade
 fi
 
 echo "install system tools (~83MB)..."
@@ -206,12 +206,12 @@ if [ "$VB_VERSION" != "" ]; then
 	#$INST virtualbox-guest-utils virtualbox-guest-x11
 	$INST linux-headers-$(uname -r) build-essential dkms
 	wget -nc http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
-	sudo mkdir /media/VBoxGuestAdditions
-	sudo mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
-	sudo sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
+	$SUDO mkdir /media/VBoxGuestAdditions
+	$SUDO mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
+	$SUDO sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
 	rm VBoxGuestAdditions_$VB_VERSION.iso
-	sudo umount /media/VBoxGuestAdditions
-	sudo rmdir /media/VBoxGuestAdditions
+	$SUDO umount /media/VBoxGuestAdditions
+	$SUDO rmdir /media/VBoxGuestAdditions
 fi
 
 if [ "$INST_FIREFOX" != "n" ]; then
@@ -233,8 +233,8 @@ fi
 if [ "$INST_CITRIX" != "n" ]; then
     echo "install citrix workspace app..."
     wget https://downloads.citrix.com/15918/linuxx64-19.3.0.5.tar.gz?__gda__=1560365066_f53cf2cdbacbfbb07d9baecb77691004
-    sudo dpkg -i *.deb
-    sudo apt-get -f install
+    $SUDO dpkg -i *.deb
+    $SUDO apt-get -f install
 fi
 
 
@@ -247,7 +247,7 @@ if [ "$INST_NETBEANS" != "n" ]; then
     echo "install java+netbeans..."
     # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
     wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/jdk-8u111-nb-8_2-linux-x$BITS.sh
-    sudo bash jdk-8u111-nb-8_2-linux-x$BITS.sh --silent &
+    $SUDO bash jdk-8u111-nb-8_2-linux-x$BITS.sh --silent &
     jdk-8u111-nb-8_2-linux-x$BITS.sh
     wget http://plugins.netbeans.org/download/plugin/3380
 fi
@@ -268,17 +268,17 @@ fi
 if [ "$INST_VSCODE" != "n" ]; then
     echo "install visual studio code..."
 	# old version (try both...)
-	sudo add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
+	$SUDO add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+	$SUDO apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
 	
 	# new version (try both...)
 	# Install key
 	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-	sudo mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+	$SUDO mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
 	# Install repo
-	sudo sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+	$SUDO sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
 	# Update apt-get
-	sudo apt update
+	$SUDO $PKG update
 	# Install
 	$INST code # or code-insiders
 	mkdir workspace
@@ -289,24 +289,24 @@ fi
 if [ "$INST_ECLIPSE" != "n" ]; then
     echo "install eclipse..."
 	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-linux-gtk-x86_64.tar.gz
-	sudo tar xfz eclipse-jee-2019-09-linux-gtk-x86_$BITS.tar.gz
-	sudo ln -s /eclipse/eclipse /usr/local/sbin/eclipse
+	$SUDO tar xfz eclipse-jee-2019-09-linux-gtk-x86_$BITS.tar.gz
+	$SUDO ln -s /eclipse/eclipse /usr/local/sbin/eclipse
 	ls -l /usr/local/sbin/
 fi
 
 if [ "$INST_FMAN" != "n" ]; then
 	echo "install fman..."
 	#curl https://fman.io/download/thank-you?os=Linux&distribution=Ubuntu
-	sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
+	$SUDO apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
 	$INST apt-transport-https
-	echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | sudo tee /etc/apt/sources.list.d/fman.list
+	echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | $SUDO tee /etc/apt/sources.list.d/fman.list
 	$INST fman
 fi
 
 if [ "$INST_SUBLIMETEXT" != "n" ]; then
 	echo "install sublime-text + plugins..."
 	wget -nc https://download.sublimetext.com/sublime-text_build-3126_amd$BITS.deb
-	sudo dpkg-deb -x sublime-text_build-3126_amd$BITS.deb /
+	$SUDO dpkg-deb -x sublime-text_build-3126_amd$BITS.deb /
 	rm sublime-text_build-3126_amd$BITS.deb
 	# start sublime-text to create the directory structure
 	subl
@@ -344,7 +344,7 @@ fi
 
 if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
     echo "install python+anaconda..."
-	#sudo apt -y install python3 python3-pip python3-nose
+	#$SUDO $PKG -y install python3 python3-pip python3-nose
 	$INST python-pip
 
     wget -nc https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_$BITS.sh
@@ -439,6 +439,6 @@ fi
 echo "PATH='$HOME/bin:$HOME/.local/bin:$JAVA_HOME/bin:$PATH'" >> .profile
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo "not setting DISPLAY in console mode"
-elif
+else
 	echo 'export DISPLAY=0:0' >> .profile
 fi
