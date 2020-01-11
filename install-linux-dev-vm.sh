@@ -88,21 +88,21 @@ read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p  "Fluxbox (~5MB)                           (Y|n) : " INST_FLUX
 	read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
-	read -p "Install wine (~400MB)                     (Y|n) : " INST_WINE
+	read -p  "Install wine (~400MB)                    (Y|n) : " INST_WINE
 	echo    "================ Standard Office Applications ================"
-	read -p "Install firefox                         (Y|n) : " INST_FIREFOX
-	read -p "Install libreoffice                     (Y|n) : " INST_LIBREOFFICE
-	read -p "Install vlc                             (Y|n) : " INST_VLC
-	read -p "Install citrix-workspace-app            (Y|n) : " INST_CITRIX
-	read -p "Install virtual box                     (Y|n) : " INST_VIRTUALBOX
-	read -p "Install gparted                         (Y|n) : " INST_GPARTED
+	read -p  "Install firefox                         (Y|n)  : " INST_FIREFOX
+	read -p  "Install libreoffice                     (Y|n)  : " INST_LIBREOFFICE
+	read -p  "Install vlc                             (Y|n)  : " INST_VLC
+	read -p  "Install citrix-workspace-app            (Y|n)  : " INST_CITRIX
+	read -p  "Install virtual box                     (Y|n)  : " INST_VIRTUALBOX
+	read -p  "Install gparted                         (Y|n)  : " INST_GPARTED
 fi
 echo     "================ development IDE+Tools ================"
 read -p "Install java8                           (Y|n) : " INST_JAVA
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 	read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
-	read -p "Install eclipse 2018-09 (~300MB)        (Y|n) : " INST_ECLIPSE
+	read -p "Install eclipse 2019-09 (~300MB)        (Y|n) : " INST_ECLIPSE
 	read -p "Install fman (Ctrl+p filemanager)       (Y|n) : " INST_FMAN
 	read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
 	read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
@@ -110,7 +110,7 @@ fi
 read -p "Install python3.x+anaconda 5.3          (Y|n) : " INST_PYTHON_ANACONDA
 read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
-read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (y|N) : " START
+read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (Y|n) : " START
 if [ "$START" == "n" ]; then
 	exit
 fi
@@ -288,8 +288,8 @@ fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
     echo "install eclipse..."
-	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-03/R/eclipse-jee-2019-03-R-linux-gtk-x86_64.tar.gz
-	sudo tar xfz eclipse-jee-2018-09-linux-gtk-x86_$BITS.tar.gz
+	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-linux-gtk-x86_64.tar.gz
+	sudo tar xfz eclipse-jee-2019-09-linux-gtk-x86_$BITS.tar.gz
 	sudo ln -s /eclipse/eclipse /usr/local/sbin/eclipse
 	ls -l /usr/local/sbin/
 fi
