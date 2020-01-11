@@ -81,7 +81,7 @@ if [ "$IP1" != "" ]; then
     read -p "Mount network-drive on USER                    : " USER1
 fi
 read -p  "Clone GIT Repository                           : " REPO
-if [ "$REP0" != "" ]; then
+if [ "$REPO" != "" ]; then
 	read -p "Git Project Name                              : " PRJ
 fi
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
