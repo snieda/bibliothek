@@ -136,7 +136,7 @@ $INST printer-driver-cups-pdf
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo "echo install xwin-system tools"
 	$INST x11-repo # only for termux
-	for i in xclip xclock xcompmgr conky abiword pm-utils; do $INST $i; done
+	for i in xclip xclock xcompmgr conky kupfer abiword pm-utils; do $INST $i; done
 fi
 
 #echo "Hetzner NTP WARNING: enables DDOS attacks!"
