@@ -250,10 +250,10 @@ if [ "$INST_NETBEANS" != "n" ]; then
     NETBEANSFILE=jdk-8u111-nb-8_2-linux-x$BITS.sh
     if [ ! -f "$NETBEANSFILE" ];then
     	wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/$NETBEANSFILE
+	wget http://plugins.netbeans.org/download/plugin/3380
     fi
     $SUDO bash $NETBEANSFILE --silent &
     source $NETBEANSFILE
-    wget http://plugins.netbeans.org/download/plugin/3380
 fi
 
 if [ "$INST_JAVA" != "n" ]; then
@@ -463,9 +463,9 @@ fi
 
 echo "PATH='$HOME/bin:$HOME/.local/bin:$JAVA_HOME/bin:$PATH'" >> .profile
 if [ "$CONSOLE_ONLY" == "n" ]; then
-	echo "not setting DISPLAY in console mode"
-else
 	echo 'export DISPLAY=0:0' >> .profile
+else
+	echo "not setting DISPLAY in console mode"
 fi
 # reload profile
 cd
