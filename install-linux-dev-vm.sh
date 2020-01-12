@@ -184,6 +184,7 @@ if [ "$INST_FLUX" != "n" ]; then
 	$INST fluxbox
 	mkdir -p .vnc
 	curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vnc/xstartup > .vnc/xstartup
+	chmod a+x .vnc/xstartup
 fi
 
 if [ "$INST_WINE" != "n" ]; then
@@ -232,7 +233,7 @@ fi
 
 if [ "$INST_CITRIX" != "n" ]; then
     echo "install citrix workspace app..."
-    wget https://downloads.citrix.com/15918/linuxx64-19.3.0.5.tar.gz?__gda__=1560365066_f53cf2cdbacbfbb07d9baecb77691004
+    wget  -nc --no-check-certificate --no-cookies https://downloads.citrix.com/15918/linuxx64-19.3.0.5.tar.gz?__gda__=1560365066_f53cf2cdbacbfbb07d9baecb77691004
     $SUDO dpkg -i *.deb
     $SUDO apt-get -f install
 fi
@@ -246,9 +247,12 @@ fi
 if [ "$INST_NETBEANS" != "n" ]; then
     echo "install java+netbeans..."
     # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/jdk-8u111-nb-8_2-linux-x$BITS.sh
-    $SUDO bash jdk-8u111-nb-8_2-linux-x$BITS.sh --silent &
-    jdk-8u111-nb-8_2-linux-x$BITS.sh
+    NETBEANSFILE=jdk-8u111-nb-8_2-linux-x$BITS.sh
+    if [ ! -f "$NETBEANSFILE" ];then
+    	wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/$NETBEANSFILE
+    fi
+    $SUDO bash $NETBEANSFILE --silent &
+    source $NETBEANSFILE
     wget http://plugins.netbeans.org/download/plugin/3380
 fi
 
@@ -266,9 +270,9 @@ if [ "$INST_JAVA" != "n" ]; then
 	
 	wget http://www-eu.apache.org/dist/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz
 	tar -xf apache-maven-3.5.3-bin.tar.gz
-	echo "export M2_HOME=$(pwd)/apache-maven >> .profile
-	export MAVEN_HOME=$(pwd)/apache-maven >> .profile
-	export PATH=${M2_HOME}/bin:${PATH} >> .profile
+	echo "export M2_HOME=$(pwd)/apache-maven" >> .profile
+	echo "export MAVEN_HOME=$(pwd)/apache-maven" >> .profile
+	echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
 fi
 
 if [ "$INST_NODEJS" != "n" ]; then
@@ -298,8 +302,11 @@ fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
     echo "install eclipse..."
-	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
-	$SUDO tar xfz eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
+    	ECLIPSE_FILE=eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
+	if [ ! -f "$ECLIPSE_FILE" ]; then
+		wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/$ECLIPSE_FILE
+	fi
+	$SUDO tar xfz $ECLIPSE_FILE
 	$SUDO ln -s /eclipse/eclipse /usr/local/sbin/eclipse
 	ls -l /usr/local/sbin/
 fi
@@ -315,9 +322,12 @@ fi
 
 if [ "$INST_SUBLIMETEXT" != "n" ]; then
 	echo "install sublime-text + plugins..."
-	wget -nc https://download.sublimetext.com/sublime-text_build-3126_amd$BITS.deb
-	$SUDO dpkg-deb -x sublime-text_build-3126_amd$BITS.deb /
-	rm sublime-text_build-3126_amd$BITS.deb
+	SUBL_FILE=sublime-text_build-3126_amd$BITS.deb
+	if [ ! -f "$SUBL_FILE" ]; then
+		wget -nc https://download.sublimetext.com/$SUBL_FILE
+	fi
+	$SUDO dpkg-deb -x $SUBL_FILE /
+	rm $SUBL_FILE
 	# start sublime-text to create the directory structure
 	subl
 	wget  -nc https://packagecontrol.io/Package%20Control.sublime-package
@@ -356,18 +366,23 @@ if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
     echo "install python+anaconda..."
 	$INST python3 python3-pip python3-nose
 	$INST python-pip
-
-    wget -nc https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    ANACONDA_FILE=Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    if [ ! -f "$ANACONDA_FILE" ]; then
+    	wget -nc https://repo.continuum.io/archive/$ANACONDA_FILE
+    fi
     #sudo rm -rf anaconda3
     # the bash script provides -b for non-interactive - but with unwanted defaults
-    echo -e "\nyes\n\nyes\nyes\n" | bash Anaconda3-5.3.0-Linux-x86_$BITS.sh
-    rm Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    echo -e "\nyes\n\nyes\nyes\n" | $ANACONDA_FILE
+    # rm $ANACONDA_FILE
     # upgrade all python modules
     pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
 fi
 
 if [ "$INST_SQUIRREL" != "n" ]; then
-	wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download -O squirrel-sql-client.jar
+	SQUIRREL_FILE=squirrel-sql-client.jar
+	if [ ! -f "$SQUIRREL_FILE" ]; then
+		wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download -O $SQUIRREL_FILE
+	fi
 fi
 
 # ----------------------------------------------------
