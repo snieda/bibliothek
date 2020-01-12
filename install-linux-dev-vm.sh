@@ -354,13 +354,13 @@ fi
 
 if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
     echo "install python+anaconda..."
-	#$SUDO $PKG -y install python3 python3-pip python3-nose
+	$INST python3 python3-pip python3-nose
 	$INST python-pip
 
     wget -nc https://repo.continuum.io/archive/Anaconda3-5.3.0-Linux-x86_$BITS.sh
     #sudo rm -rf anaconda3
     # the bash script provides -b for non-interactive - but with unwanted defaults
-    echo -e "\n yes\n\nyes\n" | bash Anaconda3-5.3.0-Linux-x86_$BITS.sh
+    echo -e "\nyes\n\nyes\nyes\n" | bash Anaconda3-5.3.0-Linux-x86_$BITS.sh
     rm Anaconda3-5.3.0-Linux-x86_$BITS.sh
     # upgrade all python modules
     pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
