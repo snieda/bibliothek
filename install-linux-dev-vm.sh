@@ -99,6 +99,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 fi
 echo     "================ development IDE+Tools ================"
 read -p "Install java8                           (Y|n) : " INST_JAVA
+read -p "Install nodejs                          (Y|n) : " INST_NODEJS
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 	read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
@@ -127,13 +128,14 @@ echo "install console text tools..."
 for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep expect; do $INST $i; done
 
 echo "install networking tools..."
-for i in nmap git curl wget openssh-server openvpn gnupg links2 w3m tightvncserver, tigervnc; do $INST $i; done
+for i in nmap git curl wget openssh openssh-server openvpn gnupg links2 w3m tightvncserver, tigervnc; do $INST $i; done
 
 echo "install printer drivers..."
 $INST printer-driver-cups-pdf
 
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo "echo install xwin-system tools"
+	$INST x11-repo # only for termux
 	for i in xclip xcompmgr conky abiword pm-utils; do $INST $i; done
 fi
 
@@ -261,6 +263,16 @@ if [ "$INST_JAVA" != "n" ]; then
 	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
 	$INST openjdk-8-jdk maven
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
+	
+	wget http://www-eu.apache.org/dist/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz
+	tar -xf apache-maven-3.5.3-bin.tar.gz
+	echo "export M2_HOME=$(pwd)/apache-maven >> .profile
+	export MAVEN_HOME=$(pwd)/apache-maven >> .profile
+	export PATH=${M2_HOME}/bin:${PATH} >> .profile
+fi
+
+if [ "$INST_NODEJS" != "n" ]; then
+	$INST nodejs
 fi
 
 if [ "$INST_VSCODE" != "n" ]; then
@@ -286,8 +298,8 @@ fi
 
 if [ "$INST_ECLIPSE" != "n" ]; then
     echo "install eclipse..."
-	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-linux-gtk-x86_64.tar.gz
-	$SUDO tar xfz eclipse-jee-2019-09-linux-gtk-x86_$BITS.tar.gz
+	wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
+	$SUDO tar xfz eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
 	$SUDO ln -s /eclipse/eclipse /usr/local/sbin/eclipse
 	ls -l /usr/local/sbin/
 fi
