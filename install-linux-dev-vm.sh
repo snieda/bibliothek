@@ -142,6 +142,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 		cd ~/ubuntu_directory
 		wget https://raw.githubusercontent.com/Neo-Oli/termux-ubuntu/master/ubuntu.sh
 		bash ubuntu.sh
+		touch ~/.hushlogin
 		cd
 	fi
 	echo "echo install xwin-system tools"
