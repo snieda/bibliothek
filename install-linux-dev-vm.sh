@@ -68,6 +68,8 @@ fi
 echo "================ System and VirtualBox informations ================"
 
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
+read -p  "Termux Terminal Emulator System addons   (Y|n) : " INST_TERMUX
+read -p  "Additional Packages                            : " INST_PACKAGES
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
 read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
 read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
@@ -128,14 +130,21 @@ echo "install console text tools..."
 for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep expect; do $INST $i; done
 
 echo "install networking tools..."
-for i in nmap git curl wget openssh openssh-server openvpn gnupg links2 w3m tightvncserver, tigervnc; do $INST $i; done
+for i in nmap git curl wget openssh openssh-server openvpn gnupg links2 w3m tightvncserver; do $INST $i; done
 
 echo "install printer drivers..."
 $INST printer-driver-cups-pdf
 
 if [ "$CONSOLE_ONLY" == "n" ]; then
+	if [ "$INST_TERMUX" != "n" ]; then
+		$INST x11-repo xorg-xclock tigervnc # only for termux
+		mkdir ~/ubuntu_directory
+		cd ~/ubuntu_directory
+		wget https://raw.githubusercontent.com/Neo-Oli/termux-ubuntu/master/ubuntu.sh
+		bash ubuntu.sh
+		cd
+	fi
 	echo "echo install xwin-system tools"
-	$INST x11-repo # only for termux
 	for i in xclip xclock xcompmgr conky kupfer abiword pm-utils; do $INST $i; done
 fi
 
@@ -148,6 +157,7 @@ echo "tool configurations (mc, tmux, etc...)"
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
 mkdir -p .config/mc
 mkdir -p .termux
+mkdir -p shell
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
 curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash > shell/keybindings.bash
@@ -268,10 +278,11 @@ if [ "$INST_JAVA" != "n" ]; then
 	$INST openjdk-8-jdk maven
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
 	
-	wget http://www-eu.apache.org/dist/maven/maven-3/3.5.3/binaries/apache-maven-3.5.3-bin.tar.gz
-	tar -xf apache-maven-3.5.3-bin.tar.gz
-	echo "export M2_HOME=$(pwd)/apache-maven" >> .profile
-	echo "export MAVEN_HOME=$(pwd)/apache-maven" >> .profile
+	MVN=apache-maven-3.6.3
+	wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/MVN-bin.tar.gz
+	tar -xf $MVN-bin.tar.gz
+	echo "export M2_HOME=$(pwd)/$MVN" >> .profile
+	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
 	echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
 fi
 
@@ -327,7 +338,10 @@ if [ "$INST_SUBLIMETEXT" != "n" ]; then
 		wget -nc https://download.sublimetext.com/$SUBL_FILE
 	fi
 	$SUDO dpkg-deb -x $SUBL_FILE /
-	rm $SUBL_FILE
+	if [ $? != 0 ]; then
+		$SUDO dpkg -i $SUBL_FILE
+	fi
+	#rm $SUBL_FILE
 	# start sublime-text to create the directory structure
 	subl
 	wget  -nc https://packagecontrol.io/Package%20Control.sublime-package
