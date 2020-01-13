@@ -172,7 +172,7 @@ if [ "$INST_ANTIVIR" != "n" ]; then
 fi
 
 echo "vim plugin dependencies"
-for i in make cmake gcc silversearcher-ag exuberant-ctags; do $INST $i; done
+for i in vim-python python-dev make cmake gcc silversearcher-ag exuberant-ctags; do $INST $i; done
 curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
