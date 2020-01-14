@@ -139,6 +139,12 @@ oder
 pv
 bar
 
+## maven
+
+install a local jar file to your local maven repository:
+
+	mvn install:install-file -Dfile=tsl2.nano.mavengenerator-2.3.1-20191208.174056-3.jar -DgroupId=net.sf.tsl2nano -DartifactId=tsl2.nano.mavengenerator -Dversion=2.3.1-SNAPSHOT -Dpackaging=de.tsl2.nano
+
 ## git
 
 Um den aktuellen Stand vom remote master in den eigenen branch zu mergen gibt es zwei Möglichkeiten:
