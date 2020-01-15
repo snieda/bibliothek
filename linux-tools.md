@@ -137,13 +137,32 @@ oder
 ## progressbar
 
 pv
+
+	with process-substitution:
+	cp <(pv $FILE_NAME) $NEW_FILE
+	
 bar
+
+tqdm
+
+	tar -v -xf tarfile.tar -C TARGET_DIR | tqdm --total $(tar -tvf tarfile.tar | wc -l) > /dev/null
 
 ## maven
 
 install a local jar file to your local maven repository:
 
 	mvn install:install-file -Dfile=tsl2.nano.mavengenerator-2.3.1-20191208.174056-3.jar -DgroupId=net.sf.tsl2nano -DartifactId=tsl2.nano.mavengenerator -Dversion=2.3.1-SNAPSHOT -Dpackaging=de.tsl2.nano
+	
+or
+
+	mvn -nsu install:install-file \
+	   -Dfile=$1 \
+	   -DgroupId=local.myorg \
+	   -DartifactId=$ARTIFACTID \
+	   -Dversion=1.0.0 \
+	   -Dpackaging=jar \
+	   -DgeneratePom=true
+
 
 ## git
 
