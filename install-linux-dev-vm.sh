@@ -424,6 +424,10 @@ echo "installing micro editor"
 curl https://getmic.ro | bash
 cp micro bin/
 
+wget https://github.com/gokcehan/lf/releases/download/r13/lf-linux-amd64.tar.gz
+tar -xvf lf-linux-amd64.tar.gz
+mv lf bin/
+
 # ----------------------------------------------------
 # user/project dependent installations
 # ----------------------------------------------------
