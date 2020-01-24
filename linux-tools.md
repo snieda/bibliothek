@@ -357,3 +357,9 @@ sudo c_rehash /opt/Citrix/ICAClient/keystore/cacerts/
 ## Windows in Linux: Wine in Docker with x11docker
 
 https://hub.docker.com/r/x11docker/lxde
+
+## VLC
+
+tv m3u list
+	https://github.com/jnk22/kodinerds-iptv
+
