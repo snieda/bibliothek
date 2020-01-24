@@ -129,6 +129,9 @@ for i in mc tree ytree htop git mupdf antiword fim zip rar p7zip tmux exfat-fuse
 echo "install console text tools..."
 for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep expect; do $INST $i; done
 
+echo "additional cli tools
+for i in lf progress autojump archivemount; do $INST $i; done
+
 echo "install networking tools..."
 for i in nmap git curl wget openssh openssh-server openvpn gnupg links2 w3m tightvncserver; do $INST $i; done
 
@@ -159,11 +162,13 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tm
 mkdir -p .config/mc
 mkdir -p .termux
 mkdir -p shell
+sudo mkdir -p /etc/lf
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
 curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash > shell/keybindings.bash
 curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash > shell/completion.bash
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.termux/termux.properties > .termux/termux.properties
+sudo curl https://raw.githubusercontent.com/snieda/bibliothek/master/etc/lf/lfrc > /etc/lf/lfrc
 echo "alias ll='ls -alF'" >> .profile
 
 if [ "$INST_ANTIVIR" != "n" ]; then
