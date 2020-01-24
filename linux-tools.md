@@ -146,7 +146,7 @@ pv
 progress
 	
 	$! gets the last started background process:
-	cp file newfile & progress $!
+	cp file newfile & progress -mp $!
 	
 bar
 
