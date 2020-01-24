@@ -140,6 +140,13 @@ pv
 
 	with process-substitution:
 	cp <(pv $FILE_NAME) $NEW_FILE
+	or
+	pv MyDirectory/* | gzip > ./MyZip.gz
+
+progress
+	
+	$! gets the last started background process:
+	cp file newfile & progress $!
 	
 bar
 
