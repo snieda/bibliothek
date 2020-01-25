@@ -189,4 +189,5 @@ set drawbox on
 set icons on
 set color256 on
 set sortby time
+set info time
 set dircounts
