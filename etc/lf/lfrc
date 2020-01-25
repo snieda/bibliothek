@@ -124,21 +124,21 @@ map <c-t> :fzf_jump
 
 # cp-p
 # pasting done right
-cmd paste ${{
-    send="while read -r line; do lf -remote \"send $id echo \$line\"; done && lf -remote 'send reload'"
-    load=$(lf -remote 'load')
-    mode=$(echo "$load" | sed -n '1p')
-    srcF=$(mktemp)
-    echo "$load" | sed '1d' > "$srcF"
-    s='' && [ ! -w . ] && s='sudo'
-    case "$mode" in
-        copy) cmd='cp-p';; move) cmd='mv-p';;
-    esac
-    cmd="$cmd --new-line"
-    $s sh -c "$cmd --backup=numbered -F \"$srcF\" . | $send && rm -f \"$srcF\" &"
-    lf -remote 'send load'
-    lf -remote 'send clear'
-}}
+#cmd paste ${{
+#    send="while read -r line; do lf -remote \"send $id echo \$line\"; done && lf -remote 'send reload'"
+#    load=$(lf -remote 'load')
+#    mode=$(echo "$load" | sed -n '1p')
+#    srcF=$(mktemp)
+#    echo "$load" | sed '1d' > "$srcF"
+#    s='' && [ ! -w . ] && s='sudo'
+#    case "$mode" in
+#        copy) cmd='cp-p';; move) cmd='mv-p';;
+#    esac
+#    cmd="$cmd --new-line"
+#    $s sh -c "$cmd --backup=numbered -F \"$srcF\" . | $send && rm -f \"$srcF\" &"
+#    lf -remote 'send load'
+#    lf -remote 'send clear'
+#}}
 
 # archivemount
 cmd open ${{
@@ -184,10 +184,13 @@ lfcd () {
     fi
 }
 
+map <c-c> copy
+map <c-v> paste
+
 set hidden on
 set drawbox on
 set icons on
 set color256 on
 set sortby time
-set info time
+set info size:time
 set dircounts
