@@ -423,9 +423,7 @@ cp micro bin/
 
 echo "lf filemanager and additional cli tools"
 for i in lf progress autojump archivemount; do $INST $i; done
-wget https://github.com/gokcehan/lf/releases/download/r13/lf-linux-amd64.tar.gz
-tar -xvf lf-linux-amd64.tar.gz
-mv lf bin/
+curl -L https://github.com/gokcehan/lf/releases/download/r13/lf-linux-amd64.tar.gz | tar xzC ~/bin
 
 # ----------------------------------------------------
 # user/project dependent installations
