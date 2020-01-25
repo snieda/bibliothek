@@ -183,3 +183,10 @@ lfcd () {
         fi
     fi
 }
+
+set hidden on
+set drawbox on
+set icons on
+set color256 on
+set sortby time
+set dircounts
