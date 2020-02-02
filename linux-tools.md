@@ -154,6 +154,12 @@ tqdm
 
 	tar -v -xf tarfile.tar -C TARGET_DIR | tqdm --total $(tar -tvf tarfile.tar | wc -l) > /dev/null
 
+## colored terminal output
+
+	grc cat MYFILE
+	
+	bat MYFILE
+
 ## maven
 
 install a local jar file to your local maven repository:
@@ -214,6 +220,14 @@ Vergleich mybranch --> master
 		
 	git difftool develop..'develop@{2 weeks ago}' | ansi2html.sh > diff-develop-test.html
 	
+Vergleich letzter commit in HEAD
+	
+	git diff HEAD^ HEAD
+
+or with two column side-by-side
+
+	git difftool --word-diff=color -y -x "icdiff --line-numbers" HEAD^ HEAD | bat
+
 Eigene Änderungen komplett überschreiben
 
 	git clean -dfx
@@ -291,6 +305,11 @@ icdiff
 ansi2html
 
 AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
+
+## FileManager
+
+	mc
+	df
 
 ## FILE CONCATENATE
 
