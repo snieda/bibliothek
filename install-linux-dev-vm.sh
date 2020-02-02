@@ -127,7 +127,10 @@ echo "install system tools (~83MB)..."
 for i in mc tree ytree htop git mupdf antiword fim zip rar p7zip tmux exfat-fuse; do $INST $i; done
 
 echo "install console text tools..."
-for i in vim ne dos2unix poppler-utils docx2txt catdoc colordiff icdiff colorized-logs kbtin pv bar ripgrep expect; do $INST $i; done
+for i in vim ne dos2unix poppler-utils docx2txt catdoc kbtin pv bar ripgrep expect; do $INST $i; done
+
+echo "install console text color tools"
+for i in colordiff icdiff colorized-logs grc bat; do $INST $i; done
 
 echo "install networking tools..."
 for i in nmap git curl wget openssh openssh-server openvpn gnupg links2 w3m tightvncserver; do $INST $i; done
