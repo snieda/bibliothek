@@ -308,8 +308,8 @@ AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
 
 ## FileManager
 
-	mc
-	df
+	mc    # midnightcommander
+	lf    # configurable filemanager, written in go 
 
 ## FILE CONCATENATE
 
