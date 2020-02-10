@@ -382,3 +382,11 @@ https://hub.docker.com/r/x11docker/lxde
 tv m3u list
 	https://github.com/jnk22/kodinerds-iptv
 
+# linux desktop launcher
+
+	kupfer
+
+# system monitor in the desktop title
+
+	indicator-multiload
+
