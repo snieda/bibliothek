@@ -31,7 +31,7 @@ echo "Thomas Schneider / 2016 (refreshed 2020-01)"
 echo -------------------------------------------------------
 echo
 
-read -ep "Package Installer (apt,pacman,pkg,yast)        : " -i "apt" PKG
+read -ep "Package Installer (apt,pacman,pkg,yum,yast)        : " -i "apt" PKG
 
 $PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
 sudo -h > /dev/null #only to check, if available
@@ -185,7 +185,9 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 
 echo "python3"
 for i in python python-pip python3 python3-pip flake8 autopep8 pudb; do $INST $i; done
+for i in python-flake8 python-autopep8 python-pudb; do $INST $i; done #second try...
 pip install -U pip
+pip install flake8 autopep8 pudb # on some distributions, it may be available on pip
 
 echo "installing all plugins for our vim-ide"
 vim +'PlugInstall --sync' +qa
