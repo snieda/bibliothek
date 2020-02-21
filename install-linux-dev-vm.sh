@@ -37,7 +37,7 @@ echo "System : $(uname -a)"
 echo "User   : $(id)"
 echo -------------------------------------------------------
 echo
-read -ep "Package Installer (apt,pacman,pkg,yum,yast)        : " -i "apt" PKG
+read -ep "Package Installer (apt,pacman,pkg,yum,yast)    : " -i "apt" PKG
 
 if [ "$UID" == "0" ]; then # only on root priviledge
 	$PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
@@ -118,8 +118,8 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
 	read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
 fi
-read -p "Install python3.x+anaconda3 Version     (Y|n) : " -i 5.3.0 INST_PYTHON_ANACONDA
-read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
+read -ep "Install python3.x+anaconda3           Version : " -i 5.3.0 INST_PYTHON_ANACONDA
+read -p  "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
 read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (Y|n) : " START
 if [ "$START" == "n" ]; then
