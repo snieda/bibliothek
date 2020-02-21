@@ -94,12 +94,18 @@ read -p  "Clone GIT Repository                           : " REPO
 if [ "$REPO" != "" ]; then
 	read -p "Git Project Name                               : " PRJ
 fi
+echo     "================== development IDE+Tools ==================="
+read -p  "Install java8                           (Y|n) : " INST_JAVA
+read -p  "Install nodejs                          (Y|n) : " INST_NODEJS
+read -ep "Install python3.x+anaconda3           Version : " -i 5.3.0 INST_PYTHON_ANACONDA
+read -p  "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
+	echo     "===================== XWindows Desktops ====================="
 	read -p  "Fluxbox (~5MB)                           (Y|n) : " INST_FLUX
 	read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
 	read -p  "Install wine (~400MB)                    (Y|n) : " INST_WINE
-	echo    "================ Standard Office Applications ================"
+	echo    "=================== Standard Applications ==================="
 	read -p  "Install firefox                         (Y|n)  : " INST_FIREFOX
 	read -p  "Install libreoffice                     (Y|n)  : " INST_LIBREOFFICE
 	read -p  "Install vlc                             (Y|n)  : " INST_VLC
@@ -107,9 +113,6 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p  "Install virtual box                     (Y|n)  : " INST_VIRTUALBOX
 	read -p  "Install gparted                         (Y|n)  : " INST_GPARTED
 fi
-echo     "================ development IDE+Tools ================"
-read -p "Install java8                           (Y|n) : " INST_JAVA
-read -p "Install nodejs                          (Y|n) : " INST_NODEJS
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 	read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
@@ -118,8 +121,6 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
 	read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
 fi
-read -ep "Install python3.x+anaconda3           Version : " -i 5.3.0 INST_PYTHON_ANACONDA
-read -p  "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
 read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (Y|n) : " START
 if [ "$START" == "n" ]; then
