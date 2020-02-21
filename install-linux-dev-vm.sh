@@ -32,10 +32,11 @@ echo "Thomas Schneider / 2016 (refreshed 2020-02)"
 echo -------------------------------------------------------
 echo
 
-echo Current System and User Infos:
+echo -------------------------------------------------------
 echo "System : $(uname -a)"
 echo "User   : $(id)"
-
+echo -------------------------------------------------------
+echo
 read -ep "Package Installer (apt,pacman,pkg,yum,yast)        : " -i "apt" PKG
 
 if [ "$UID" == "0" ]; then # only on root priviledge
