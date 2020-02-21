@@ -73,7 +73,7 @@ if [ "$SUDO" == "sudo" ]; then
 		sudo login -f $DEV
 	fi
 fi
-echo "================ System and VirtualBox informations ================"
+echo "============ System and VirtualBox informations ============"
 
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
@@ -94,26 +94,28 @@ read -p  "Clone GIT Repository                           : " REPO
 if [ "$REPO" != "" ]; then
 	read -p "Git Project Name                               : " PRJ
 fi
-echo     "================== development IDE+Tools ==================="
-read -p  "Install java8                           (Y|n) : " INST_JAVA
+echo     "================== development IDE+Tools ===================="
+read -p  "Install open java8                      (Y|n) : " INST_JAVA
+read -ep "Install graalvm java8 community         (Y|n) : " INST_GRAALVM
 read -p  "Install nodejs                          (Y|n) : " INST_NODEJS
 read -ep "Install python3.x+anaconda3           Version : " -i 5.3.0 INST_PYTHON_ANACONDA
 read -p  "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo     "===================== XWindows Desktops ====================="
-	read -p  "Fluxbox (~5MB)                           (Y|n) : " INST_FLUX
-	read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
-	read -p  "Install wine (~400MB)                    (Y|n) : " INST_WINE
-	echo    "=================== Standard Applications ==================="
-	read -p  "Install firefox                         (Y|n)  : " INST_FIREFOX
-	read -p  "Install libreoffice                     (Y|n)  : " INST_LIBREOFFICE
-	read -p  "Install vlc                             (Y|n)  : " INST_VLC
-	read -p  "Install citrix-workspace-app            (Y|n)  : " INST_CITRIX
-	read -p  "Install virtual box                     (Y|n)  : " INST_VIRTUALBOX
-	read -p  "Install gparted                         (Y|n)  : " INST_GPARTED
+	read -p  "Fluxbox (~5MB)                          (Y|n) : " INST_FLUX
+	read -p  "LXDE Desktop (~250MB)                   (Y|n) : " INST_LXDE
+	read -p  "Install wine (~400MB)                   (Y|n) : " INST_WINE
+	echo    "================ Standard Desktop Applications ==============="
+	read -p  "Install firefox                        (Y|n)  : " INST_FIREFOX
+	read -p  "Install libreoffice                    (Y|n)  : " INST_LIBREOFFICE
+	read -p  "Install vlc                            (Y|n)  : " INST_VLC
+	read -p  "Install citrix-workspace-app           (Y|n)  : " INST_CITRIX
+	read -p  "Install virtual box                    (Y|n)  : " INST_VIRTUALBOX
+	read -p  "Install gparted                        (Y|n)  : " INST_GPARTED
 fi
 if [ "$CONSOLE_ONLY" == "n" ]; then
+	echo    "======================= Desktop IDEs ========================"
 	read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
 	read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
 	read -p "Install eclipse 2019-09 (~300MB)        (Y|n) : " INST_ECLIPSE
@@ -234,7 +236,7 @@ if [ "$INST_JAVA" != "n" ]; then
 	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
 	$INST openjdk-8-jdk maven
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
-	
+
 	MVN=apache-maven-3.6.3
 	wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/MVN-bin.tar.gz
 	tar -xf $MVN-bin.tar.gz
@@ -242,6 +244,24 @@ if [ "$INST_JAVA" != "n" ]; then
 	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
 	echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
 fi
+
+if [ "$INST_GRAALVM" != "" ]; then
+	GRAAL=graalvm-ce-java8-linux-amd$BIT-$INST_GRAALVM
+	wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-$INST_GRAALVM/$GRAAL.tar.gz
+	tar -xf $GRAAL.tar.gz
+	echo "export JAVA_HOME=$(pwd)/$GRAAL" >> .profile
+	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
+	
+	if [ "$MVN" == "" ]; then
+		MVN=apache-maven-3.6.3
+		wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/MVN-bin.tar.gz
+		tar -xf $MVN-bin.tar.gz
+		echo "export M2_HOME=$(pwd)/$MVN" >> .profile
+		echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
+		echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
+	fi
+fi
+
 
 echo "installing all plugins for our vim-ide"
 vim +'PlugInstall --sync' +qa
