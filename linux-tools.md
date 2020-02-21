@@ -51,6 +51,14 @@ htop
 lsof
 iftop
 
+## hdd list
+
+lsblk
+
+### freebsd
+
+camcontrol devlist
+
 ## hdd partitionieren und formatieren
 
 sudo mkdosfs -n 'Label' -I /dev/sdd -F 32
