@@ -4,7 +4,8 @@ cat <<EOM
 ##############################################################################
 # install development-tools on linux (Thomas Schneider / 2016)
 # 
-# preconditions: linux system with package manager
+# preconditions: linux or bsd system with package manager
+# annotation   : on FreeBSD the bash is on: /usr/local/bin/bash
 ##############################################################################
 
 
@@ -27,13 +28,19 @@ EOM
 # system preparations
 # ----------------------------------------------------
 echo -------------------------------------------------------
-echo "Thomas Schneider / 2016 (refreshed 2020-01)"
+echo "Thomas Schneider / 2016 (refreshed 2020-02)"
 echo -------------------------------------------------------
 echo
 
+echo Current System and User Infos:
+echo "System : $(uname -a)"
+echo "User   : $(id)"
+
 read -ep "Package Installer (apt,pacman,pkg,yum,yast)        : " -i "apt" PKG
 
-$PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
+if [ "$UID" == "0" ]; then # only on root priviledge
+	$PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
+fi
 sudo -h > /dev/null #only to check, if available
 if [ "$?" == "0" ]; then
 	SUDO="sudo"
