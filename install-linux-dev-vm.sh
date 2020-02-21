@@ -4,7 +4,7 @@ cat <<EOM
 ##############################################################################
 # install development-tools on linux (Thomas Schneider / 2016)
 # 
-# preconditions: debian 64bit system
+# preconditions: linux system with package manager
 ##############################################################################
 
 
@@ -68,9 +68,9 @@ fi
 echo "================ System and VirtualBox informations ================"
 
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
-read -p  "Termux Terminal Emulator System addons   (Y|n) : " INST_TERMUX
-read -p  "Additional Packages                            : " INST_PACKAGES
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
+read -p  "Termux Terminal Emulator System addons   (Y|n) : " INST_TERMUX
+read -p  "Unsecure (TimeServer:ntp, WinFS:samba)   (y|N) : " INST_UNSECURE
 read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
 read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
 read -p  "Connect to a Network Domain                    : " DOMAIN
@@ -110,7 +110,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
 	read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
 fi
-read -p "Install python3.x+anaconda 5.3          (Y|n) : " INST_PYTHON_ANACONDA
+read -p "Install python3.x+anaconda3 Version     (Y|n) : " -i 5.3.0 INST_PYTHON_ANACONDA
 read -p "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
 
 read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (Y|n) : " START
@@ -152,11 +152,6 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	for i in xclip xclock xcompmgr conky kupfer abiword pm-utils; do $INST $i; done
 fi
 
-#echo "Hetzner NTP WARNING: enables DDOS attacks!"
-#$INST ntp
-#echo "CIFS contains main server of SAMBA-4: smbd, nmbd (network access on windows filesystem and printers)"
-#$INST cifs-utils
-
 echo "tool configurations (mc, tmux, etc...)"
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
 mkdir -p .config/mc
@@ -170,242 +165,6 @@ curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.termux/termux.properties > .termux/termux.properties
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/etc/lf/lfrc > .config/lf/lfrc
 echo "alias ll='ls -alF'" >> .profile
-
-if [ "$INST_ANTIVIR" != "n" ]; then
-	echo "install antiviren (clam-av, rk-hunter..."
-	$INST clamav rkhunter
-fi
-
-echo "vim plugin dependencies"
-for i in vim-python python-dev make cmake gcc silversearcher-ag exuberant-ctags; do $INST $i; done
-curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
-#wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
-#chmod a+x eclim_2.8.0.bin
-
-echo "python3"
-for i in python python-pip python3 python3-pip flake8 autopep8 pudb; do $INST $i; done
-for i in python-flake8 python-autopep8 python-pudb; do $INST $i; done #second try...
-pip install -U pip
-pip install flake8 autopep8 pudb # on some distributions, it may be available on pip
-
-echo "installing all plugins for our vim-ide"
-vim +'PlugInstall --sync' +qa
-
-if [ "$INST_LXDE" != "n" ]; then
-	echo "install lxde..."
-	$INST lxde lxde-core
-fi
-
-if [ "$INST_FLUX" != "n" ]; then
-	echo "install flux..."
-	$INST fluxbox
-	mkdir -p .vnc
-	curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vnc/xstartup > .vnc/xstartup
-	chmod a+x .vnc/xstartup
-fi
-
-if [ "$INST_WINE" != "n" ]; then
-	echo "install wine-hq..." # only one of the is available!
-	for i in  wine-hq wine-stable wine; do $INST $i; done
-fi
-
-if [ "$INST_VIRTUALBOX" != "n" ]; then
-	echo "install virtualbox..."
-	$INST virtualbox
-fi
-
-if [ "$INST_GPARTED" != "n" ]; then
-	echo "install gparted..."
-	$INST gparted
-fi
-
-if [ "$VB_VERSION" != "" ]; then
-	echo "install virtualbox guest additions"
-	#$INST virtualbox-guest-utils virtualbox-guest-x11
-	$INST linux-headers-$(uname -r) build-essential dkms
-	wget -nc http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
-	$SUDO mkdir /media/VBoxGuestAdditions
-	$SUDO mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
-	$SUDO sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
-	rm VBoxGuestAdditions_$VB_VERSION.iso
-	$SUDO umount /media/VBoxGuestAdditions
-	$SUDO rmdir /media/VBoxGuestAdditions
-fi
-
-if [ "$INST_FIREFOX" != "n" ]; then
-	echo "install firefox..."
-	$INST firefox
-fi
-
-if [ "$INST_LIBREOFFICE" != "n" ]; then
-    echo "install libreoffice..."
-#	wget -nc https://www.libreoffice.org/donate/dl/deb-x86_64/6.1.2/de/LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
-#	tar -xvf LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
-#	cd debs
-#	sudo dpkg -i *.deb
-#	sudo apt-get -f install
-#	cd ..
-	$INST libreoffice-common
-fi
-
-if [ "$INST_CITRIX" != "n" ]; then
-    echo "install citrix workspace app..."
-    wget  -nc --no-check-certificate --no-cookies https://downloads.citrix.com/15918/linuxx64-19.3.0.5.tar.gz?__gda__=1560365066_f53cf2cdbacbfbb07d9baecb77691004
-    $SUDO dpkg -i *.deb
-    $SUDO apt-get -f install
-fi
-
-
-if [ "$INST_VLC" != "n" ]; then
-	echo "install vlc..."
-	$INST vlc-nox vlc
-fi
-
-if [ "$INST_NETBEANS" != "n" ]; then
-    echo "install java+netbeans..."
-    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    NETBEANSFILE=jdk-8u111-nb-8_2-linux-x$BITS.sh
-    if [ ! -f "$NETBEANSFILE" ];then
-    	wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/$NETBEANSFILE
-	wget http://plugins.netbeans.org/download/plugin/3380
-    fi
-    $SUDO bash $NETBEANSFILE --silent &
-    source $NETBEANSFILE
-fi
-
-if [ "$INST_JAVA" != "n" ]; then
-    echo "install java openjdk-8-jdk..."
-    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    #wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz
-	#sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
-	#sudo ln -s java jdk1.8.0_191
-	#ls -l /usr/local/sbin/
-	echo "export JAVA_HOME=/usr" >> .profile
-	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
-	$INST openjdk-8-jdk maven
-	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
-	
-	MVN=apache-maven-3.6.3
-	wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/MVN-bin.tar.gz
-	tar -xf $MVN-bin.tar.gz
-	echo "export M2_HOME=$(pwd)/$MVN" >> .profile
-	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
-	echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
-fi
-
-if [ "$INST_NODEJS" != "n" ]; then
-	$INST nodejs
-fi
-
-if [ "$INST_VSCODE" != "n" ]; then
-    echo "install visual studio code..."
-	# old version (try both...)
-	$SUDO add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
-	$SUDO apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
-	
-	# new version (try both...)
-	# Install key
-	curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
-	$SUDO mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
-	# Install repo
-	$SUDO sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-	# Update apt-get
-	$SUDO $PKG update
-	# Install
-	$INST code # or code-insiders
-	mkdir workspace
-	echo "https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895" > workspace/settings-sync-gist.txt 
-	code --install-extension alphabotsec.vscode-eclipse-keybindings --install-extension  danields761.status-bar-breadcrumb --install-extension  dgileadi.java-decompiler --install-extension  donjayamanne.githistory --install-extension  donjayamanne.javadebugger --install-extension  DotJoshJohnson.xml --install-extension  eamodio.gitlens --install-extension  faustinoaq.javac-linter --install-extension  felipecaputo.git-project-manager --install-extension  IBM.XMLLanguageSupport --install-extension  masonicboom.web-browser --install-extension  ms-python.python --install-extension  ms-vsts.team --install-extension  msjsdiag.debugger-for-chrome --install-extension  qub.qub-xml-vscode --install-extension  redhat.java --install-extension  Shan.code-settings-sync --install-extension  VisualStudioExptTeam.vscodeintellicode --install-extension  vscjava.vscode-java-debug --install-extension  vscjava.vscode-java-dependency --install-extension  vscjava.vscode-java-pack --install-extension  vscjava.vscode-java-test --install-extension  vscjava.vscode-maven --install-extension  yzhang.markdown-all-in-one -a workspace &
-fi
-
-if [ "$INST_ECLIPSE" != "n" ]; then
-    echo "install eclipse..."
-    	ECLIPSE_FILE=eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
-	if [ ! -f "$ECLIPSE_FILE" ]; then
-		wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/$ECLIPSE_FILE
-	fi
-	$SUDO tar xfz $ECLIPSE_FILE
-	$SUDO ln -s /eclipse/eclipse /usr/local/sbin/eclipse
-	ls -l /usr/local/sbin/
-fi
-
-if [ "$INST_FMAN" != "n" ]; then
-	echo "install fman..."
-	#curl https://fman.io/download/thank-you?os=Linux&distribution=Ubuntu
-	$SUDO apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
-	$INST apt-transport-https
-	echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | $SUDO tee /etc/apt/sources.list.d/fman.list
-	$INST fman
-fi
-
-if [ "$INST_SUBLIMETEXT" != "n" ]; then
-	echo "install sublime-text + plugins..."
-	SUBL_FILE=sublime-text_build-3126_amd$BITS.deb
-	if [ ! -f "$SUBL_FILE" ]; then
-		wget -nc https://download.sublimetext.com/$SUBL_FILE
-	fi
-	$SUDO dpkg-deb -x $SUBL_FILE /
-	if [ $? != 0 ]; then
-		$SUDO dpkg -i $SUBL_FILE
-	fi
-	#rm $SUBL_FILE
-	# start sublime-text to create the directory structure
-	subl
-	wget  -nc https://packagecontrol.io/Package%20Control.sublime-package
-	cp "Package Control".sublime-package ~/.config/sublime-text-3/"Installed Packages"
-cat <<EOM >> ~/.config/sublime-text-3/Packages/User/"Package Control".sublime-settings
-{
-   "installed_packages":
-    [
-        "Anaconda",
-        "AutoFileName",
-        "Block Cursor Everywhere",
-        "BracketHighlighter",
-        "CursorRuler",
-	"Diffy",
-        "Git",
-        "GitGutter",
-        "Markdown Preview",
-        "Open in Default Application",
-        "Package Control",
-        "PackageResourceViewer",
-        "PyRefactor",
-        "Python Breakpoints",
-        "Python Flake8 Lint",
-        "Python Improved",
-        "SideBarEnhancements",
-        "SublimeCodeIntel",
-        "SublimeREPL",
-        "SyncedSideBar",
-        "Terminal",
-    ]
-}
-EOM
-fi
-
-if [ "$INST_PYTHON_ANACONDA" != "n" ]; then
-    echo "install python+anaconda..."
-	$INST python3 python3-pip python3-nose
-	$INST python-pip
-    ANACONDA_FILE=Anaconda3-5.3.0-Linux-x86_$BITS.sh
-    if [ ! -f "$ANACONDA_FILE" ]; then
-    	wget -nc https://repo.continuum.io/archive/$ANACONDA_FILE
-    fi
-    #sudo rm -rf anaconda3
-    # the bash script provides -b for non-interactive - but with unwanted defaults
-    echo -e "\nyes\n\nyes\nyes\n" | $ANACONDA_FILE
-    # rm $ANACONDA_FILE
-    # upgrade all python modules
-    pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
-fi
-
-if [ "$INST_SQUIRREL" != "n" ]; then
-	SQUIRREL_FILE=squirrel-sql-client.jar
-	if [ ! -f "$SQUIRREL_FILE" ]; then
-		wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download -O $SQUIRREL_FILE
-	fi
-fi
 
 # ----------------------------------------------------
 # additional terminal tools
@@ -429,6 +188,251 @@ cp micro bin/
 echo "lf filemanager and additional cli tools"
 for i in lf progress autojump archivemount; do $INST $i; done
 curl -L https://github.com/gokcehan/lf/releases/download/r13/lf-linux-amd64.tar.gz | tar xzC ~/bin
+
+if [ "$INST_UNSECURE" == "y" ]; then
+	echo "Hetzner NTP WARNING: enables DDOS attacks!"
+	$INST ntp
+	echo "CIFS contains main server of SAMBA-4: smbd, nmbd (network access on windows filesystem and printers)"
+	$INST cifs-utils
+fi
+
+if [ "$INST_ANTIVIR" != "n" ]; then
+	echo "install antiviren (clam-av, rk-hunter..."
+	$INST clamav rkhunter
+fi
+
+echo "vim plugin dependencies"
+for i in vim-python python-dev make cmake gcc silversearcher-ag exuberant-ctags; do $INST $i; done
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
+#wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
+#chmod a+x eclim_2.8.0.bin
+
+echo "python3"
+for i in python python-pip python3 python3-pip flake8 autopep8 pudb; do $INST $i; done
+for i in python-flake8 python-autopep8 python-pudb; do $INST $i; done #second try...
+pip install -U pip
+pip install flake8 autopep8 pudb # on some distributions, it may be available on pip
+
+if [ "$INST_JAVA" != "n" ]; then
+    echo "install java openjdk-8-jdk..."
+    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
+    #wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz
+	#sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
+	#sudo ln -s java jdk1.8.0_191
+	#ls -l /usr/local/sbin/
+	echo "export JAVA_HOME=/usr" >> .profile
+	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
+	$INST openjdk-8-jdk maven
+	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
+	
+	MVN=apache-maven-3.6.3
+	wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/MVN-bin.tar.gz
+	tar -xf $MVN-bin.tar.gz
+	echo "export M2_HOME=$(pwd)/$MVN" >> .profile
+	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
+	echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
+fi
+
+echo "installing all plugins for our vim-ide"
+vim +'PlugInstall --sync' +qa
+
+if [ "$INST_SQUIRREL" != "n" ]; then
+	SQUIRREL_FILE=squirrel-sql-client.jar
+	if [ ! -f "$SQUIRREL_FILE" ]; then
+		wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download -O $SQUIRREL_FILE
+	fi
+fi
+
+if [ "$INST_PYTHON_ANACONDA" != "" ]; then
+    echo "install python+anaconda..."
+	$INST python3 python3-pip python3-nose
+	$INST python-pip
+    ANACONDA_FILE=Anaconda3-$INST_PYTHON_ANACONDA-Linux-x86_$BITS.sh
+    if [ ! -f "$ANACONDA_FILE" ]; then
+    	wget -nc https://repo.continuum.io/archive/$ANACONDA_FILE
+    fi
+    #sudo rm -rf anaconda3
+    # the bash script provides -b for non-interactive - but with unwanted defaults
+    echo -e "\nyes\n\nyes\nyes\n" | $ANACONDA_FILE
+    # rm $ANACONDA_FILE
+    # upgrade all python modules
+    pip list --outdated | cut -d ' ' -f1 | xargs -n1 pip install -U
+fi
+
+if [ "$INST_NODEJS" != "n" ]; then
+	$INST nodejs
+fi
+
+if [ "$CONSOLE_ONLY" == "n" ]; then
+	if [ "$INST_LXDE" != "n" ]; then
+		echo "install lxde..."
+		$INST lxde lxde-core
+	fi
+
+	if [ "$INST_FLUX" != "n" ]; then
+		echo "install flux..."
+		$INST fluxbox
+		mkdir -p .vnc
+		curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vnc/xstartup > .vnc/xstartup
+		chmod a+x .vnc/xstartup
+	fi
+
+	if [ "$INST_WINE" != "n" ]; then
+		echo "install wine-hq..." # only one of the is available!
+		for i in  wine-hq wine-stable wine; do $INST $i; done
+	fi
+
+	if [ "$INST_VIRTUALBOX" != "n" ]; then
+		echo "install virtualbox..."
+		$INST virtualbox
+	fi
+
+	if [ "$INST_GPARTED" != "n" ]; then
+		echo "install gparted..."
+		$INST gparted
+	fi
+
+	if [ "$INST_FMAN" != "n" ]; then
+		echo "install fman..."
+		#curl https://fman.io/download/thank-you?os=Linux&distribution=Ubuntu
+		$SUDO apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
+		$INST apt-transport-https
+		echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | $SUDO tee /etc/apt/sources.list.d/fman.list
+		$INST fman
+	fi
+
+	if [ "$VB_VERSION" != "" ]; then
+		echo "install virtualbox guest additions"
+		#$INST virtualbox-guest-utils virtualbox-guest-x11
+		$INST linux-headers-$(uname -r) build-essential dkms
+		wget -nc http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
+		$SUDO mkdir /media/VBoxGuestAdditions
+		$SUDO mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
+		$SUDO sh /media/VBoxGuestAdditions/VBoxLinuxAdditions.run
+		rm VBoxGuestAdditions_$VB_VERSION.iso
+		$SUDO umount /media/VBoxGuestAdditions
+		$SUDO rmdir /media/VBoxGuestAdditions
+	fi
+
+	if [ "$INST_FIREFOX" != "n" ]; then
+		echo "install firefox..."
+		$INST firefox
+	fi
+
+	if [ "$INST_LIBREOFFICE" != "n" ]; then
+	    echo "install libreoffice..."
+	#	wget -nc https://www.libreoffice.org/donate/dl/deb-x86_64/6.1.2/de/LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
+	#	tar -xvf LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
+	#	cd debs
+	#	sudo dpkg -i *.deb
+	#	sudo apt-get -f install
+	#	cd ..
+		$INST libreoffice-common
+	fi
+
+	if [ "$INST_CITRIX" != "n" ]; then
+	    echo "install citrix workspace app..."
+	    wget  -nc --no-check-certificate --no-cookies https://downloads.citrix.com/15918/linuxx64-19.3.0.5.tar.gz?__gda__=1560365066_f53cf2cdbacbfbb07d9baecb77691004
+	    $SUDO dpkg -i *.deb
+	    $SUDO apt-get -f install
+	fi
+
+
+	if [ "$INST_VLC" != "n" ]; then
+		echo "install vlc..."
+		$INST vlc-nox vlc
+	fi
+
+	if [ "$INST_NETBEANS" != "n" ]; then
+	    echo "install java+netbeans..."
+	    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
+	    NETBEANSFILE=jdk-8u111-nb-8_2-linux-x$BITS.sh
+	    if [ ! -f "$NETBEANSFILE" ];then
+		wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/$NETBEANSFILE
+		wget http://plugins.netbeans.org/download/plugin/3380
+	    fi
+	    $SUDO bash $NETBEANSFILE --silent &
+	    source $NETBEANSFILE
+	fi
+
+	if [ "$INST_VSCODE" != "n" ]; then
+	    echo "install visual studio code..."
+		# old version (try both...)
+		$SUDO add-apt-repository -y "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main"
+		$SUDO apt-key adv --keyserver keyserver.ubuntu.com --recv-keys EB3E94ADBE1229CF
+
+		# new version (try both...)
+		# Install key
+		curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+		$SUDO mv microsoft.gpg /etc/apt/trusted.gpg.d/microsoft.gpg
+		# Install repo
+		$SUDO sh -c 'echo "deb [arch=amd64] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+		# Update apt-get
+		$SUDO $PKG update
+		# Install
+		$INST code # or code-insiders
+		mkdir workspace
+		echo "https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895" > workspace/settings-sync-gist.txt 
+		code --install-extension alphabotsec.vscode-eclipse-keybindings --install-extension  danields761.status-bar-breadcrumb --install-extension  dgileadi.java-decompiler --install-extension  donjayamanne.githistory --install-extension  donjayamanne.javadebugger --install-extension  DotJoshJohnson.xml --install-extension  eamodio.gitlens --install-extension  faustinoaq.javac-linter --install-extension  felipecaputo.git-project-manager --install-extension  IBM.XMLLanguageSupport --install-extension  masonicboom.web-browser --install-extension  ms-python.python --install-extension  ms-vsts.team --install-extension  msjsdiag.debugger-for-chrome --install-extension  qub.qub-xml-vscode --install-extension  redhat.java --install-extension  Shan.code-settings-sync --install-extension  VisualStudioExptTeam.vscodeintellicode --install-extension  vscjava.vscode-java-debug --install-extension  vscjava.vscode-java-dependency --install-extension  vscjava.vscode-java-pack --install-extension  vscjava.vscode-java-test --install-extension  vscjava.vscode-maven --install-extension  yzhang.markdown-all-in-one -a workspace &
+	fi
+
+	if [ "$INST_ECLIPSE" != "n" ]; then
+	    echo "install eclipse..."
+		ECLIPSE_FILE=eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
+		if [ ! -f "$ECLIPSE_FILE" ]; then
+			wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/$ECLIPSE_FILE
+		fi
+		$SUDO tar xfz $ECLIPSE_FILE
+		$SUDO ln -s /eclipse/eclipse /usr/local/sbin/eclipse
+		ls -l /usr/local/sbin/
+	fi
+
+	if [ "$INST_SUBLIMETEXT" != "n" ]; then
+		echo "install sublime-text + plugins..."
+		SUBL_FILE=sublime-text_build-3126_amd$BITS.deb
+		if [ ! -f "$SUBL_FILE" ]; then
+			wget -nc https://download.sublimetext.com/$SUBL_FILE
+		fi
+		$SUDO dpkg-deb -x $SUBL_FILE /
+		if [ $? != 0 ]; then
+			$SUDO dpkg -i $SUBL_FILE
+		fi
+		#rm $SUBL_FILE
+		# start sublime-text to create the directory structure
+		subl
+		wget  -nc https://packagecontrol.io/Package%20Control.sublime-package
+		cp "Package Control".sublime-package ~/.config/sublime-text-3/"Installed Packages"
+	cat <<EOM >> ~/.config/sublime-text-3/Packages/User/"Package Control".sublime-settings
+	{
+	   "installed_packages":
+	    [
+		"Anaconda",
+		"AutoFileName",
+		"Block Cursor Everywhere",
+		"BracketHighlighter",
+		"CursorRuler",
+		"Diffy",
+		"Git",
+		"GitGutter",
+		"Markdown Preview",
+		"Open in Default Application",
+		"Package Control",
+		"PackageResourceViewer",
+		"PyRefactor",
+		"Python Breakpoints",
+		"Python Flake8 Lint",
+		"Python Improved",
+		"SideBarEnhancements",
+		"SublimeCodeIntel",
+		"SublimeREPL",
+		"SyncedSideBar",
+		"Terminal",
+	    ]
+	}
+	EOM
+	fi
+fi
 
 # ----------------------------------------------------
 # user/project dependent installations
