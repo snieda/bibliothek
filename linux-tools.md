@@ -388,12 +388,12 @@ sudo rkhunter --check
 
 ## stop a named process
 
-ps -uax | grep '[t]sl2' | tee | awk '{print $2}' | xargs kill
+	ps -uax | grep '[t]sl2' | tee | awk '{print $2}' | xargs kill
 
 ## citrix problem with certificate: "Verbindung mit 0.0.0.2 Desktop kann nicht hergestellt werden"
 
-sudo ln -s /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/
-sudo c_rehash /opt/Citrix/ICAClient/keystore/cacerts/
+	sudo ln -s /usr/share/ca-certificates/mozilla/* /opt/Citrix/ICAClient/keystore/cacerts/
+	sudo c_rehash /opt/Citrix/ICAClient/keystore/cacerts/
 
 ## Windows in Linux: Wine in Docker with x11docker
 
@@ -402,6 +402,7 @@ https://hub.docker.com/r/x11docker/lxde
 ## VLC
 
 tv m3u list
+
 	https://github.com/jnk22/kodinerds-iptv
 
 # linux desktop launcher
