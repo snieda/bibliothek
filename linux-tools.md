@@ -55,9 +55,19 @@ iftop
 
 lsblk
 
-### freebsd
+## freebsd
 
-camcontrol devlist
+camcontrol devlist #show all disks
+dmesg # show all system events
+
+### create/format and mount a new partition with gpart
+
+gpart create -s GPT ada0 #create GPT partition on ada0
+gpart add -t freebsd-ufs ada0
+newfs -U /dev/ada0p1
+mkdir /media/newhdd
+echo "/dev/ada0p1      /media/newhdd      ufs     rw     2     2" >> /etc/fstab
+mount /media/newhdd
 
 ## hdd partitionieren und formatieren
 
