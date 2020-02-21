@@ -6,6 +6,7 @@ cat <<EOM
 # 
 # preconditions: linux or bsd system with package manager
 # annotation   : on FreeBSD the bash is on: /usr/local/bin/bash
+# tested on    : ubuntu, ghostbsd, termux, msys2
 ##############################################################################
 
 
