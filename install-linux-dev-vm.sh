@@ -37,7 +37,7 @@ echo "System : $(uname -a)"
 echo "User   : $(id)"
 echo -------------------------------------------------------
 echo
-read -ep "Package Installer (apt,pacman,pkg,yum,yast)    : " -i "apt" PKG
+read -ep "Pckg Installer (apt,pacman,pkg,yum,yast,zypper): " -i "apt" PKG
 
 if [ "$UID" == "0" ]; then # only on root priviledge
 	$PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
@@ -48,7 +48,20 @@ if [ "$?" == "0" ]; then
 fi
 echo
 
-INST="$SUDO $PKG install -y --ignore-missing $*"
+if [ "$PKG" == "apt" ];then #debian
+	INST="$SUDO $PKG install -y --ignore-missing $*"
+elif [ "$PKG" == "pacman" ];then #arch, msys2 (windows/cygwin)
+	INST="$SUDO $PKG -S --noconfirm $*"
+elif [ "$PKG" == "pkg" ];then #freebsd
+	INST="$SUDO $PKG install -y --ignore-missing $*"
+elif [ "$PKG" == "yum" ];then #fedora
+	INST="$SUDO $PKG install -y --skip-broken --tolerant $*"
+elif [ "$PKG" == "yast" ];then #SUSE (old)
+	INST="$SUDO $PKG --install $*"
+elif [ "$PKG" == "zypper" ];then #openSUSE
+	INST="$SUDO $PKG install --non-interactive --ignore-unknown --no-cd --auto-agree-with-licenses --allow-unsigned-rpm  $*"
+fi
+
 DO_FORMAT=no
 
 read -ep "Package Install Command                        : " -i "$INST" INST
@@ -95,36 +108,36 @@ if [ "$REPO" != "" ]; then
 	read -p "Git Project Name                               : " PRJ
 fi
 echo     "================== development IDE+Tools ===================="
-read -p  "Install open java8                      (Y|n) : " INST_JAVA
-read -ep "Install graalvm java8 community         (Y|n) : " INST_GRAALVM
-read -p  "Install nodejs                          (Y|n) : " INST_NODEJS
-read -ep "Install python3.x+anaconda3           Version : " -i 5.3.0 INST_PYTHON_ANACONDA
-read -p  "Install resilio sync (data sync)        (y|N) : " INST_RESILIO_SYNC
+read -p  "Install open java8                       (Y|n) : " INST_JAVA
+read -ep "Install graalvm java8 community          (Y|n) : " -i 20.0.0 INST_GRAALVM
+read -p  "Install nodejs                           (Y|n) : " INST_NODEJS
+read -ep "Install python3.x+anaconda3            Version : " -i 5.3.0 INST_PYTHON_ANACONDA
+read -p  "Install resilio sync (data sync)         (y|N) : " INST_RESILIO_SYNC
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo     "===================== XWindows Desktops ====================="
-	read -p  "Fluxbox (~5MB)                          (Y|n) : " INST_FLUX
-	read -p  "LXDE Desktop (~250MB)                   (Y|n) : " INST_LXDE
-	read -p  "Install wine (~400MB)                   (Y|n) : " INST_WINE
+	read -p  "Fluxbox (~5MB)                           (Y|n) : " INST_FLUX
+	read -p  "LXDE Desktop (~250MB)                    (Y|n) : " INST_LXDE
+	read -p  "Install wine (~400MB)                    (Y|n) : " INST_WINE
 	echo    "================ Standard Desktop Applications ==============="
-	read -p  "Install firefox                        (Y|n)  : " INST_FIREFOX
-	read -p  "Install libreoffice                    (Y|n)  : " INST_LIBREOFFICE
-	read -p  "Install vlc                            (Y|n)  : " INST_VLC
-	read -p  "Install citrix-workspace-app           (Y|n)  : " INST_CITRIX
-	read -p  "Install virtual box                    (Y|n)  : " INST_VIRTUALBOX
-	read -p  "Install gparted                        (Y|n)  : " INST_GPARTED
+	read -p  "Install firefox                         (Y|n)  : " INST_FIREFOX
+	read -p  "Install libreoffice                     (Y|n)  : " INST_LIBREOFFICE
+	read -p  "Install vlc                             (Y|n)  : " INST_VLC
+	read -p  "Install citrix-workspace-app            (Y|n)  : " INST_CITRIX
+	read -p  "Install virtual box                     (Y|n)  : " INST_VIRTUALBOX
+	read -p  "Install gparted                         (Y|n)  : " INST_GPARTED
 fi
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo    "======================= Desktop IDEs ========================"
-	read -p "Install java8 + netbeans 8.2            (Y|n) : " INST_NETBEANS
-	read -p "Install visual studio code (~40MB)      (Y|n) : " INST_VSCODE
-	read -p "Install eclipse 2019-09 (~300MB)        (Y|n) : " INST_ECLIPSE
-	read -p "Install fman (Ctrl+p filemanager)       (Y|n) : " INST_FMAN
-	read -p "Install sublimetext+python-plugins      (Y|n) : " INST_SUBLIMETEXT
-	read -p "Install squirrel (sql)                  (Y|n) : " INST_SQUIRREL
+	read -p  "Install java8 + netbeans 8.2             (Y|n) : " INST_NETBEANS
+	read -p  "Install visual studio code (~40MB)       (Y|n) : " INST_VSCODE
+	read -ep "Install eclipse (~300MB)                 (Y|n) : " -i 2019-09 INST_ECLIPSE
+	read -p  "Install fman (Ctrl+p filemanager)        (Y|n) : " INST_FMAN
+	read -p  "Install sublimetext+python-plugins       (Y|n) : " INST_SUBLIMETEXT
+	read -p  "Install squirrel (sql)                   (Y|n) : " INST_SQUIRREL
 fi
 
-read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (Y|n) : " START
+read -p ">>>>>> !!! START INSTALLATION ? <<<<<<  (Y|n)  : " START
 if [ "$START" == "n" ]; then
 	exit
 fi
@@ -406,11 +419,11 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 		code --install-extension alphabotsec.vscode-eclipse-keybindings --install-extension  danields761.status-bar-breadcrumb --install-extension  dgileadi.java-decompiler --install-extension  donjayamanne.githistory --install-extension  donjayamanne.javadebugger --install-extension  DotJoshJohnson.xml --install-extension  eamodio.gitlens --install-extension  faustinoaq.javac-linter --install-extension  felipecaputo.git-project-manager --install-extension  IBM.XMLLanguageSupport --install-extension  masonicboom.web-browser --install-extension  ms-python.python --install-extension  ms-vsts.team --install-extension  msjsdiag.debugger-for-chrome --install-extension  qub.qub-xml-vscode --install-extension  redhat.java --install-extension  Shan.code-settings-sync --install-extension  VisualStudioExptTeam.vscodeintellicode --install-extension  vscjava.vscode-java-debug --install-extension  vscjava.vscode-java-dependency --install-extension  vscjava.vscode-java-pack --install-extension  vscjava.vscode-java-test --install-extension  vscjava.vscode-maven --install-extension  yzhang.markdown-all-in-one -a workspace &
 	fi
 
-	if [ "$INST_ECLIPSE" != "n" ]; then
+	if [ "$INST_ECLIPSE" != "" ]; then
 	    echo "install eclipse..."
-		ECLIPSE_FILE=eclipse-jee-2019-09-R-linux-gtk-x86_$BITS.tar.gz
+		ECLIPSE_FILE=eclipse-jee-$INST_ECLIPSE-R-linux-gtk-x86_$BITS.tar.gz
 		if [ ! -f "$ECLIPSE_FILE" ]; then
-			wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/2019-09/R/$ECLIPSE_FILE
+			wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/$INST_ECLIPSE/R/$ECLIPSE_FILE
 		fi
 		$SUDO tar xfz $ECLIPSE_FILE
 		$SUDO ln -s /eclipse/eclipse /usr/local/sbin/eclipse
