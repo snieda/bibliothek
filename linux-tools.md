@@ -45,42 +45,42 @@ syncronize source and remote destination directories:
 
 ## linux monitors
 
-netstat
-top
-htop
-lsof
-iftop
+	netstat
+	top
+	htop
+	lsof
+	iftop
 
 ## hdd list
 
-lsblk
+	lsblk
 
 ## freebsd
 
-camcontrol devlist #show all disks
-dmesg # show all system events
+	camcontrol devlist #show all disks
+	dmesg # show all system events
 
 ### create/format and mount a new partition with gpart
 
-gpart create -s GPT ada0 #create GPT partition on ada0
-gpart add -t freebsd-ufs ada0
-newfs -U /dev/ada0p1
-mkdir /media/newhdd
-echo "/dev/ada0p1      /media/newhdd      ufs     rw     2     2" >> /etc/fstab
-mount /media/newhdd
+	gpart create -s GPT ada0 #create GPT partition on ada0
+	gpart add -t freebsd-ufs ada0
+	newfs -U /dev/ada0p1
+	mkdir /media/newhdd
+	echo "/dev/ada0p1      /media/newhdd      ufs     rw     2     2" >> /etc/fstab
+	mount /media/newhdd
 
 ## hdd partitionieren und formatieren
 
-sudo mkdosfs -n 'Label' -I /dev/sdd -F 32
+	sudo mkdosfs -n 'Label' -I /dev/sdd -F 32
 
 oder
 
-fdisk ...
-sudo mkfs.ext3 -n 'Label' -I /dev/sdd
+	fdisk ...
+	sudo mkfs.ext3 -n 'Label' -I /dev/sdd
 
 ## vmdk mounten
 
-sudo mount vmware-server-flat.vmdk /tmp/test/ -o ro,loop=/dev/loop1,offset=32768 -t ntfs
+	sudo mount vmware-server-flat.vmdk /tmp/test/ -o ro,loop=/dev/loop1,offset=32768 -t ntfs
 
 Mount a VMware virtual disk (.vmdk) file on a Linux box
 Assumes XP/2000/2003. For Server 2008+ try offset=105,906,176 You can find this number in the System Information utility under Partition Starting Offset. UEFI based boxes you want partition 2 since the first is just the boot files (and FAT). This works with (storage side) snapshots which is handy for single file restores on NFS mounted VMware systems
@@ -104,12 +104,16 @@ oder
 
 Mount a VMware virtual disk (.vmdk) file on a Linux box
 This does not require you to know the partition offset, kpartx will find all partitions in the image and create loopback devices for them automatically. This works for all types of images (dd of hard drives, img, etc) not just vmkd. You can also activate LVM volumes in the image by running
-vgchange -a y
+
+	vgchange -a y
+
 and then you can mount the LV inside the image.
 To unmount the image, umount the partition/LV, deactivate the VG for the image
-vgchange -a n <volume_group>
+
+	vgchange -a n <volume_group>
 then run
-kpartx -dv <image-flad.vmdk>
+	
+	kpartx -dv <image-flad.vmdk>
 to remove the partition mappings.
 
 ## find
@@ -117,14 +121,14 @@ to remove the partition mappings.
 	find -type f -mtime -365 -ls -regex "de[/]tsl2[/].*Definition.java"
 
 ### search for executable files that were accessed max 24 hours ago
-find -type f -executable -atime -1
+	find -type f -executable -atime -1
 ### search files modified maximum 120 minutes ago
-find -type f -mmin -120
+	find -type f -mmin -120
 ### search files created maximum 120 minutes ago without cache files
 find -type f -regextype "sed" -regex ".*^(cache).*" -mmin -120
 
 ### convert files in a tree from iso8859-1 to utf-8
-find . -name "*.properties" -or -name "*.java" -type f -exec bash -c 'iconv {} -f ASCII//TRANSLIT -t UTF8 -o {}' \;
+	find . -name "*.properties" -or -name "*.java" -type f -exec bash -c 'iconv {} -f ASCII//TRANSLIT -t UTF8 -o {}' \;
 
 ## file renaming
 
@@ -307,7 +311,7 @@ Zurücksetzen auf master und holen von commits von remote oder anderem branch
 
 ## TEXT
 
-vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
+* vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
 	vjde (code completition)
 	filled .vimrc
 	exuberant-ctags (index for java-docs) 
@@ -315,12 +319,12 @@ vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-codin
 	.vimrc  : https://gist.githubusercontent.com/facundovictor/42733b014bcc479f5cd8/raw/e53816453a21de40653906731ddb079d710b1531/.vimrc
 	eclim   : wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
 
-slap:     https://github.com/slap-editor/slap
-micro:    https://github.com/zyedidia/micro/releases
-suplemon: https://github.com/richrd/suplemon
+* slap:     https://github.com/slap-editor/slap
+* micro:    https://github.com/zyedidia/micro/releases
+* suplemon: https://github.com/richrd/suplemon
 
-icdiff
-ansi2html
+	icdiff
+	ansi2html
 
 AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
 
@@ -335,16 +339,16 @@ AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
 
 ## TightVNC
 
-~/.vnc/xstartup:
-lxterminal & /usr/bin/lxsession -s Lubuntu &
+	~/.vnc/xstartup:
+	lxterminal & /usr/bin/lxsession -s Lubuntu &
 
-tightvncserver -geometry 1920x1080
+	tightvncserver -geometry 1920x1080
 
 ## TMUX + fzf
 
-tmux display-message -p -F "#{pane_current_path}" -t0
+	tmux display-message -p -F "#{pane_current_path}" -t0
 https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
-myVar=$(grep -Po "(?<=^HereIsAKey ).*" file)
+	myVar=$(grep -Po "(?<=^HereIsAKey ).*" file)
 
 ## WINDOWS TOOLS
 
@@ -360,15 +364,15 @@ https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
 
 ## Hibernation
 
-pm-hibernate
-GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=<SWAP-UUID>"
+	pm-hibernate
+	GRUB_CMDLINE_LINUX_DEFAULT="quiet splash resume=UUID=<SWAP-UUID>"
 
-on problems (swap-partition must be active!):
-cat /etc/fstab
-sudo blkid
-cat /var/log/pm-suspend.log
+	on problems (swap-partition must be active!):
+	cat /etc/fstab
+	sudo blkid
+	cat /var/log/pm-suspend.log
 
-sudo update-initramfs -u
+	sudo update-initramfs -u
 
 see https://www.reddit.com/r/Ubuntu/comments/61xfzk/hibernation_ubuntu_1604_unencrypted_swap/
 
