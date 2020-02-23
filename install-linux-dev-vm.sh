@@ -4,9 +4,9 @@ cat <<EOM
 ##############################################################################
 # install development-tools on linux (Thomas Schneider / 2016)
 # 
-# preconditions: linux or bsd system with package manager
+# preconditions: linux (best: debian) or bsd system with package manager
 # annotation   : on FreeBSD the bash is on: /usr/local/bin/bash
-# tested on    : ubuntu, ghostbsd, termux, msys2
+# tested on    : ubuntu, ghostbsd(freebsd), termux, msys2
 ##############################################################################
 
 
@@ -196,6 +196,16 @@ echo "alias ll='ls -alF'" >> .profile
 # ----------------------------------------------------
 mkdir bin
 
+echo "python3"
+for i in python python-pip python3 python3-pip flake8 autopep8 pudb; do $INST $i; done
+for i in python-flake8 python-autopep8 python-pudb; do $INST $i; done #second try...
+pip install -U pip
+pip install flake8 autopep8 pudb # on some distributions, it may be available on pip
+
+if [ "$PKG" == "pkg" ]; then # mostly freenbsd
+	for i in py37-pip; do $INST $i; done
+fi
+
 echo "installing Fuzzy Finder"
 wget -nc https://github.com/junegunn/fzf/raw/master/install
 mv install fzf-install.sh
@@ -233,22 +243,16 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
 #chmod a+x eclim_2.8.0.bin
 
-echo "python3"
-for i in python python-pip python3 python3-pip flake8 autopep8 pudb; do $INST $i; done
-for i in python-flake8 python-autopep8 python-pudb; do $INST $i; done #second try...
-pip install -U pip
-pip install flake8 autopep8 pudb # on some distributions, it may be available on pip
-
 if [ "$INST_JAVA" != "n" ]; then
     echo "install java openjdk-8-jdk..."
     # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-    #wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x64.tar.gz
+    #wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x$BIT.tar.gz
 	#sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
 	#sudo ln -s java jdk1.8.0_191
 	#ls -l /usr/local/sbin/
 	echo "export JAVA_HOME=/usr" >> .profile
 	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
-	$INST openjdk-8-jdk maven
+	for i in openjdk-8-jdk maven; do $INST $i; done
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
 
 	MVN=apache-maven-3.6.3
@@ -473,7 +477,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 		"Terminal",
 	    ]
 	}
-	EOM
+EOM
 	fi
 fi
 
