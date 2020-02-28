@@ -224,6 +224,12 @@ echo "lf filemanager and additional cli tools"
 for i in lf progress autojump archivemount; do $INST $i; done
 curl -L https://github.com/gokcehan/lf/releases/download/r13/lf-linux-amd64.tar.gz | tar xzC ~/bin
 
+echo "installing googler"
+curl https://raw.githubusercontent.com/jarun/googler/v4.0/googler -O ~/bin/googler && chmod a+x ~/bin/goolger
+
+echo "installing broot tree+fzf like file browser"
+curl https://dystroy.org/broot/download/x86_64-linux/broot -O ~/bin/broot && chmod a+x ~/bin/broot
+
 if [ "$INST_UNSECURE" == "y" ]; then
 	echo "Hetzner NTP WARNING: enables DDOS attacks!"
 	$INST ntp
