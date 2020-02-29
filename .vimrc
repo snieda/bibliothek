@@ -49,6 +49,8 @@ Plug 'w0rp/ale'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'idanarye/vim-vebugger'
 Plug 'Dica-Developer/vim-jdb'
+Plug 'puremourning/vimspector'
+Plug 'microsoft/vscode-java-debug'
 
 " java
 " add javacomplete2 only, if YCM and deoplete are not working
@@ -496,11 +498,12 @@ nnoremap <leader>g :cfirst<CR>
 nnoremap <leader>G :clast<CR>
 let g:workspace_autosave_always = 1
 
-noremap <Tab> :WSNext<CR>
-noremap <S-Tab> :WSPrev<CR>
-noremap <Leader><Tab> :WSClose<CR>
-noremap <Leader><S-Tab> :WSClose!<CR>
-noremap <C-t> :WSTabNew<CR>
+noremap <Tab> :WintabsNext<CR>
+noremap <S-Tab> :WintabsPrevious<CR>
+noremap <Leader><Tab> :WintabsClose<CR>
+noremap <Leader><S-Tab> :WintabsClose!<CR>
+noremap <C-t> :tabnew<CR>
+noremap <C-e> :WintabsAllBuffers<CR>
 
 cabbrev bonly WSBufOnly
 
@@ -538,8 +541,24 @@ set nocompatible
 source $VIMRUNTIME/mswin.vim
 behave mswin
 
-noremap <S-P> :CtrlPCmdPalette
-noremap <C-M> :only
+" Zoom / Restore window.
+function! s:ZoomToggle() abort
+    if exists('t:zoomed') && t:zoomed
+        execute t:zoom_winrestcmd
+        let t:zoomed = 0
+    else
+        let t:zoom_winrestcmd = winrestcmd()
+        resize
+        vertical resize
+        let t:zoomed = 1
+    endif
+endfunction
+command! ZoomToggle call s:ZoomToggle()
+nnoremap <silent> <C-M> :ZoomToggle<CR>
+
+noremap <C-E>   :Buffers<CR>
+noremap <C-S-y> :Commands<CR>
+" noremap <C-M> :only
 let g:ycm_error_symbol = '**'
 let g:ycm_add_preview_to_completeopt = 1
 set encoding=utf-8
