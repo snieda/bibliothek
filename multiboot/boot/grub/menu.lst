@@ -1,0 +1,80 @@
+gfxmenu /boot/grub/themes/message.linuxtux
+color white/blue black/light-gray
+default 0
+timeout 30
+
+title TinyCore 7.2
+find --set-root /boot/iso/TinyCore-7.2.iso
+map /boot/iso/TinyCore-7.2.iso (hd32) || map --mem /boot/iso/TinyCore-7.2.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title Lubuntu 16.10
+find --set-root /boot/iso/lubuntu-16.10-desktop-i386.iso
+map /boot/iso/lubuntu-16.10-desktop-i386.iso (hd32) || map --mem /boot/iso/lubuntu-16.10-desktop-i386.iso (hd32)
+map --hook locale=de_DE bootkbd=de console-setup/layoutcode=de
+chainloader (hd32)
+
+title Porteus Kiosk ThinClient 4.1.0 (64Bit)
+find --set-root /boot/iso/Porteus-Kiosk-ThinClient-4.1.0_dev-x86_64.iso
+map /boot/iso/Porteus-Kiosk-ThinClient-4.1.0_dev-x86_64.iso (hd64) || map --mem /boot/iso/Porteus-Kiosk-ThinClient-4.1.0_dev-x86_64.iso (hd64)
+map --hook
+chainloader (hd64)
+
+title systemrescuecd 4.8.3
+find --set-root /boot/iso/systemrescuecd-x86-4.8.3.iso
+map /boot/iso/systemrescuecd-x86-4.8.3.iso (hd32) || map --mem /boot/iso/systemrescuecd-x86-4.8.3.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title ubcd536
+find --set-root /boot/iso/ubcd536.iso
+map /boot/iso/ubcd536.iso (hd32) || map --mem /boot/iso/ubcd536.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title kav_rescue_10
+find --set-root /boot/iso/kav_rescue_10.iso
+map /boot/iso/kav_rescue_10.iso (hd32) || map --mem /boot/iso/kav_rescue_10.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title nanolinux64-1.3
+find --set-root /boot/iso/nanolinux64-1.3.iso
+map /boot/iso/nanolinux64-1.3.iso (hd32) || map --mem /boot/iso/nanolinux64-1.3.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title bodhi-3.2.1-32
+find --set-root /boot/iso/bodhi-3.2.1-32.iso
+map /boot/iso/bodhi-3.2.1-32.iso (hd32) || map --mem /boot/iso/bodhi-3.2.1-32.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title DOS6.22
+find --set-root /boot/iso/DOS6.22_bootdisk.iso
+map /boot/iso/DOS6.22_bootdisk.iso (hd32) || map --mem /boot/iso/DOS6.22_bootdisk.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title KNOPPIX_V7.6.1DVD-2016-01-16-DE
+find --set-root /boot/iso/KNOPPIX_V7.6.1DVD-2016-01-16-DE.iso
+map /boot/iso/KNOPPIX_V7.6.1DVD-2016-01-16-DE.iso (hd32) || map --mem /boot/iso/KNOPPIX_V7.6.1DVD-2016-01-16-DE.iso (hd32)
+map --hook
+chainloader (hd32)
+
+title TinyCore 7.2 German non persistent live system
+kernel /boot/vmlinuz noprompt cdrom-detect/try-usb=true locale=de_DE.UTF-8 bootkbd=de console-setup/layoutcode=de boot=casper iso-scan/filename=/boot/iso/TinyCore-7.2.iso quiet splash --
+initrd /boot/core.gz
+
+title Lubuntu 16.10 German persistent live system
+kernel /casper/vmlinuz noprompt cdrom-detect/try-usb=true locale=de_DE.UTF-8 bootkbd=de console-setup/layoutcode=de persistent file=/preseed/ubuntu.seed boot=casper initrd=/casper/initrd.lz quiet splash --
+initrd /casper/initrd.lz
+
+title Lubuntu 16.10 directly
+find --set-root /boot/iso/lubuntu-16.10-desktop-i386.iso
+map /boot/iso/lubuntu-16.10-desktop-i386.iso (0xff) || map --mem /boot/iso/lubuntu-16.10-desktop-i386.iso (0xff)
+map --hook
+root (0xff)
+kernel /casper/vmlinuz file=/casper/preseed/lubuntu.seed noprompt boot=casper live-media-path=/boot/iso/lubuntu-16.10-desktop-i386.iso quiet splash --
+initrd /casper/initrd.lz
