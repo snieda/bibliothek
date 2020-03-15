@@ -27,7 +27,7 @@ choco install -y -dir  gnupg
 choco install -y -dir  make
 choco install -y -dir  cmake.portable
 choco install -y -dir  msys2-installer
-curl https://dystroy.org/broot/download/x86_64-windows/broot -O ~/bin/broot
+curl https://dystroy.org/broot/download/x86_64-pc-windows-gnu/broot.exe -O ~/bin/broot
 wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download/squirrel-sql-client.jar
 
 wget https://www.pendrivelinux.com/downloads/YUMI/YUMI-2.0.6.9.exe
