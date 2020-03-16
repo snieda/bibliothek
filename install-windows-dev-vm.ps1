@@ -27,6 +27,7 @@ choco install -y -dir  gnupg
 choco install -y -dir  make
 choco install -y -dir  cmake.portable
 choco install -y -dir  msys2-installer
+choco install -y -dir  freecommander-xe.install
 curl https://dystroy.org/broot/download/x86_64-pc-windows-gnu/broot.exe -O ~/bin/broot
 wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download/squirrel-sql-client.jar
 
