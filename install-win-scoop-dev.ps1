@@ -1,3 +1,6 @@
+# activate shell scripting
+Set-ExecutionPolicy Unrestricted
+
 # prepare base directory
 $env:SCOOP='%USERPROFILE%\tools\scoop'
 [Environment]::SetEnvironmentVariable('SCOOP', $env:SCOOP, 'User')
