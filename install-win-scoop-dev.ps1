@@ -40,7 +40,7 @@ scoop install openssh openvpn gnupg netcat nmap-portable putty kitty winscp tigh
 scoop openjdk python
 
 # install language additions
-scoop nodejs rust anaconda3 pip-tool
+scoop maven gradle nodejs rust anaconda3 pip-tool
 pip install -U pip
 pip install flake8 autopep8 pudb
 
