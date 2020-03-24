@@ -16,7 +16,7 @@ scoop install aria2
 
 # install cli tools
 scoop install wget curl vim fzf broot mc lf busybox git psutils fd less bat 7zip googler ripgrep
-scoop install make cmake coreutils diffutils
+scoop install make cmake grep sed coreutils diffutils
 
 # install editors and additional working tools
 scoop install links fman-np notepadplusplus freecommander graphviz cmder virtualbox-np
