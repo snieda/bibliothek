@@ -9,6 +9,9 @@ $env:SCOOP='%USERPROFILE%\tools\scoop'
 iwr -useb get.scoop.sh | iex
 scoop update
 
+# without 7zip and git we can't add buckets
+scoop install 7zip git
+
 # add package buckets
 scoop bucket add extras 
 scoop bucket add java 
