@@ -56,4 +56,4 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 vim +'PlugInstall --sync' +qa
 
 # install standard gui applications
-scoop install libreoffice-stable, vlc, googlechrome, firefox, opera, gimp
+scoop install mupdf libreoffice-stable, vlc, googlechrome, firefox, opera, gimp
