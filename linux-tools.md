@@ -405,11 +405,24 @@ tv m3u list
 
 	https://github.com/jnk22/kodinerds-iptv
 
-# linux desktop launcher
+## linux desktop launcher
 
 	kupfer
 
-# system monitor in the desktop title
+## system monitor in the desktop title
 
 	indicator-multiload
 
+## transparent linux windows
+
+devilspie -a
+
+### example script for devilspie in '~/.devilspie/chrome.ds
+
+	( if
+	( contains ( window_class ) "chrome" )
+	( begin
+	( spawn_async (str "xprop -id " (window_xid) " -f _NET_WM_WINDOW_OPACITY 32c -set _NET_WM_WINDOW_OPACITY 0xcfffffff") )
+	)
+	)
+	
