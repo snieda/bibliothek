@@ -174,7 +174,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 		cd
 	fi
 	echo "echo install xwin-system tools"
-	for i in xclip xclock xcompmgr conky kupfer abiword pm-utils; do $INST $i; done
+	for i in xclip xclock xcompmgr devilspie conky kupfer abiword pm-utils; do $INST $i; done
 fi
 
 echo "tool configurations (mc, tmux, etc...)"
