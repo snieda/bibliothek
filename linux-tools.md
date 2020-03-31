@@ -309,6 +309,13 @@ Zurücksetzen auf master und holen von commits von remote oder anderem branch
 	or
 	grep -lr '<<<<<<<' . | xargs git checkout --yours
 
+### git revert merge request or commit
+
+most git servers provide that per merge request or commit in the browser as option.
+in the commandline you can revert with:
+
+	git revert <commit-hash>
+
 ## TEXT
 
 * vim (see: http://www.lucianofiandesio.com/vim-configuration-for-happy-java-coding)
