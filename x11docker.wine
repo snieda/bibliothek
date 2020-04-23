@@ -1,0 +1,12 @@
+# see https://hub.docker.com/r/x11docker/xfce-wine-playonlinux/
+#
+# docker pull x11docker/xfce-wine-playonlinux
+
+
+# if /etc/resolv.conf points to a stub, docker wont go to internet
+#
+# sudo ln -sf /run/systemd/resolve/resolv.conf /etc/resolv.conf
+# sudo systemctl restart docker
+
+x11docker --desktop --pulseaudio --webcam --gpu --clipboard --home x11docker/xfce-wine-playonlinux $*
+# --device=/dev/mmcblk0p1 
