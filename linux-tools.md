@@ -433,3 +433,10 @@ devilspie -a
 	)
 	)
 	
+## netcat alternative pwncat (python script)
+
+	curl https://raw.githubusercontent.com/cytopia/pwncat/master/bin/pwncat
+
+## Sql GraphViz
+
+	https://github.com/rm-hull/sql_graphviz
