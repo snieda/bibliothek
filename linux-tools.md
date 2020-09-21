@@ -351,7 +351,12 @@ AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
 
 	tightvncserver -geometry 1920x1080
 
-## TMUX + fzf
+## TMUX
+
+* plugins: https://github.com/tmux-plugins
+	* best of: TPM (tmux plugin manager), tmux resurrect
+
+### TMUX + fzf
 
 	tmux display-message -p -F "#{pane_current_path}" -t0
 https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
