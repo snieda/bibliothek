@@ -14,6 +14,17 @@ several systems are supported: debian, arch, msys2(cygwin/windows), windows(scoo
   chmod +x install-linux-dev-vm
   ./install-linux-dev-vm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+perhaps you have to set 'http_proxy' and 'https_proxy' before!
+
+###### termux (android)
+
+if you get an error like **BAD SYSTEM** on starting java, you should set:
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+alias java="proot java"
+alias javac="proot javac"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   
 ##### start
 
