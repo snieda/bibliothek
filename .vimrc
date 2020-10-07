@@ -1,18 +1,15 @@
-call plug#begin('~/.vim/plugged')
+set mouse=a
 
-" layout and coloring
-Plug 'altercation/vim-colors-solarized'
-Plug 'ryanoasis/vim-devicons'
-"Plug 'vim-airline/vim-airline'
-"Plug 'vim-airline/vim-airline-themes'
-Plug 'itchyny/lightline.vim'
+call plug#begin('~/.vim/plugged')
 
 " utils
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
-
+"Plug 'wfxr/minimap.vim'  " system: code-minimap must be installed
+"Plug 'koron/minimap-vim' " system: ............ must be installed
 Plug '/opt/fzf' | Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+Plug 'ryanoasis/vim-devicons'
 
 Plug 'majutsushi/tagbar'
 Plug 'terryma/vim-multiple-cursors'
@@ -44,6 +41,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
 Plug 'vim-syntastic/syntastic'
 Plug 'w0rp/ale'
 "Plug 'natebosch/vim-lsc'
+Plug 'neoclide/coc.nvim'
 
 "debugging
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
@@ -88,6 +86,13 @@ Plug 'guns/xterm-color-table.vim'
 " Autocompletion
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
+" layout and coloring
+Plug 'altercation/vim-colors-solarized'
+Plug 'ryanoasis/vim-devicons'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+"Plug 'itchyny/lightline.vim'
+
 " Load on nothing
 Plug 'nacitar/terminalkeys.vim', { 'on': [] }
 
@@ -103,6 +108,8 @@ call plug#end()
 " if filereadable(expand("~/.vim/plugins.vim"))
 "    source ~/.vim/plugins.vim
 " endif
+
+let g:vimspector_enable_mappings = 'HUMAN'
 
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
@@ -344,7 +351,7 @@ set t_Co=256
 " let g:airline_theme='term'
 "let g:airline_theme='jellybeans'
 
-"let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 1
 
 " powerline symbols
 "let g:airline_left_sep = ''
@@ -355,6 +362,8 @@ set t_Co=256
 "let g:airline_symbols.readonly = ''
 "let g:airline_symbols.linenr = ''
 
+" devicons
+set guifont=Fantasque\ Sans\ Mono
 
 " Syntastic Configuration -----------------------------------------------------
 
@@ -462,7 +471,7 @@ noremap <C-m> :setlocal spell! spelllang=en_us<CR>
 noremap <C-k> :setlocal list!<CR>
 
 " Set the mapleader
-let mapleader = "¡"
+let mapleader = "<"
 
 " Edit my .vimrc file"
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -527,7 +536,9 @@ augroup Binary
   au BufWritePost *.bin set nomod | endif
 augroup END
 
-let g:decomp_jar = '$TOOLS/cfr_0_115.jar'
+let g:decomp_jar = '~/bin/cfr-0.138.jar'
+au BufNewFile,BufRead,BufReadPost *.class set filetype=java
+
 let python_highlight_all=1
 syntax on
 autocmd FileType python noremap <buffer> <F8> :call Autopep8()<CR>
@@ -561,5 +572,56 @@ noremap <C-S-y> :Commands<CR>
 " noremap <C-M> :only
 let g:ycm_error_symbol = '**'
 let g:ycm_add_preview_to_completeopt = 1
-set encoding=utf-8
+set encoding=utf8
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" Tell YCM where to find the plugin. Add to any existing values.
+let g:ycm_java_jdtls_extension_path = [
+  \ '~/.vim/plugged/vimspector/gadgets/linux'
+  \ ]
+
+let s:jdt_ls_debugger_port = 0
+function! s:StartDebugging()
+  if s:jdt_ls_debugger_port <= 0
+    " Get the DAP port
+    let s:jdt_ls_debugger_port = youcompleteme#GetCommandResponse(
+      \ 'ExecuteCommand',
+      \ 'vscode.java.startDebugSession' )
+
+    if s:jdt_ls_debugger_port == ''
+       echom "Unable to get DAP port - is JDT.LS initialized?"
+       let s:jdt_ls_debugger_port = 0
+       return
+     endif
+  endif
+
+  " Start debugging with the DAP port
+  call vimspector#LaunchWithSettings( { 'DAPPort': s:jdt_ls_debugger_port } )
+endfunction
+
+nnoremap <silent> <buffer> <F12> :call <SID>StartDebugging()<CR>
+
+" Eigene 'eclipse-like' Shortcuts
+nnoremap <expr> <F7> :JDBAttach input("host: ") . ":" . input("port:")\<ESC>
+map <leader><F12> :call vebugger#jdb#attach('localhost:8787',{'srcpath':['tsl2.nano.h5/src/main','tsl2.nano.core/src/main/java','tsl2.nano.common/src/main/java','tsl2.nano.descriptor/src/main/java']})
+map <leader><F5> :VBGstepIn<CR>
+map <leader><F6> :VBGstepOver<CR>
+map <leader><F8> :VBGcontinue<CR>
+map <leader><C-I> :VBGexecuteSelectedText<CR>
+map <leader><F9> :VBGtoggleBreakpointThisLine<CR>
+map <leader>t :VBGtoggleTerminalBuffer
+map <leader><F3> :YcmCompleter GoToDefinition<CR>
+map <leader><C-1> :YcmCompleter FitIt
+map <leader><C-H> :YcmCompleter GoToReferences
+map <leader><C-t> :YcmCompleter GoToImplementation
+map <leader><C-o> :YcmCompleter OrganizeImports
+map <leader><C-R> :YcmCompleter RefactorRename
+map <leader><C-P> :Commands
+map <leader><C-W> :Buffers
+map <leader><C-R> :History
+map <leader><C-E> :History:
+map <leader><C-F> :History/
+map <leader><C-T> :Files
+map <leader><A-LEFT> :<C-o>
+map <leader><A-RIGHT> :<C-i>
+map <leader>r :NERDTreeFind<CR> "sync NERDTree with current buffer
