@@ -270,7 +270,7 @@ if [ "$INST_JAVA" != "n" ]; then
 	tar -xf $MVN-bin.tar.gz
 	echo "export M2_HOME=$(pwd)/$MVN" >> .profile
 	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
-	echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
+	echo "export PATH=$M2_HOME/bin:$PATH" >> .profile
 fi
 
 if [ "$INST_GRAALVM" != "" ]; then
