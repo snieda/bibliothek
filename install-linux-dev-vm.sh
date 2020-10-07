@@ -29,7 +29,7 @@ EOM
 # system preparations
 # ----------------------------------------------------
 echo -------------------------------------------------------
-echo "Thomas Schneider / 2016 (refreshed 2020-02)"
+echo "Thomas Schneider / 2016 (refreshed 2020-10)"
 echo -------------------------------------------------------
 echo
 
@@ -132,7 +132,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo    "======================= Desktop IDEs ========================"
 	read -p  "Install java8 + netbeans 8.2             (Y|n) : " INST_NETBEANS
 	read -p  "Install visual studio code (~40MB)       (Y|n) : " INST_VSCODE
-	read -ep "Install eclipse (~300MB)                 (Y|n) : " -i 2019-09 INST_ECLIPSE
+	read -ep "Install eclipse (~300MB)                 (Y|n) : " -i 2020-09 INST_ECLIPSE
 	read -p  "Install fman (Ctrl+p filemanager)        (Y|n) : " INST_FMAN
 	read -p  "Install sublimetext+python-plugins       (Y|n) : " INST_SUBLIMETEXT
 	read -p  "Install squirrel (sql)                   (Y|n) : " INST_SQUIRREL
