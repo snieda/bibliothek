@@ -100,5 +100,9 @@ Install squirrel (sql)                   (Y|n) :
 
 ##### installation
 
+open a powershell console:
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  wget 
+  install-win-scoop-dev.ps1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
