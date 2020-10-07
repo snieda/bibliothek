@@ -10,7 +10,7 @@ several systems are supported: debian, arch, msys2(cygwin/windows), windows(scoo
 ##### linux / msys2 (cygwin on windows)
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  wget 
+  wget https://raw.githubusercontent.com/snieda/bibliothek/master/install-linux-dev-vm
   chmod +x install-linux-dev-vm
   ./install-linux-dev-vm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -103,6 +103,6 @@ Install squirrel (sql)                   (Y|n) :
 open a powershell console:
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-  wget 
+  wget https://raw.githubusercontent.com/snieda/bibliothek/master/install-win-scoop-dev.ps1
   install-win-scoop-dev.ps1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
