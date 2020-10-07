@@ -266,7 +266,7 @@ if [ "$INST_JAVA" != "n" ]; then
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
 
 	MVN=apache-maven-3.6.3
-	wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/MVN-bin.tar.gz
+	wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/$MVN-bin.tar.gz
 	tar -xf $MVN-bin.tar.gz
 	echo "export M2_HOME=$(pwd)/$MVN" >> .profile
 	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
