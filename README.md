@@ -7,13 +7,15 @@ several systems are supported: debian, arch, msys2(cygwin/windows), windows(scoo
 
 #### installation
 
+##### linux / msys2 (cygwin on windows)
+
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   wget 
-  chmod
-  ./
+  chmod +x install-linux-dev-vm
+  ./install-linux-dev-vm
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
   
-#### start
+##### start
 
 start the downloaded script *./install-linux-dev-vm*
 
@@ -94,3 +96,9 @@ Install squirrel (sql)                   (Y|n) :
 >>>>>> !!! START INSTALLATION ? <<<<<<  (Y|n)  : 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
+#### windows
+
+##### installation
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
