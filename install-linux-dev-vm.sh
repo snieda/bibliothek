@@ -91,7 +91,7 @@ echo "============ System and VirtualBox informations ============"
 
 read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
-read -p  "Termux Terminal Emulator System addons   (Y|n) : " INST_TERMUX
+read -p  "Termux Terminal Emulator System addons   (y|N) : " INST_TERMUX
 read -p  "Unsecure (TimeServer:ntp, WinFS:samba)   (y|N) : " INST_UNSECURE
 read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
 read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
@@ -110,7 +110,7 @@ if [ "$REPO" != "" ]; then
 fi
 echo     "================== development IDE+Tools ===================="
 read -p  "Install open java8                       (Y|n) : " INST_JAVA
-read -ep "Install graalvm java8 community          (Y|n) : " -i 20.0.0 INST_GRAALVM
+read -ep "Install graalvm java8 community        Version : " -i 20.2.0 INST_GRAALVM
 read -p  "Install nodejs                           (Y|n) : " INST_NODEJS
 read -ep "Install python3.x+anaconda3            Version : " -i 5.3.0 INST_PYTHON_ANACONDA
 read -p  "Install resilio sync (data sync)         (y|N) : " INST_RESILIO_SYNC
@@ -164,7 +164,7 @@ echo "install printer drivers..."
 $INST printer-driver-cups-pdf
 
 if [ "$CONSOLE_ONLY" == "n" ]; then
-	if [ "$INST_TERMUX" != "n" ]; then
+	if [ "$INST_TERMUX" == "y" ]; then
 		$INST x11-repo xorg-xclock tigervnc # only for termux
 		mkdir ~/ubuntu_directory
 		cd ~/ubuntu_directory
@@ -195,6 +195,7 @@ echo "alias ll='ls -alF'" >> .profile
 # additional terminal tools
 # ----------------------------------------------------
 mkdir bin
+mkdir -p .local/share/fonts
 
 echo "python3"
 for i in python python-pip python3 python3-pip flake8 autopep8 pudb; do $INST $i; done
@@ -205,6 +206,9 @@ pip install flake8 autopep8 pudb # on some distributions, it may be available on
 if [ "$PKG" == "pkg" ]; then # mostly freenbsd
 	for i in py37-pip; do $INST $i; done
 fi
+
+echo "installing developer font 'fantasque sans mono' to be used by terminal or vim/devicons"
+curl -L https://github.com/belluzj/fantasque-sans/releases/download/v1.8.0/FantasqueSansMono-Normal.tar.gz | tar xzC ~/.local/share/fonts
 
 echo "installing Fuzzy Finder"
 wget -nc https://github.com/junegunn/fzf/raw/master/install
