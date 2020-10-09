@@ -441,6 +441,12 @@ devilspie -a
 	)
 	)
 	
+## gnome desktop extensions
+
+	Extensions in : https://extensions.gnome.org/
+	
+	let you configure a system status bar (cpu, ram-use etc.)
+
 ## netcat alternative pwncat (python script)
 
 	curl https://raw.githubusercontent.com/cytopia/pwncat/master/bin/pwncat
