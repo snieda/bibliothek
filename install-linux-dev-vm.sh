@@ -38,6 +38,10 @@ echo "System : $(uname -a)"
 echo "User   : $(id)"
 echo -------------------------------------------------------
 echo
+ARCH=$(uname -m)
+$Os=$(uname -s)
+$os=${$(uname -s),,}
+
 read -ep "Pckg Installer (apt,pacman,pkg,yum,yast,zypper): " -i "apt" PKG
 
 if [ "$UID" == "0" ]; then # only on root priviledge
@@ -232,7 +236,7 @@ echo "installing googler"
 curl https://raw.githubusercontent.com/jarun/googler/v4.2/googler -o ~/bin/googler && chmod a+x ~/bin/goolger
 
 echo "installing broot tree+fzf like file browser"
-curl https://dystroy.org/broot/download/x86_64-linux/broot -o ~/bin/broot && chmod a+x ~/bin/broot
+curl https://dystroy.org/broot/download/$ARCH-$os/broot -o ~/bin/broot && chmod a+x ~/bin/broot
 
 if [ "$INST_UNSECURE" == "y" ]; then
 	echo "Hetzner NTP WARNING: enables DDOS attacks!"
@@ -308,7 +312,7 @@ if [ "$INST_PYTHON_ANACONDA" != "" ]; then
     echo "install python+anaconda..."
 	$INST python3 python3-pip python3-nose
 	$INST python-pip
-    ANACONDA_FILE=Anaconda3-$INST_PYTHON_ANACONDA-Linux-x86_$BITS.sh
+    ANACONDA_FILE=Anaconda3-$INST_PYTHON_ANACONDA-$Os-$ARCH.sh
     if [ ! -f "$ANACONDA_FILE" ]; then
     	wget -nc https://repo.continuum.io/archive/$ANACONDA_FILE
     fi
@@ -355,7 +359,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 
 	if [ "$INST_FMAN" != "n" ]; then
 		echo "install fman..."
-		#curl https://fman.io/download/thank-you?os=Linux&distribution=Ubuntu
+		#curl https://fman.io/download/thank-you?os=$Os&distribution=Ubuntu
 		$SUDO apt-key adv --keyserver keyserver.ubuntu.com --recv 9CFAF7EB
 		$INST apt-transport-https
 		echo "deb [arch=amd64] https://fman.io/updates/ubuntu/ stable main" | $SUDO tee /etc/apt/sources.list.d/fman.list
@@ -365,7 +369,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	if [ "$VB_VERSION" != "" ]; then
 		echo "install virtualbox guest additions"
 		#$INST virtualbox-guest-utils virtualbox-guest-x11
-		$INST linux-headers-$(uname -r) build-essential dkms
+		$INST $os-headers-$(uname -r) build-essential dkms
 		wget -nc http://download.virtualbox.org/virtualbox/$VB_VERSION/VBoxGuestAdditions_$VB_VERSION.iso
 		$SUDO mkdir /media/VBoxGuestAdditions
 		$SUDO mount -o loop,ro VBoxGuestAdditions_$VB_VERSION.iso /media/VBoxGuestAdditions
@@ -382,8 +386,8 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 
 	if [ "$INST_LIBREOFFICE" != "n" ]; then
 	    echo "install libreoffice..."
-	#	wget -nc https://www.libreoffice.org/donate/dl/deb-x86_64/6.1.2/de/LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
-	#	tar -xvf LibreOffice_6.1.2_Linux_x86-64_deb.tar.gz
+	#	wget -nc https://www.libreoffice.org/donate/dl/deb-$ARCH/6.1.2/de/LibreOffice_6.1.2_$Os_$ARCH_deb.tar.gz
+	#	tar -xvf LibreOffice_6.1.2_$Os_$ARCH_deb.tar.gz
 	#	cd debs
 	#	sudo dpkg -i *.deb
 	#	sudo apt-get -f install
@@ -406,8 +410,8 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 
 	if [ "$INST_NETBEANS" != "n" ]; then
 	    echo "install java+netbeans..."
-	    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
-	    NETBEANSFILE=jdk-8u111-nb-8_2-linux-x$BITS.sh
+	    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-$os-i586.tar.gz
+	    NETBEANSFILE=jdk-8u111-nb-8_2-$os-x$BITS.sh
 	    if [ ! -f "$NETBEANSFILE" ];then
 		wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/$NETBEANSFILE
 		wget http://plugins.netbeans.org/download/plugin/3380
@@ -439,7 +443,7 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 
 	if [ "$INST_ECLIPSE" != "" ]; then
 	    echo "install eclipse..."
-		ECLIPSE_FILE=eclipse-jee-$INST_ECLIPSE-R-linux-gtk-x86_$BITS.tar.gz
+		ECLIPSE_FILE=eclipse-jee-$INST_ECLIPSE-R-$os-gtk-$ARCH.tar.gz
 		if [ ! -f "$ECLIPSE_FILE" ]; then
 			wget -nc http://ftp.fau.de/eclipse/technology/epp/downloads/release/$INST_ECLIPSE/R/$ECLIPSE_FILE
 		fi
@@ -500,16 +504,16 @@ fi
 
 if [ "$INST_RESILIO_SYNC" == "y" ]; then
     echo "install/run bittorrent-sync. use localhost:8888 to configure it"
-    wget -nc https://download-cdn.resilio.com/stable/linux-x$BITS/resilio-sync_x$BITS.tar.gz
+    wget -nc https://download-cdn.resilio.com/stable/$os-x$BITS/resilio-sync_x$BITS.tar.gz
     tar -xf resilio-sync_x$BITS.tar.gz
     ./rslsync
 fi
 
 if [ "$DOMAIN" != "" ]; then
     echo "domain"
-    wget -nc http://download.beyondtrust.com/PBISO/8.0.0.2016/linux.deb.x$BITS/pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
-    chmod +x pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
-    sudo ./pbis-open-8.0.0.2016.linux.x86_$BITS.deb.sh
+    wget -nc http://download.beyondtrust.com/PBISO/8.0.0.2016/$os.deb.x$BITS/pbis-open-8.0.0.2016.$os.$ARCH.deb.sh
+    chmod +x pbis-open-8.0.0.2016.$os.$ARCH.deb.sh
+    sudo ./pbis-open-8.0.0.2016.$os.$ARCH.deb.sh
     domainjoin-cli join $DOMAIN $DOMAIN_USER
 fi
 
