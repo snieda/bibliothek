@@ -325,13 +325,14 @@ in the commandline you can revert with:
 	vim-plug: curl -fLo ~/.vim/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 	.vimrc  : https://gist.githubusercontent.com/facundovictor/42733b014bcc479f5cd8/raw/e53816453a21de40653906731ddb079d710b1531/.vimrc
 	eclim   : wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
-
+* ne:       nice editor http://ne.di.unimi.it/
 * slap:     https://github.com/slap-editor/slap
 * micro:    https://github.com/zyedidia/micro/releases
 * suplemon: https://github.com/richrd/suplemon
 
 	icdiff
 	ansi2html
+	pdftotext
 
 AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
 
@@ -339,6 +340,7 @@ AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
 
 	mc    # midnightcommander
 	lf    # configurable filemanager, written in go 
+	broot # tree file manager with fast fuzzy search
 
 ## FILE CONCATENATE
 
@@ -365,6 +367,7 @@ https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
 ## WINDOWS TOOLS
 
 windows system tools http://www.nirsoft.net/x64_download_package.html
+windows package manager: scoop (light, no admin required!)
 
 ##  Eclilpse Dark Theme
 
