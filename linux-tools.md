@@ -116,6 +116,11 @@ then run
 	kpartx -dv <image-flad.vmdk>
 to remove the partition mappings.
 
+## multi boot usb
+
+http://multibootusb.org/page_guide/
+https://www.ventoy.net/en/index.html
+
 ## find
 
 	find -type f -mtime -365 -ls -regex "de[/]tsl2[/].*Definition.java"
