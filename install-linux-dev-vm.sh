@@ -229,10 +229,10 @@ for i in lf progress autojump archivemount; do $INST $i; done
 curl -L https://github.com/gokcehan/lf/releases/download/r13/lf-linux-amd64.tar.gz | tar xzC ~/bin
 
 echo "installing googler"
-curl https://raw.githubusercontent.com/jarun/googler/v4.0/googler -O ~/bin/googler && chmod a+x ~/bin/goolger
+curl https://raw.githubusercontent.com/jarun/googler/v4.2/googler -o ~/bin/googler && chmod a+x ~/bin/goolger
 
 echo "installing broot tree+fzf like file browser"
-curl https://dystroy.org/broot/download/x86_64-linux/broot -O ~/bin/broot && chmod a+x ~/bin/broot
+curl https://dystroy.org/broot/download/x86_64-linux/broot -o ~/bin/broot && chmod a+x ~/bin/broot
 
 if [ "$INST_UNSECURE" == "y" ]; then
 	echo "Hetzner NTP WARNING: enables DDOS attacks!"
@@ -257,10 +257,13 @@ if [ "$INST_JAVA" != "n" ]; then
     echo "install java openjdk-8-jdk..."
     # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
     #wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x$BIT.tar.gz
+    #wget  --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/15+36/779bf45e88a44cbd9ea6621d33e33db1/jdk-15_windows-x64_bin.zip
 	#sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
 	#sudo ln -s java jdk1.8.0_191
 	#ls -l /usr/local/sbin/
-	echo "export JAVA_HOME=/usr" >> .profile
+	[ "$(pwd)" == *"com.termux"* ] && TERMUX=/data/data/com.termux/files # more generic: TERMUX=${$(pwd)%/home}
+	echo "export JAVA_HOME=$TERMUX/usr/lib/jvm/java-8-openjdk-amd64" >> .profile
+	#echo "export JAVA_HOME=/usr" >> .profile
 	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
 	for i in openjdk-8-jdk maven; do $INST $i; done
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
