@@ -285,11 +285,11 @@ if [ "$INST_GRAALVM" != "" ]; then
 	
 	if [ "$MVN" == "" ]; then
 		MVN=apache-maven-3.6.3
-		wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/MVN-bin.tar.gz
+		wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/$MVN-bin.tar.gz
 		tar -xf $MVN-bin.tar.gz
 		echo "export M2_HOME=$(pwd)/$MVN" >> .profile
 		echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
-		echo "export PATH=${M2_HOME}/bin:${PATH}" >> .profile
+		echo "export PATH=$M2_HOME/bin:$PATH" >> .profile
 	fi
 fi
 
