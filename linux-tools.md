@@ -1,5 +1,17 @@
 # Linux Tool Descriptions
 
+## bash
+
+use file asteriks like **/myfile.*
+	
+	shopt -s globstar
+
+add shortcuts for fast file find (like Ctrl+P) and command find (like Ctrl+Shift+P
+
+	bind -x '"\C-r":"cat ~/.bash_history | fzy"'
+	bind -x '"\C-g":"locate . | fzy"'
+	bind -x '"\C-h":"apropos -s 1 \'' | fzy"'
+
 ## wget
 
 	-m: mirror
