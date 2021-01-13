@@ -475,3 +475,6 @@ devilspie -a
 ## Sql GraphViz
 
 	https://github.com/rm-hull/sql_graphviz
+
+## Send Keystroke to XWindows Application
+	xdotool key --window "$(xdotool search --class Chromium | head -1)" Ctrl+Tab
