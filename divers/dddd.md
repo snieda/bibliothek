@@ -15,6 +15,7 @@
 * steuerliche Regulierung nicht-vegetarischer Lebensmittel in Bezug auf ermittelte Grundpreise von Brot/Wasser/Gemüse
 * Wasser/Funk/Bahn/Gesundheitswesen/Strassenbau/Müllentsorgung nicht gewinnorientiert -> nicht privatisiert!
 * Besteuerung von Energieverbrauch in Bezug auf CO2 und Partikel Ausstoss (Zahlungen sind zum Ausgleich der Umweltschäden zu verwenden)
+* zusätzlich nicht-lineare Besteuerung in Bezug auf gefahrene/geflogene Strecken pro Jahr (bezogen auf den obigen Energieverbrauch/Ausstoss)
 * Begrenzung fremd-vermieteten Wohneingentumes von Altbeständen pro Eigentümer
 * striktere Unabhängigkeit wirtschaftlicher/finanzorientierter Prüf-Organisationen. Jährliche Nachweispflicht.
 * soziale Unterstützungsgelder gebunden an soziale Tätigkeiten (alle oben genannten nicht gewinnorientierten staatlichen Grundleistungen)
