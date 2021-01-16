@@ -1,6 +1,8 @@
 
 ## Defizite der deutschen Demokratie
 
+### Lösungsvorschläge
+
 * Lobbyismus durch universitäre Beratung ersetzen - kein direkter Zugang gewinnorientierter Organisationen zur Regierung
 * keine Unterstützung international agierender Konzerne
 * kein Beziehen eines wirtschaftlichen Amtes innerhalb eines Konzerns/AG nach Verlassen eines mind. ministerialen Amtes
