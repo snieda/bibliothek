@@ -18,3 +18,4 @@
 * Begrenzung fremd-vermieteten Wohneingentumes von Altbeständen pro Eigentümer
 * striktere Unabhängigkeit wirtschaftlicher/finanzorientierter Prüf-Organisationen. Jährliche Nachweispflicht.
 * soziale Unterstützungsgelder gebunden an soziale Tätigkeiten (alle oben genannten nicht gewinnorientierten staatlichen Grundleistungen)
+* Asylantrag nur mit Nachweis (evtl. Kopie) von bisheriger Staatsangehörigkeit/Geburtsdatum+Ort. Identifizierung/Tracking bis zum Antrags-Abschluss. Bei grösseren Verstößen (Raub, Körperverletzung, etc.) gegen die Staatsordnung erfolgt Ausweisung -> kein weiterer Asylantrag möglich
