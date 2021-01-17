@@ -21,6 +21,7 @@
 * Wasser/Funk/Bahn/Gesundheitswesen/Strassenbau/Müllentsorgung nicht gewinnorientiert -> nicht privatisiert!
 * Besteuerung von Energieverbrauch in Bezug auf CO2 und Partikel Ausstoss (Zahlungen sind zum Ausgleich der Umweltschäden zu verwenden)
 * zusätzlich nicht-lineare Besteuerung in Bezug auf gefahrene/geflogene Strecken pro Jahr (bezogen auf den obigen Energieverbrauch/Ausstoss)
+* Innenstädte autofrei (ausgenommen Anwohner, Lieferverkehr)
 * Begrenzung fremd-vermieteten Wohneingentumes von Altbeständen pro Eigentümer
 * soziale Unterstützungsgelder gebunden an soziale Tätigkeiten (alle oben genannten nicht gewinnorientierten staatlichen Grundleistungen)
 * Asylantrag nur mit Nachweis (evtl. Kopie) von bisheriger Staatsangehörigkeit/Geburtsdatum+Ort. Identifizierung/Tracking bis zum Antrags-Abschluss. Bei grösseren Verstößen (Raub, Körperverletzung, etc.) gegen die Staatsordnung erfolgt Ausweisung -> kein weiterer Asylantrag möglich
