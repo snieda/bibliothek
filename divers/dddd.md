@@ -17,6 +17,7 @@
 * Abschaffung privater steuerlicher Schlupfregeln - allgemeine steuerliche Verarbeitung ohne private Nachweise/Erklärung
 * allgemeiner Schutz von Umwelt/Tieren durch Verfassung/Grundgesetz (Festlegung eines min. natürlichen Bestandes, min. Frei-Volumen pro Körperumfang und durchschn.Geschw.)
 * steuerliche Regulierung nicht-vegetarischer Lebensmittel in Bezug auf ermittelte Grundpreise von Brot/Wasser/Gemüse
+* starke öko-Steuer auf nicht-recyclebare Verpackungen oder Einweg-Verpackungen
 * Wasser/Funk/Bahn/Gesundheitswesen/Strassenbau/Müllentsorgung nicht gewinnorientiert -> nicht privatisiert!
 * Besteuerung von Energieverbrauch in Bezug auf CO2 und Partikel Ausstoss (Zahlungen sind zum Ausgleich der Umweltschäden zu verwenden)
 * zusätzlich nicht-lineare Besteuerung in Bezug auf gefahrene/geflogene Strecken pro Jahr (bezogen auf den obigen Energieverbrauch/Ausstoss)
