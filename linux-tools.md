@@ -478,3 +478,6 @@ devilspie -a
 
 ## Send Keystroke to XWindows Application
 	xdotool key --window "$(xdotool search --class Chromium | head -1)" Ctrl+Tab
+
+## Check certificate path of a web-server through java keytool
+	keytool -printcert -sslserver host:443
