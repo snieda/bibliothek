@@ -481,3 +481,7 @@ devilspie -a
 
 ## Check certificate path of a web-server through java keytool
 	keytool -printcert -sslserver host:443
+
+## HTTPS redirection on HTTP-Webapplication with certbot
+	- creates/renews cert for application on port 80 
+	https://certbot.eff.org/lets-encrypt/ubuntufocal-webproduct
