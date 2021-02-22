@@ -9,7 +9,7 @@ Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'koron/minimap-vim' " system: ............ must be installed
 Plug '/opt/fzf' | Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
-Plug 'ryanoasis/vim-devicons'
+Plug 'ludovicchabant/vim-gutentags'
 
 Plug 'majutsushi/tagbar'
 Plug 'terryma/vim-multiple-cursors'
@@ -22,6 +22,8 @@ Plug 'jiangmiao/auto-pairs'
 
 " install 'BurntSushi/ripgrep' "multifile search command line tool
 Plug 'wincent/ferret'
+Plug 'jremmen/vim-ripgrep'
+Plug 'el-iot/buffer-tree-explorer'
 
 " workspace / project
 " Plug 'thaerkh/vim-workspace'
@@ -36,12 +38,13 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'junegunn/vim-github-dashboard' "Needs Ruby compilation 
 
 " develop
-Plug 'Shougo/deoplete.nvim'
+"Plug 'Shougo/deoplete.nvim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
-Plug 'vim-syntastic/syntastic'
-Plug 'w0rp/ale'
+"Plug 'vim-syntastic/syntastic'
+"Plug 'w0rp/ale'
 "Plug 'natebosch/vim-lsc'
 Plug 'neoclide/coc.nvim'
+Plug 'liuchengxu/vista.vim'
 
 "debugging
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
@@ -51,9 +54,10 @@ Plug 'puremourning/vimspector'
 Plug 'microsoft/vscode-java-debug'
 
 " java
-" add javacomplete2 only, if YCM and deoplete are not working
-Plug 'artur-shaik/vim-javacomplete2'
+"Plug 'artur-shaik/vim-javacomplete2'  " add javacomplete2 only, if YCM and deoplete are not working
 Plug 'bam9523/vim-decompile'
+Plug 'richox/vim-search-maven'
+Plug 'dareni/vim-maven-ide'
 
 " python
 "Plug 'nvie/vim-flake8'
@@ -67,7 +71,7 @@ Plug 'mtscout6/vim-cjsx'
 " TypeScript
 Plug 'leafgarland/typescript-vim'
 
-" Othes
+" Others
 Plug 'digitaltoad/vim-jade'
 Plug 'wavded/vim-stylus'
 Plug 'genoma/vim-less'
@@ -88,10 +92,10 @@ Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
 " layout and coloring
 Plug 'altercation/vim-colors-solarized'
-Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 "Plug 'itchyny/lightline.vim'
+Plug 'ryanoasis/vim-devicons'
 
 " Load on nothing
 Plug 'nacitar/terminalkeys.vim', { 'on': [] }
@@ -124,7 +128,7 @@ au BufNewFile,BufRead Jenkinsfile*  setf groovy
 set number
 set ruler
 set cursorcolumn 
-hi CursorColumn ctermbg=8
+hi CursorColumn ctermbg=Blue
 
 filetype plugin indent on
 " show existing tab with 4 spaces width
@@ -363,7 +367,8 @@ let g:airline_powerline_fonts = 1
 "let g:airline_symbols.linenr = ''
 
 " devicons
-set guifont=Fantasque\ Sans\ Mono
+set guifont=Fantasque\ Sans\ Mono\ 11
+"set guifont=Ubuntu\ Nerd\ Font\ Complete\ Mono\ 11
 
 " Syntastic Configuration -----------------------------------------------------
 
@@ -444,7 +449,7 @@ let g:typescript_indent_disable = 1
 
 " THEMING ---------------------------------------------------------------------
 color ron
-set colorcolumn=120
+"set colorcolumn=120
 set cursorline
 
 " Searching colors
@@ -572,7 +577,8 @@ noremap <C-S-y> :Commands<CR>
 " noremap <C-M> :only
 let g:ycm_error_symbol = '**'
 let g:ycm_add_preview_to_completeopt = 1
-set encoding=utf8
+set encoding=UTF-8
+
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " Tell YCM where to find the plugin. Add to any existing values.
@@ -580,23 +586,24 @@ let g:ycm_java_jdtls_extension_path = [
   \ '~/.vim/plugged/vimspector/gadgets/linux'
   \ ]
 
-let s:jdt_ls_debugger_port = 0
+let g:jdt_ls_debugger_port = 0
 function! s:StartDebugging()
-  if s:jdt_ls_debugger_port <= 0
+  if g:jdt_ls_debugger_port <= 0
     " Get the DAP port
-    let s:jdt_ls_debugger_port = youcompleteme#GetCommandResponse(
+    let g:jdt_ls_debugger_port = youcompleteme#GetCommandResponse(
       \ 'ExecuteCommand',
       \ 'vscode.java.startDebugSession' )
 
-    if s:jdt_ls_debugger_port == ''
+    if g:jdt_ls_debugger_port == ''
        echom "Unable to get DAP port - is JDT.LS initialized?"
-       let s:jdt_ls_debugger_port = 0
+       let g:jdt_ls_debugger_port = 0
        return
      endif
   endif
 
   " Start debugging with the DAP port
-  call vimspector#LaunchWithSettings( { 'DAPPort': s:jdt_ls_debugger_port } )
+  echom "DAP Port: " g:jdt_ls_debugger_port
+  call vimspector#LaunchWithSettings( { 'DAPPort': g:jdt_ls_debugger_port } )
 endfunction
 
 nnoremap <silent> <buffer> <F12> :call <SID>StartDebugging()<CR>
@@ -622,6 +629,23 @@ map <leader><C-R> :History
 map <leader><C-E> :History:
 map <leader><C-F> :History/
 map <leader><C-T> :Files
+map <leader><A-T> :rightbelow vertical YcmCompleter GoToType
 map <leader><A-LEFT> :<C-o>
 map <leader><A-RIGHT> :<C-i>
 map <leader>r :NERDTreeFind<CR> "sync NERDTree with current buffer
+map <leader>tt :bo terminal<CR> " to scroll in terminal: Ctrl+W N (to cancel: i or a)
+
+" coc.nvim -> starting java debugger
+
+function! JavaStartDebugCallback(err, port)
+  execute "cexpr! 'Java debug started on port: " . a:port . "'"
+  call vimspector#LaunchWithSettings({ "configuration": "Java Attach", "AdapterPort": ${DAPPort} })
+endfunction
+
+function JavaStartDebug()
+  call CocActionAsync('runCommand', 'vscode.java.startDebugSession', function('JavaStartDebugCallback'))
+endfunction
+
+nmap <leader>y :call JavaStartDebug()<CR>
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>mt :call MvnFindJavaClass()
