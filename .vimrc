@@ -1,8 +1,14 @@
+" .vimrc configuration file for a vim-ide using mouse 
+" and windows/eclipse/vscode like shortcuts
+" Thomas Schneider / 2021
+
 set mouse=a
 
 call plug#begin('~/.vim/plugged')
 
 " utils
+Plug 'snieda/vim-fiand'
+Plug 'ervandew/archive'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 "Plug 'wfxr/minimap.vim'  " system: code-minimap must be installed
@@ -19,6 +25,7 @@ Plug 'fisadev/vim-ctrlp-cmdpalette'
 "Plug 'vim-scripts/unmswin.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'sheerun/vim-polyglot'
 
 " install 'BurntSushi/ripgrep' "multifile search command line tool
 Plug 'wincent/ferret'
@@ -31,11 +38,12 @@ Plug 'el-iot/buffer-tree-explorer'
 Plug 'powerman/vim-plugin-autosess'
 Plug 'zefei/vim-wintabs'
 Plug 'zefei/vim-wintabs-powerline'
+Plug 'tpope/vim-dadbod' "database util relaying on dbext.vim (start with :DB mydatabaseurl)
 
 " git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
-" Plug 'junegunn/vim-github-dashboard' "Needs Ruby compilation 
+Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Needs Ruby compilatio
 
 " develop
 "Plug 'Shougo/deoplete.nvim'
@@ -64,10 +72,6 @@ Plug 'dareni/vim-maven-ide'
 Plug 'SkyLeach/pudb.vim'
 Plug 'tell-k/vim-autopep8'
 
-" CoffeeScript
-Plug 'kchmck/vim-coffee-script'
-Plug 'mtscout6/vim-cjsx'
-
 " TypeScript
 Plug 'leafgarland/typescript-vim'
 
@@ -78,11 +82,6 @@ Plug 'genoma/vim-less'
 
 " Docker
 Plug 'docker/docker', {'rtp': '/contrib/syntax/vim/'}
-
-" Plug 'pangloss/vim-javascript'
-
-" Jsx
-Plug 'mxw/vim-jsx'
 
 " Show the available 256 colors in vim.
 Plug 'guns/xterm-color-table.vim'
@@ -125,11 +124,6 @@ au BufNewFile,BufRead *.groovy  setf groovy
 au BufNewFile,BufRead Jenkinsfile*  setf groovy
 
 " General configuration -------------------------------------------------------
-set number
-set ruler
-set cursorcolumn 
-hi CursorColumn ctermbg=Blue
-
 filetype plugin indent on
 " show existing tab with 4 spaces width
 set tabstop=4
@@ -452,8 +446,13 @@ color ron
 "set colorcolumn=120
 set cursorline
 
+set number
+set ruler
+set cursorcolumn 
+hi CursorColumn ctermbg=8
+
 " Searching colors
-highlight Search cterm=NONE ctermfg=LightGrey ctermbg=Blue
+highlight Search cterm=NONE ctermfg=Yellow ctermbg=DarkGrey
 
 " Fix background on Guake
 highlight Normal ctermbg=NONE
@@ -512,21 +511,45 @@ nnoremap <leader>g :cfirst<CR>
 nnoremap <leader>G :clast<CR>
 let g:workspace_autosave_always = 1
 
+" Switching between Tabs(=Views or Perspectives), Windows(=Splits) and Buffers(=File-Views in Tab)
 noremap <Tab> :WintabsNext<CR>
 noremap <S-Tab> :WintabsPrevious<CR>
 noremap <Leader><Tab> :WintabsClose<CR>
 noremap <Leader><S-Tab> :WintabsClose!<CR>
 noremap <C-t> :tabnew<CR>
 noremap <C-e> :WintabsAllBuffers<CR>
-
+noremap <C-Tab> :tagNext<CR>
+noremap <C-L> : ($locate .) <bar> FZF
 cabbrev bonly WSBufOnly
 
 :set autoread
 
 " session related.
-cnoremap <C-O> source ~/.vim-session
-cnoremap <C-S> mksession! ~/.vim-session
+cnoremap <leader> <A-W> source ~/.vim-session
+cnoremap <leader> <A-S> mksession! ~/.vim-session
 nnoremap <silent> <C-S><C-S> :mksession! ~/.vim-session <CR>
+
+fu! SaveSess()
+    execute 'mksession! ' . getcwd() . '/.session.vim'
+endfunction
+
+"fu! RestoreSess()
+"if filereadable(getcwd() . '/.session.vim')
+"    execute 'so ' . getcwd() . '/.session.vim'
+"    if bufexists(1)
+"        for l in range(1, bufnr('$'))
+"            if bufwinnr(l) == -1
+"                exec 'sbuffer ' . l
+"            endif
+"        endfor
+"    endif
+"endif
+"endfunction
+
+"autocmd VimLeave * call SaveSess()
+"autocmd VimEnter * nested call RestoreSess()
+
+
 let g:vebugger_leader='<Leader>d'
 
 " /vim -b : edit binary using xxd-format!
@@ -625,8 +648,8 @@ map <leader><C-o> :YcmCompleter OrganizeImports
 map <leader><C-R> :YcmCompleter RefactorRename
 map <leader><C-P> :Commands
 map <leader><C-W> :Buffers
-map <leader><C-R> :History
-map <leader><C-E> :History:
+map <leader><C-E> :History
+map <leader><C-R> :History:
 map <leader><C-F> :History/
 map <leader><C-T> :Files
 map <leader><A-T> :rightbelow vertical YcmCompleter GoToType
@@ -647,5 +670,11 @@ function JavaStartDebug()
 endfunction
 
 nmap <leader>y :call JavaStartDebug()<CR>
+
 nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <leader>mt :call MvnFindJavaClass()
+nnoremap <leader>mt :call MvnFindJavaClass() " extremely slow!!
+nnoremap <leader>pp :call fzf#vim#locate('.', fzf#vim#with_preview('right'))<CR>
+nnoremap <leader>nt :NERDTreeFind
+nnoremap <leader>vv :write<CR><leader>sv
+noremap <C-s> :write<CR>
+com -nargs=+ FF call fzf#run({'source' : split(execute(<q-args>), "\n"), 'sink':'"'})
