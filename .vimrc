@@ -3,6 +3,11 @@
 " Thomas Schneider / 2021
 
 set mouse=a
+"set insertmode                       " use <C-O>+key to execute key on normal mode. <C-L> starts command mode. ESC returns to insert
+set splitright
+set splitbelow
+set nostartofline
+"autocmd BufEnter * silent! normal! g`"zz   " go to the last cursur position in the buffer after switching
 
 call plug#begin('~/.vim/plugged')
 
@@ -11,8 +16,8 @@ Plug 'snieda/vim-fiand'
 Plug 'ervandew/archive'
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
-"Plug 'wfxr/minimap.vim'  " system: code-minimap must be installed
-"Plug 'koron/minimap-vim' " system: ............ must be installed
+"Plug 'wfxr/minimap.vim'              " system: code-minimap must be installed
+"Plug 'koron/minimap-vim'             " system: ............ must be installed
 Plug '/opt/fzf' | Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'ludovicchabant/vim-gutentags'
@@ -20,14 +25,15 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-vinegar'
-" Plug 'wincent/command-t' " Needs Ruby compilation
+" Plug 'wincent/command-t'            " Needs Ruby compilation
 Plug 'fisadev/vim-ctrlp-cmdpalette'
 "Plug 'vim-scripts/unmswin.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'sheerun/vim-polyglot'
+Plug 'Townk/vim-autoclose'
 
-" install 'BurntSushi/ripgrep' "multifile search command line tool
+" install 'BurntSushi/ripgrep'        "multifile search command line tool
 Plug 'wincent/ferret'
 Plug 'jremmen/vim-ripgrep'
 Plug 'el-iot/buffer-tree-explorer'
@@ -38,34 +44,36 @@ Plug 'el-iot/buffer-tree-explorer'
 Plug 'powerman/vim-plugin-autosess'
 Plug 'zefei/vim-wintabs'
 Plug 'zefei/vim-wintabs-powerline'
-Plug 'tpope/vim-dadbod' "database util relaying on dbext.vim (start with :DB mydatabaseurl)
+Plug 'tpope/vim-dadbod'               "database util relaying on dbext.vim (start with :DB mydatabaseurl)
 
 " git
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
+Plug 'airblade/vim-gitgutter'         " git change history on file
 Plug 'junegunn/vim-github-dashboard', { 'on': ['GHDashboard', 'GHActivity'] } "Needs Ruby compilatio
 
 " develop
 "Plug 'Shougo/deoplete.nvim'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
-"Plug 'vim-syntastic/syntastic'
-"Plug 'w0rp/ale'
+"Plug 'vim-syntastic/syntastic'       " syntax checker for casi all languages
+"Plug 'w0rp/ale'                      " linter for casi all languages
 "Plug 'natebosch/vim-lsc'
 Plug 'neoclide/coc.nvim'
 Plug 'liuchengxu/vista.vim'
 
 "debugging
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'idanarye/vim-vebugger'
-Plug 'Dica-Developer/vim-jdb'
+"Plug 'idanarye/vim-vebugger'
+"Plug 'Dica-Developer/vim-jdb'
 Plug 'puremourning/vimspector'
 Plug 'microsoft/vscode-java-debug'
 
 " java
-"Plug 'artur-shaik/vim-javacomplete2'  " add javacomplete2 only, if YCM and deoplete are not working
+"Plug 'artur-shaik/vim-javacomplete2' " add javacomplete2 only, if YCM and deoplete are not working
 Plug 'bam9523/vim-decompile'
 Plug 'richox/vim-search-maven'
 Plug 'dareni/vim-maven-ide'
+"Plug 'georgewfraser/java-language-server' { 'do': './scripts/link_{linux|mac|windows}.sh' } " (depends on vim-lsc) ..then call mvn package -DskipTests
+Plug 'wsdjeg/JavaUnit.vim'
 
 " python
 "Plug 'nvie/vim-flake8'
@@ -79,17 +87,17 @@ Plug 'leafgarland/typescript-vim'
 Plug 'digitaltoad/vim-jade'
 Plug 'wavded/vim-stylus'
 Plug 'genoma/vim-less'
+Plug 'guns/xterm-color-table.vim'     " Show the available 256 colors in vim.
+
 
 " Docker
 Plug 'docker/docker', {'rtp': '/contrib/syntax/vim/'}
-
-" Show the available 256 colors in vim.
-Plug 'guns/xterm-color-table.vim'
 
 " Autocompletion
 Plug 'ternjs/tern_for_vim', { 'do': 'npm install' }
 
 " layout and coloring
+Plug 'vim-scripts/AutumnLeaf'
 Plug 'altercation/vim-colors-solarized'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
@@ -112,10 +120,6 @@ call plug#end()
 "    source ~/.vim/plugins.vim
 " endif
 
-let g:vimspector_enable_mappings = 'HUMAN'
-
-let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
-
 " Groovy ----------------------------------------------------------------------
 " Reference: http://www.vim.org/scripts/script.php?script_id=945
 " source ~/.vim/syntax/groovy.vim
@@ -125,14 +129,11 @@ au BufNewFile,BufRead Jenkinsfile*  setf groovy
 
 " General configuration -------------------------------------------------------
 filetype plugin indent on
-" show existing tab with 4 spaces width
-set tabstop=4
-" when indenting with '>', use 4 spaces width
-set shiftwidth=4
-" Sets the number of columns for a TAB.
-set softtabstop=4
-" On pressing tab, insert 4 spaces
-set expandtab
+
+set tabstop=4      " show existing tab with 4 spaces width
+set shiftwidth=4   " when indenting with '>', use 4 spaces width
+set softtabstop=4  " Sets the number of columns for a TAB.
+set expandtab      " On pressing tab, insert 4 spaces
 
 " Specific identations
 augroup identationGroup
@@ -331,6 +332,7 @@ let g:ale_statusline_format = ['x %d', '⚠ %d', '⬥ ok']
 let g:ale_open_list=1
 let g:ale_set_loclist=1
 let g:ale_set_quickfix=1
+let g:ale_disable_lsp = 1  " don't have collistions with coc.nvim or ycm
 
 " Airline configuration -------------------------------------------------------
 
@@ -339,6 +341,9 @@ set laststatus=2
 
 " Use 256 colors
 set t_Co=256
+let g:airline#extensions#ale#enabled = 1
+
+hi TabLineFill ctermfg=LightBlue ctermbg=DarkBlue
 
 "call airline#parts#define_function('ALE', 'ALEGetStatusLine')
 "call airline#parts#define_condition('ALE', 'exists("*ALEGetStatusLine")')
@@ -423,19 +428,6 @@ endfunction
 "noremap <silent> <C-e> : call ToggleErrors()<CR>
 " noremap <C-e> : call ToggleErrors()<CR>
 
-" YouCompleteMe Configuration -------------------------------------------------
-" ['same-buffer', 'horizontal-split', 'vertical-split', 'new-tab', 'new-or-existing-tab']
-let g:ycm_goto_buffer_command = 'new-or-existing-tab'
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_complete_in_comments = 1
-let g:ycm_seed_identifiers_with_syntax = 1
-
-" Fix for working with virtualenvs: https://github.com/Valloric/YouCompleteMe#i-get-importerror-exceptions-that-mention-pyinit_ycm_core-or-initycm_core 
-" let g:ycm_server_python_interpreter = 'env python'
-let g:ycm_python_binary_path = 'python'
-
-" bind
-nnoremap <leader>jd :YcmComplete GoTo<CR>
 
 " TypeScript configuration ----------------------------------------------------
 " Disable custom indenter
@@ -518,8 +510,7 @@ noremap <Leader><Tab> :WintabsClose<CR>
 noremap <Leader><S-Tab> :WintabsClose!<CR>
 noremap <C-t> :tabnew<CR>
 noremap <C-e> :WintabsAllBuffers<CR>
-noremap <C-Tab> :tagNext<CR>
-noremap <C-L> : ($locate .) <bar> FZF
+map <C-Tab> :tagNext<CR>
 cabbrev bonly WSBufOnly
 
 :set autoread
@@ -528,14 +519,15 @@ cabbrev bonly WSBufOnly
 cnoremap <leader> <A-W> source ~/.vim-session
 cnoremap <leader> <A-S> mksession! ~/.vim-session
 nnoremap <silent> <C-S><C-S> :mksession! ~/.vim-session <CR>
+autocmd VimLeave * NERDTreeClose
 
-fu! SaveSess()
-    execute 'mksession! ' . getcwd() . '/.session.vim'
-endfunction
-
+"fu! SaveSess()
+"    execute 'mksession! ' . getcwd() . '/.session.vim'
+"endfunction
+"
 "fu! RestoreSess()
 "if filereadable(getcwd() . '/.session.vim')
-"    execute 'so ' . getcwd() . '/.session.vim'
+"    execute 'so ' . getcwd() . '/.session.vim'
 "    if bufexists(1)
 "        for l in range(1, bufnr('$'))
 "            if bufwinnr(l) == -1
@@ -548,9 +540,6 @@ endfunction
 
 "autocmd VimLeave * call SaveSess()
 "autocmd VimEnter * nested call RestoreSess()
-
-
-let g:vebugger_leader='<Leader>d'
 
 " /vim -b : edit binary using xxd-format!
 augroup Binary
@@ -595,14 +584,33 @@ endfunction
 command! ZoomToggle call s:ZoomToggle()
 nnoremap <silent> <C-M> :ZoomToggle<CR>
 
-noremap <C-E>   :Buffers<CR>
-noremap <C-S-y> :Commands<CR>
+map <C-E>   :Buffers<CR>
+map <C-S-y> :Commands<CR>
 " noremap <C-M> :only
 let g:ycm_error_symbol = '**'
 let g:ycm_add_preview_to_completeopt = 1
 set encoding=UTF-8
 
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+" java language server
+let g:lsc_server_commands = {'java': '<path-to-java-language-server>/java-language-server/dist/lang_server_{linux|mac|windows}.sh'}
+" vimspector
+let g:vimspector_enable_mappings = 'HUMAN'
+
+" YouCompleteMe Configuration -------------------------------------------------
+" ['same-buffer', 'horizontal-split', 'vertical-split', 'new-tab', 'new-or-existing-tab']
+let g:ycm_goto_buffer_command = 'new-or-existing-tab'
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_complete_in_comments = 1
+let g:ycm_seed_identifiers_with_syntax = 1
+
+" Fix for working with virtualenvs: https://github.com/Valloric/YouCompleteMe#i-get-importerror-exceptions-that-mention-pyinit_ycm_core-or-initycm_core
+" let g:ycm_server_python_interpreter = 'env python'
+let g:ycm_python_binary_path = 'python'
+
+" bind
+nnoremap <leader>jd :YcmComplete GoTo<CR>
 
 " Tell YCM where to find the plugin. Add to any existing values.
 let g:ycm_java_jdtls_extension_path = [
@@ -631,6 +639,8 @@ endfunction
 
 nnoremap <silent> <buffer> <F12> :call <SID>StartDebugging()<CR>
 
+let g:vebugger_leader='<Leader>d'
+
 " Eigene 'eclipse-like' Shortcuts
 nnoremap <expr> <F7> :JDBAttach input("host: ") . ":" . input("port:")\<ESC>
 map <leader><F12> :call vebugger#jdb#attach('localhost:8787',{'srcpath':['tsl2.nano.h5/src/main','tsl2.nano.core/src/main/java','tsl2.nano.common/src/main/java','tsl2.nano.descriptor/src/main/java']})
@@ -657,9 +667,10 @@ map <leader><A-LEFT> :<C-o>
 map <leader><A-RIGHT> :<C-i>
 map <leader>r :NERDTreeFind<CR> "sync NERDTree with current buffer
 map <leader>tt :bo terminal<CR> " to scroll in terminal: Ctrl+W N (to cancel: i or a)
+map <Esc>[1;3D <C-I>            " go back to last position with ALT-LEFT
+map <Esc>[1;3C <C-O>            " go forward to next postition with ALT-RIGHT
 
 " coc.nvim -> starting java debugger
-
 function! JavaStartDebugCallback(err, port)
   execute "cexpr! 'Java debug started on port: " . a:port . "'"
   call vimspector#LaunchWithSettings({ "configuration": "Java Attach", "AdapterPort": ${DAPPort} })
@@ -669,12 +680,25 @@ function JavaStartDebug()
   call CocActionAsync('runCommand', 'vscode.java.startDebugSession', function('JavaStartDebugCallback'))
 endfunction
 
-nmap <leader>y :call JavaStartDebug()<CR>
+nmap <leader>y :call JavaStartDebug()<CR>    " start this before starting the vimspector debugger
 
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <leader>gd :YcmCompleter GoToDefinitionElseDeclaration<CR>
 nnoremap <leader>mt :call MvnFindJavaClass() " extremely slow!!
 nnoremap <leader>pp :call fzf#vim#locate('.', fzf#vim#with_preview('right'))<CR>
 nnoremap <leader>nt :NERDTreeFind
 nnoremap <leader>vv :write<CR><leader>sv
-noremap <C-s> :write<CR>
+map <C-s> :write<CR>
+map <C-q> :qa<CR>
 com -nargs=+ FF call fzf#run({'source' : split(execute(<q-args>), "\n"), 'sink':'"'})
+
+" maven + java -jar (compile/install test or java-jar for remote debugging)
+map <leader>jv: let $JAVA_HOME=~/graalvm-ce-java8-21.0.0 :let $PATH=$JAVA_HOME/bin:$PATH
+let $MSD="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8787 -Xnoagent -Djava.compiler=NONE"
+map <leader>mc :execute bo term ++rows=16 mvn compile
+map <leader>mi :execute bo term ++rows=16 mvn install
+map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
+map <leader>mt :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.") . " test -o
+"map <leader>md :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.core") . " test -o -Dmaven.surefire.debug=$MSD -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
+map <leader>md :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.core") . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
+let $JDB="-agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n"
+map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
