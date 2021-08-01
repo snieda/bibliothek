@@ -162,7 +162,7 @@ echo "install console text color tools"
 for i in colordiff icdiff colorized-logs grc bat; do $INST $i; done
 
 echo "install networking tools..."
-for i in nmap git curl wget openssh openssh-server openvpn gnupg links2 w3m tightvncserver; do $INST $i; done
+for i in nmap git curl wget openssh openssh-server openvpn gnupg lynx links2 w3m w3m-img tightvncserver tinyproxy; do $INST $i; done
 
 echo "install printer drivers..."
 $INST printer-driver-cups-pdf
@@ -183,22 +183,28 @@ fi
 
 echo "tool configurations (mc, tmux, etc...)"
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.tmux.conf > .tmux.conf
+mkdir -p bin
 mkdir -p .config/mc
 mkdir -p .termux
 mkdir -p shell
 mkdir -p .config/lf
+mkdir -p .config/broot
+
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
 curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash > shell/keybindings.bash
 curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash > shell/completion.bash
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.termux/termux.properties > .termux/termux.properties
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/etc/lf/lfrc > .config/lf/lfrc
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/broot/conf.toml > .config/broot/conf.toml
 echo "alias ll='ls -alF'" >> .profile
 
 # ----------------------------------------------------
 # additional terminal tools
 # ----------------------------------------------------
-mkdir bin
+
+curl https://www.gnu.org/software/bash/manual/bash.txt > bash.txt
+
 mkdir -p .local/share/fonts
 
 echo "python3"
@@ -213,6 +219,12 @@ fi
 
 echo "installing developer font 'fantasque sans mono' to be used by terminal or vim/devicons"
 curl -L https://github.com/belluzj/fantasque-sans/releases/download/v1.8.0/FantasqueSansMono-Normal.tar.gz | tar xzC ~/.local/share/fonts
+
+cd ~/.local/share/fonts && curl -fLo "Droid Sans Mono for Powerline Nerd Font Complete.otf" https://github.com/ryanoasis/nerd-fonts/raw/master/patched-fonts/DroidSansMono/complete/Droid%20Sans%20Mono%20Nerd%20Font%20Complete.otf
+
+echo "nnn filemanager with icons"
+curl https://github.com/jarun/nnn/releases/download/v4.2/nnn-nerd-static-4.2.x86_64.tar.gz  | tar xzC ~/bin
+curl https://github.com/Canop/broot/raw/master/resources/icons/vscode/vscode.ttf > ~/.local/share/fonts/vscode.ttf
 
 echo "installing Fuzzy Finder"
 wget -nc https://github.com/junegunn/fzf/raw/master/install
@@ -229,8 +241,11 @@ curl https://getmic.ro | bash
 cp micro bin/
 
 echo "lf filemanager and additional cli tools"
-for i in lf progress autojump archivemount; do $INST $i; done
+for i in lf nnn progress autojump archivemount sshfs fzy locate apropos; do $INST $i; done
 curl -L https://github.com/gokcehan/lf/releases/download/r13/lf-linux-amd64.tar.gz | tar xzC ~/bin
+
+echo "plugins for nnn filemanager"
+curl -Ls https://raw.githubusercontent.com/jarun/nnn/master/plugins/getplugs | sh
 
 echo "installing googler"
 curl https://raw.githubusercontent.com/jarun/googler/v4.2/googler -o ~/bin/googler && chmod a+x ~/bin/goolger
@@ -278,6 +293,8 @@ if [ "$INST_JAVA" != "n" ]; then
 	echo "export M2_HOME=$(pwd)/$MVN" >> .profile
 	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
 	echo "export PATH=$M2_HOME/bin:$PATH" >> .profile
+
+	curl https://www.benf.org/other/cfr/cfr-0.151.jar > bin/cfr-0.151.jar
 fi
 
 if [ "$INST_GRAALVM" != "" ]; then

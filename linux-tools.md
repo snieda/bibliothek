@@ -199,6 +199,8 @@ tqdm
 	
 	bat MYFILE
 
+	diff -yw --color=always <file1> <file2>
+
 ## maven
 
 install a local jar file to your local maven repository:

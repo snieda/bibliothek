@@ -328,7 +328,7 @@ endif
 " set laststatus=2
 
 " Ale Configuration -----------------------------------------------------------
-let g:ale_statusline_format = ['x %d', '⚠ %d', '⬥ ok']
+let g:ale_statusline_format = ['x %d', 'â  %d', 'â¬¥ ok']
 let g:ale_open_list=1
 let g:ale_set_loclist=1
 let g:ale_set_quickfix=1
@@ -357,13 +357,13 @@ hi TabLineFill ctermfg=LightBlue ctermbg=DarkBlue
 let g:airline_powerline_fonts = 1
 
 " powerline symbols
-"let g:airline_left_sep = ''
-"let g:airline_left_alt_sep = ''
-"let g:airline_right_sep = ''
-"let g:airline_right_alt_sep = ''
-"let g:airline_symbols.branch = ''
-"let g:airline_symbols.readonly = ''
-"let g:airline_symbols.linenr = ''
+"let g:airline_left_sep = 'î°'
+"let g:airline_left_alt_sep = 'î±'
+"let g:airline_right_sep = 'î²'
+"let g:airline_right_alt_sep = 'î³'
+"let g:airline_symbols.branch = 'î '
+"let g:airline_symbols.readonly = 'î¢'
+"let g:airline_symbols.linenr = 'î¡'
 
 " devicons
 set guifont=Fantasque\ Sans\ Mono\ 11
