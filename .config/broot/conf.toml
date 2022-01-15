@@ -18,10 +18,12 @@
 # if you don't want the hidden files you can launch `br -H`)
 # A popular flag is the `g` one which displays git related info.
 #
-default_flags = "ihg"
+default_flags = "ihgsd"
 
 icon_theme="vscode"
 show_selection_mark=true
+date_time_format="%d.%m.%y %R"
+syntax_theme="solarized.light"
 
 ###############################################################
 # Verbs and shortcuts
@@ -66,6 +68,13 @@ external = "mv {file} {other-panel-directory}"
 leave_broot = false
 
 [[verbs]]
+name = "newfile"
+key = "shift-F4"
+invocation = "touch {new_file}"
+execution = "touch {directory}/{new_file}"
+leave_broot = false
+
+[[verbs]]
 invocation = "create directory"
 key = "F7"
 shortcut = "md"
@@ -75,16 +84,31 @@ leave_broot = false
 [[verbs]]
 invocation = "pack directory"
 key = "ctrl-F5"
-external = "tar -cvf {directory} {other-pnael-directory}/{directory}.zip"
+external = "tar -cvf {directory} {other-panel-directory}/{directory}.zip"
 leave_broot = false
 
 [[verbs]]
 invocation = "archivemount packed file"
 key = "ctrl-shift-F5"
 shortcut = "z"
-execution = "am.sh {file-name} {file}"
+execution = ["am.sh {file} /tmp/{file-name}", ":focus /tmp/{file-name}"]
 leave_broot = false
 auto_exec = false
+set_working_dir = false
+
+[[verbs]]
+invocation = "unmount archivemount packed file"
+key = "ctrl-shift-F6"
+shortcut = "u"
+execution = "umount /tmp/{file-name}"
+leave_broot = false
+auto_exec = false
+set_working_dir = true
+
+[[verbs]]
+invocation = "home"
+key = "ctrl-home"
+execution = ":focus ~"
 
 [[verbs]]
 invocation = "locate file"
@@ -184,6 +208,17 @@ execution = ":focus"
 key = "ctrl-g"
 execution = ":toggle_git_status"
 
+cols_order = [
+    "mark",
+    "git",
+    "branch",
+    "name",
+    "date",
+    "size",
+    "permission",
+    "count"
+]
+
 [ext_colors]
 png = "rgb(255, 156, 75)"
 jpg = "rgb(255, 156, 75)"
@@ -209,12 +244,12 @@ gzip = "blue"
 #
 
 [skin]
-default = "none none"
+default = "White none"
 
-# default = "gray(20) gray(1)"
+# default = "gray(23) gray(1)"
 # tree = "rgb(89, 73, 101) none"
-# file = "gray(21) none"
-# directory = "rgb(255, 152, 0) none bold"
+file = "White none"
+# directory = "rgb(255, 255, 0) none bold"
 # exe = "rgb(17, 164, 181) none"
 # link = "Magenta none"
 # pruning = "rgb(89, 73, 101) none Italic"
@@ -224,17 +259,20 @@ default = "none none"
 # perm_x = "ansi(65) None"
 # owner = "gray(12) none"
 # group = "gray(12) none"
-# selected_line = "none gray(3)"
+# 	count = "ansi(136) gray(3)"
+dates = "ansi(136) None"
+# 	sparse = "ansi(214) None"
+selected_line = "none gray(9)"
 # char_match = "yellow none"
 # file_error = "Red none"
 # flag_label = "gray(16) none"
-# flag_value = "rgb(255, 152, 0) none bold"
+flag_value = "rgb(152, 255, 0) none bold"
 # input = "White none"
-# status_error = "Red gray(2)"
+status_error = "rgb(255, 152, 152) gray(2)"
 # status_job = "ansi(220) gray(5)"
 # status_normal = "gray(20) gray(3)"
-# status_italic = "rgb(255, 152, 0) None"
-# status_bold = "rgb(255, 152, 0) None bold"
+status_italic = "rgb(152, 255, 152) None"
+status_bold = "rgb(152, 255, 152) None bold"
 # status_code = "ansi(229) gray(5)"
 # status_ellipsis = "gray(19) gray(1)"
 # scrollbar_track = "rgb(80, 50, 0) none"
