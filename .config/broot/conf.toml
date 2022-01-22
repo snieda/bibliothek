@@ -47,12 +47,13 @@ key = "F8"
 shortcut = "rm"
 external = "rm -r {file}"
 leave_broot = false
+auto_exec = false
 
 [[verbs]]
 invocation = "edit"
 key = "F4"
 shortcut = "e"
-execution = "$EDITOR +{line} {file}"
+external = "$EDITOR +{line} {file}"
 leave_broot = false
 
 [[verbs]]
@@ -60,61 +61,70 @@ invocation = "copy"
 key = "F5"
 external = "cp -r {file} {other-panel-directory}"
 leave_broot = false
+auto_exec = false
 
 [[verbs]]
 invocation = "move"
 key = "F6"
 external = "mv {file} {other-panel-directory}"
 leave_broot = false
+auto_exec = false
+
+[[verbs]]
+invocation = "create-directory {newdir}"
+key = "F7"
+shortcut = "md"
+external = "mkdir {directory}/{newdir}"
+leave_broot = false
+auto_exec = false
 
 [[verbs]]
 name = "newfile"
 key = "shift-F4"
-invocation = "touch {new_file}"
-execution = "touch {directory}/{new_file}"
+invocation = "create-file {newname}"
+external = "$EDITOR {directory}/{newname}"
 leave_broot = false
+auto_exec = false
 
 [[verbs]]
-invocation = "create directory"
-key = "F7"
-shortcut = "md"
-external = "mkdir {subpath}"
-leave_broot = false
-
-[[verbs]]
-invocation = "pack directory"
+invocation = "pack-file-or-directory"
 key = "ctrl-F5"
-external = "tar -cvf {directory} {other-panel-directory}/{directory}.zip"
-leave_broot = false
-
-[[verbs]]
-invocation = "archivemount packed file"
-key = "ctrl-shift-F5"
-shortcut = "z"
-execution = ["am.sh {file} /tmp/{file-name}", ":focus /tmp/{file-name}"]
+external = "tar -cvf {other-panel-directory}/{file-name}.zip {file}"
 leave_broot = false
 auto_exec = false
-set_working_dir = false
 
 [[verbs]]
-invocation = "unmount archivemount packed file"
-key = "ctrl-shift-F6"
-shortcut = "u"
-execution = "umount /tmp/{file-name}"
+invocation = "archivemount"
+shortcut = "am"
+external = "am.sh {file-name}"
 leave_broot = false
-auto_exec = false
+auto_exec = true
 set_working_dir = true
+apply_to = "file"
 
 [[verbs]]
-invocation = "home"
-key = "ctrl-home"
-execution = ":focus ~"
+invocation = "view-archivemount"
+key = "ctrl-shift-F5"
+shortcut = "vam"
+auto_exec = true
+set_working_dir = true
+cmd = ":mkdir -p /tmp/{file-name};:am;:!focus /tmp/{file-name}.archivemount"
 
 [[verbs]]
-invocation = "locate file"
+invocation = "locate {dir}"
 key = "ctrl-F7"
 external = "locate {dir}"
-from_shell = true
+leave_broot = false
+auto_exec = false
+
+[[verbs]]
+incocation = "bash {arg}"
+shortcut = "bash"
+key = "F12"
+external = "$SHELL -c \"{file-name} {arg}\""
+set_working_dir = true
+leave_broot = false
+auto_exec = false
 
 [[verbs]]
 invocation = "webbrowser"
@@ -127,7 +137,7 @@ leave_broot = false
 invocation = "diff"
 key = "shift-F5"
 shortcut = "diff"
-execution = "diff -ywl --color=always {file} {other-panel-file}"
+external = "diff -ywl --color=always {file} {other-panel-file}"
 from_shell = true
 
 [[verbs]]
@@ -145,19 +155,9 @@ set_working_dir = true
 leave_broot = false
 
 [[verbs]]
-key = "ctrl-c"
-execution = ":quit"
-
-[[verbs]]
-key = "shift-F4"
-invocation = "create {subpath}"
-execution = "$EDITOR {directory}/{subpath}"
-leave_broot = false
-
-[[verbs]]
 invocation = "git_diff"
 shortcut = "gd"
-execution = "git diff {file}"
+external = "git diff {file}"
 leave_broot = false
 
 # If $PAGER isn't set on your computer, you should either set it
@@ -169,7 +169,8 @@ leave_broot = false
 key = "F3"
 name = "view"
 invocation = "view"
-execution = "$PAGER {file}"
+external = "$PAGER {file}"
+leave_broot = false
 
 # If you uncomment the two next shortcuts, the left
 # and right arrow keys will be used to go to the parent
@@ -177,11 +178,11 @@ execution = "$PAGER {file}"
 #
 [[verbs]]
 key = "left"
-execution = ":parent"
+internal = ":parent"
 
 [[verbs]]
 key = "right"
-execution = ":focus"
+internal = ":focus"
 
 # Another popular set of shorctuts for going up and down:
 #
@@ -205,8 +206,10 @@ execution = ":focus"
 # to the "git status" filter:
 #
 [[verbs]]
-key = "ctrl-g"
-execution = ":toggle_git_status"
+key = "ctrl-y"
+shortcut = "y"
+internal = ":toggle_stage"
+auto_exec = true
 
 cols_order = [
     "mark",
@@ -286,4 +289,3 @@ status_bold = "rgb(152, 255, 152) None bold"
 # You may find other skins on
 #  https://dystroy.org/broot/documentation/configuration/#colors
 # for example a skin suitable for white backgrounds
-
