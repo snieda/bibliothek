@@ -128,8 +128,24 @@ leave_broot = false
 invocation = "start-in-bash {arg}"
 shortcut = "bash"
 key = "F12"
-external = "$SHELL -c \"{file-name} {arg}\""
+external = "$SHELL -c \"{file-name} {arg};read;\""
 set_working_dir = true
+leave_broot = false
+auto_exec = false
+
+[[verbs]]
+invocation = "exec1-on-file {command}"
+shortcut = "exec1"
+key = "shift-F12"
+external = "{command} {file}"
+leave_broot = false
+auto_exec = false
+
+[[verbs]]
+invocation = "exec2-on-file {command}"
+shortcut = "exec2"
+key = "shift-F12"
+external = "{command} {file} {other-panel-file}"
 leave_broot = false
 auto_exec = false
 
@@ -153,15 +169,17 @@ leave_broot = false
 invocation = "diff"
 key = "shift-F5"
 shortcut = "diff"
-external = "diff -ywl --color=always {file} {other-panel-file}"
-from_shell = true
+external = "$SHELL -c \"diff -ywl --color=always {file} {other-panel-file}; read;\""
+#from_shell = true
+leave_broot = false
 
 [[verbs]]
 invocation = "ddiff"
 key = "shift-F7"
 shortcut = "ddiff"
-external = "diff -rywl --color=always {directory} {other-panel-directory}"
-from_shell = true
+external = "$SHELL -c \"diff -rywl --color=always {directory} {other-panel-directory}; read;\""
+#from_shell = true
+leave_broot = false
 
 [[verbs]]
 invocation = "git_diff"
