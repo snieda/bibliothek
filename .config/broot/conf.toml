@@ -118,10 +118,26 @@ leave_broot = false
 auto_exec = false
 
 [[verbs]]
-incocation = "bash {arg}"
+invocation = "terminal"
+key = "ctrl-t"
+execution = "$SHELL"
+set_working_dir = true
+leave_broot = false
+
+[[verbs]]
+invocation = "start-in-bash {arg}"
 shortcut = "bash"
 key = "F12"
 external = "$SHELL -c \"{file-name} {arg}\""
+set_working_dir = true
+leave_broot = false
+auto_exec = false
+
+[[verbs]]
+invocation = "new-terminal-on-file {arg}"
+shortcut = "terminal"
+key = "shift-alt-t"
+external = "gnome-terminal -- {arg} {file-name}"
 set_working_dir = true
 leave_broot = false
 auto_exec = false
@@ -146,13 +162,6 @@ key = "shift-F7"
 shortcut = "ddiff"
 external = "diff -rywl --color=always {directory} {other-panel-directory}"
 from_shell = true
-
-[[verbs]]
-incocation = "terminal"
-key = "ctrl-t"
-execution = "$SHELL"
-set_working_dir = true
-leave_broot = false
 
 [[verbs]]
 invocation = "git_diff"
