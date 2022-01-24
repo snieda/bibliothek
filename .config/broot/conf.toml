@@ -113,7 +113,7 @@ cmd = ":mkdir -p /tmp/{file-name};:am;:!focus /tmp/{file-name}.archivemount"
 [[verbs]]
 invocation = "locate {dir}"
 key = "ctrl-F7"
-external = "locate {dir}"
+external = "$SHELL -c \"locate {dir} | fzy;read\""
 leave_broot = false
 auto_exec = false
 
@@ -161,8 +161,22 @@ auto_exec = false
 [[verbs]]
 invocation = "webbrowser"
 key = "shift-F3"
-shortcut = "w"
+shortcut = "www"
 external = "w3m {file}"
+leave_broot = false
+
+[[verbs]]
+invocation = "word-view"
+key = "ctrl-shift-F3"
+shortcut = "w"
+external = "$SHELL -c \"docx2txt < {file} | less\""
+leave_broot = false
+
+[[verbs]]
+invocation = "excel-view"
+key = "alt-shift-F3"
+shortcut = "x"
+external = "$SHELL -c \"xlsx2csv -a -d tab {file} | less\""
 leave_broot = false
 
 [[verbs]]
@@ -186,6 +200,10 @@ invocation = "git_diff"
 shortcut = "gd"
 external = "git diff {file}"
 leave_broot = false
+
+[[verbs]]
+key = "alt-shift-f"
+internal = ":toggle_files"
 
 # If $PAGER isn't set on your computer, you should either set it
 #  or just replace it with your viewer of choice in the 'execution'
