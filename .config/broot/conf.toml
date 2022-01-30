@@ -96,7 +96,7 @@ auto_exec = false
 [[verbs]]
 invocation = "archivemount"
 shortcut = "am"
-external = "am.sh {file-name}"
+external = "am.sh \"{file-name}\""
 leave_broot = false
 auto_exec = true
 set_working_dir = true
@@ -111,9 +111,9 @@ set_working_dir = true
 cmd = ":mkdir -p /tmp/{file-name};:am;:!focus /tmp/{file-name}.archivemount"
 
 [[verbs]]
-invocation = "locate {dir}"
+invocation = "locate {anyfile}"
 key = "ctrl-F7"
-external = "$SHELL -c \"locate {dir} | fzy;read\""
+external = "$SHELL -c \"locate {anyfile} | fzy | xsel -b\""
 leave_broot = false
 auto_exec = false
 
@@ -125,8 +125,8 @@ set_working_dir = true
 leave_broot = false
 
 [[verbs]]
-invocation = "start-in-bash {arg}"
-shortcut = "bash"
+invocation = "start-in-shell {arg}"
+shortcut = "sh"
 key = "F12"
 external = "$SHELL -c \"{file-name} {arg};read;\""
 set_working_dir = true
@@ -134,7 +134,7 @@ leave_broot = false
 auto_exec = false
 
 [[verbs]]
-invocation = "exec1-on-file {command}"
+invocation = "exec1-on-current-file {command}"
 shortcut = "exec1"
 key = "shift-F12"
 external = "{command} {file}"
@@ -142,7 +142,7 @@ leave_broot = false
 auto_exec = false
 
 [[verbs]]
-invocation = "exec2-on-file {command}"
+invocation = "exec2-on-both-panel-files {command}"
 shortcut = "exec2"
 key = "shift-F12"
 external = "{command} {file} {other-panel-file}"
@@ -150,10 +150,19 @@ leave_broot = false
 auto_exec = false
 
 [[verbs]]
-invocation = "new-terminal-on-file {arg}"
-shortcut = "terminal"
+invocation = "new-terminal"
+shortcut = "bash"
 key = "shift-alt-t"
-external = "gnome-terminal -- {arg} {file-name}"
+external = "gnome-terminal"
+set_working_dir = true
+leave_broot = false
+auto_exec = true
+
+[[verbs]]
+invocation = "new-terminal-on-file {cmd}"
+shortcut = "cmd"
+key = "shift-alt-t"
+external = "gnome-terminal -- {cmd} {file-name}"
 set_working_dir = true
 leave_broot = false
 auto_exec = false
@@ -177,6 +186,13 @@ invocation = "excel-view"
 key = "alt-shift-F3"
 shortcut = "x"
 external = "$SHELL -c \"xlsx2csv -a -d tab {file} | less\""
+leave_broot = false
+
+[[verbs]]
+invocation = "openoffice-view"
+key = "alt-F3"
+shortcut = "libre"
+external = "$SHELL -c \"odt2txt {file} | less\""
 leave_broot = false
 
 [[verbs]]
