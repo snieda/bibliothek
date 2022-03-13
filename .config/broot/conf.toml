@@ -111,6 +111,22 @@ set_working_dir = true
 cmd = ":mkdir -p /tmp/{file-name};:am;:!focus /tmp/{file-name}.archivemount"
 
 [[verbs]]
+invocation = "sshfs {host}"
+shortcut = "ssh"
+external = "sshfs \"{host}:/\" \"{host}.sshfs\""
+leave_broot = false
+auto_exec = true
+set_working_dir = true
+
+[[verbs]]
+invocation = "view-sshfs {host}"
+key = "ctrl-shift-F7"
+shortcut = "vssh"
+auto_exec = true
+set_working_dir = true
+cmd = ":mkdir -p /tmp/{host};:ssh;:!focus /tmp/{host}.sshfs"
+
+[[verbs]]
 invocation = "locate {anyfile}"
 key = "ctrl-F7"
 external = "$SHELL -c \"locate {anyfile} | fzy | xsel -b\""
