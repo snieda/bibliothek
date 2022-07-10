@@ -170,21 +170,21 @@
             name: newfile
             key: shift-F4
             invocation: create-file {newname}
-            external: $EDITOR {directory}/{newname}
+            external: "$EDITOR {directory}/{newname}"
             leave_broot: false
             auto_exec: false
         }
         {
             invocation: pack-file-or-directory
             key: ctrl-F5
-            external: tar -cvf {other-panel-directory}/{file-name}.zip {file}
+            external: "tar -cvf {other-panel-directory}/{file-name}.zip {file}"
             leave_broot: false
             auto_exec: false
         }
         {
             invocation: archivemount
             shortcut: am
-            external: am.sh \{file-name}\
+            external: "am.sh {file-name}"
             leave_broot: false
             auto_exec: true
             set_working_dir: true
@@ -201,7 +201,7 @@
         {
             invocation: sshfs {host}
             shortcut: ssh
-            external: "sshfs {host}://tmp/{host}.sshfs"
+            external: "sshfs {host}:/tmp/{host}.sshfs"
             leave_broot: false
             auto_exec: true
             set_working_dir: true
@@ -217,7 +217,7 @@
         {
             invocation: locate {anyfile}
             key: ctrl-F7
-            external: $SHELL -c \locate {anyfile} | fzy | xsel -b\
+            external: "$SHELL -c \"locate {anyfile} | fzy | xsel -b\""
             leave_broot: false
             auto_exec: false
         }
@@ -232,7 +232,7 @@
             invocation: start-in-shell {arg}
             shortcut: sh
             key: F12
-            external: $SHELL -c \{file-name} {arg};read;\
+            external: "$SHELL -c \"{file-name} {arg};read;\""
             set_working_dir: true
             leave_broot: false
             auto_exec: false
@@ -289,21 +289,21 @@
             invocation: excel-view
             key: alt-shift-F3
             shortcut: x
-            external: $SHELL -c \xlsx2csv -a -d tab {file} | less\
+            external: "$SHELL -c \"xlsx2csv -a -d tab {file} | less\""
             leave_broot: false
         }
         {
             invocation: openoffice-view
             key: alt-F3
             shortcut: libre
-            external: $SHELL -c \odt2txt {file} | less\
+            external: "$SHELL -c \"odt2txt {file} | less\""
             leave_broot: false
         }
         {
             invocation: diff
             key: shift-F5
             shortcut: diff
-            external: $SHELL -c \diff -ywl --color=always {file} {other-panel-file}; read;\
+            external: "$SHELL -c \"diff -ywl --color=always {file} {other-panel-file}; read;\""
             #from_shell: true
             leave_broot: false
         }
@@ -311,7 +311,7 @@
             invocation: ddiff
             key: shift-F7
             shortcut: ddiff
-            external: $SHELL -c \diff -rywl --color=always {directory} {other-panel-directory}; read;\
+            external: "$SHELL -c \"diff -rywl --color=always {directory} {other-panel-directory}; read;\""
             #from_shell: true
             leave_broot: false
         }
