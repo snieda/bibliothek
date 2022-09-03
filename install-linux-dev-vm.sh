@@ -239,6 +239,7 @@ echo "installing micro editor"
 #cp $MICRO_DIR/micro bin/
 curl https://getmic.ro | bash
 cp micro bin/
+micro -plugin install aspell editorconfig filemanager fish fzf jump lsp  quickfix wc autoclose comment diff ftoptions linter literate status
 
 echo "lf filemanager and additional cli tools"
 for i in lf nnn progress autojump archivemount sshfs fzy locate apropos; do $INST $i; done
