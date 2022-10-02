@@ -2,7 +2,7 @@
 clear
 cat <<EOM
 ##############################################################################
-# install development-tools on linux (Thomas Schneider / 2016)
+# install development-tools on linux (Thomas Schneider / 2016-2022)
 # 
 # preconditions: linux (best: debian) or bsd system with package manager
 # annotation   : on FreeBSD the bash is on: /usr/local/bin/bash
@@ -29,7 +29,7 @@ EOM
 # system preparations
 # ----------------------------------------------------
 echo -------------------------------------------------------
-echo "Thomas Schneider / 2016 (refreshed 2020-10)"
+echo "Thomas Schneider / 2016 (refreshed 2022-10)"
 echo -------------------------------------------------------
 echo
 
@@ -97,7 +97,7 @@ read -p  "System upgrade                           (Y|n) : " INST_UPGRADE
 read -ep "Linux System Bit-width (32|64)                 : " -i "64" BITS
 read -p  "Termux Terminal Emulator System addons   (y|N) : " INST_TERMUX
 read -p  "Unsecure (TimeServer:ntp, WinFS:samba)   (y|N) : " INST_UNSECURE
-read -ep "Virtualbox Guest additions Version             : " -i 5.1.6 VB_VERSION
+read -ep "Virtualbox Guest additions Version             : " -i 6.1.38 VB_VERSION
 read -p  "Antiviren/Trojaner (clamav, rkhunter)    (Y|n) : " INST_ANTIVIR
 read -p  "Connect to a Network Domain                    : " DOMAIN
 if [ "$DOMAIN" != "" ]; then
@@ -113,11 +113,11 @@ if [ "$REPO" != "" ]; then
 	read -p "Git Project Name                               : " PRJ
 fi
 echo     "================== development IDE+Tools ===================="
-read -p  "Install open java8                       (Y|n) : " INST_JAVA
+read -p  "Install open jdk (openjdk-VERSION-jdk) Version : " -i 18 INST_JAVA
 read -ep "Install graalvm java community         Version : " -i 22.2 INST_GRAALVM
 read -ep "Install language server JDTLS          Version : " -i 1.16.0 INST_JDTLS
 read -p  "Install nodejs                           (Y|n) : " INST_NODEJS
-read -ep "Install python3.x+anaconda3            Version : " -i 5.3.0 INST_PYTHON_ANACONDA
+read -ep "Install python3.x+anaconda3            Version : " -i 2022.05 INST_PYTHON_ANACONDA
 read -p  "Install resilio sync (data sync)         (y|N) : " INST_RESILIO_SYNC
 read -p  "Console System only                      (Y|n) : " CONSOLE_ONLY
 if [ "$CONSOLE_ONLY" == "n" ]; then
@@ -135,9 +135,10 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 fi
 if [ "$CONSOLE_ONLY" == "n" ]; then
 	echo    "======================= Desktop IDEs ========================"
-	read -p  "Install java8 + netbeans 8.2             (Y|n) : " INST_NETBEANS
 	read -p  "Install visual studio code (~40MB)       (Y|n) : " INST_VSCODE
-	read -ep "Install eclipse (~300MB)                 (Y|n) : " -i 2020-09 INST_ECLIPSE
+	read -ep "Install eclipse (~300MB)                 (Y|n) : " -i 2022-09 INST_ECLIPSE
+	read -ep "Install netbeans                       Version : " -i 13 INST_NETBEANS
+	read -p  "Install theia                            (y|N) : " INST_THEIA
 	read -p  "Install fman (Ctrl+p filemanager)        (Y|n) : " INST_FMAN
 	read -p  "Install sublimetext+python-plugins       (Y|n) : " INST_SUBLIMETEXT
 	read -p  "Install squirrel (sql)                   (Y|n) : " INST_SQUIRREL
@@ -277,29 +278,32 @@ curl https://raw.githubusercontent.com/snieda/bibliothek/master/.vimrc > .vimrc
 #wget https://github.com/ervandew/eclim/releases/download/2.8.0/eclim_2.8.0.bin
 #chmod a+x eclim_2.8.0.bin
 
-if [ "$INST_JAVA" != "n" ]; then
-    echo "install java openjdk-8-jdk..."
-    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
+if [ "$INST_JAVA" != "" ]; then
+    echo "install java openjdk-$INST_JAVA-jdk..."
+    #wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-linux-i586.tar.gz
     #wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn/java/jdk/8u211-b12/478a62b7d4e34b78b671c754eaaf38ab/jdk-8u211-linux-x$BIT.tar.gz
     #wget  --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" https://download.oracle.com/otn-pub/java/jdk/15+36/779bf45e88a44cbd9ea6621d33e33db1/jdk-15_windows-x64_bin.zip
 	#sudo tar xfz jdk-8u191-linux-x$BITS.tar.gz
 	#sudo ln -s java jdk1.8.0_191
 	#ls -l /usr/local/sbin/
+	
 	[ "$(pwd)" == *"com.termux"* ] && TERMUX=/data/data/com.termux/files # more generic: TERMUX=${$(pwd)%/home}
 	echo "export JAVA_HOME=$TERMUX/usr/lib/jvm/java-8-openjdk-amd64" >> .profile
 	#echo "export JAVA_HOME=/usr" >> .profile
 	echo "PATH=$JAVA_HOME/bin:$PATH" >> .profile
-	for i in openjdk-8-jdk maven; do $INST $i; done
+	
+	for i in openjdk-$INST_JAVA-jdk maven; do $INST $i; done
+	
 	echo "call 'sudo update-alternatives --config java' to select/config the desired java"
 
-	MVN=apache-maven-3.6.3
-	wget http://www.apache.org/dist/maven/maven-3/3.6.3/binaries/$MVN-bin.tar.gz
+	MVN=apache-maven-3.8.6
+	wget http://www.apache.org/dist/maven/maven-3/3.8.6/binaries/$MVN-bin.tar.gz
 	tar -xf $MVN-bin.tar.gz
 	echo "export M2_HOME=$(pwd)/$MVN" >> .profile
 	echo "export MAVEN_HOME=$(pwd)/$MVN" >> .profile
 	echo "export PATH=$M2_HOME/bin:$PATH" >> .profile
 
-	curl https://www.benf.org/other/cfr/cfr-0.151.jar > bin/cfr-0.151.jar
+	curl https://www.benf.org/other/cfr/cfr-0.152.jar > bin/cfr-0.152.jar
 fi
 
 if [ "$INST_GRAALVM" != "" ]; then
@@ -438,16 +442,27 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 		$INST vlc-nox vlc
 	fi
 
-	if [ "$INST_NETBEANS" != "n" ]; then
-	    echo "install java+netbeans..."
+	if [ "$INST_NETBEANS" != "" ]; then
+	    echo "install netbeans..."
 	    # wget -nc http://download.oracle.com/otn-pub/java/jdk/8u112-b15/jdk-8u112-$os-i586.tar.gz
-	    NETBEANSFILE=jdk-8u111-nb-8_2-$os-x$BITS.sh
+	    NETBEANSFILE=Apache-NetBeans-$INST_NETBEANS-bin-$os-x$BITS.sh
 	    if [ ! -f "$NETBEANSFILE" ];then
-		wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/$NETBEANSFILE
-		wget http://plugins.netbeans.org/download/plugin/3380
+		#wget -nc --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk-nb/8u111-8.2/$NETBEANSFILE
+		wget -nc --no-check-certificate --no-cookies https://www.apache.org/dyn/closer.cgi/netbeans/netbeans-installers/$INST_NETBEANS/$NETBEANSFILE
+		#wget http://plugins.netbeans.org/download/plugin/3380
 	    fi
 	    $SUDO bash $NETBEANSFILE --silent &
 	    source $NETBEANSFILE
+	fi
+
+	if [ "$INST_THEIA" != "n" ]; then
+	    echo "install theia..."
+	    THEIAFILE=TheiaBlueprint.AppImage
+	    if [ ! -f "$THEIAFILE" ];then
+		wget -nc --no-check-certificate --no-cookies https://www.eclipse.org/downloads/download.php?file=/theia/latest/$os/TheiaBlueprint.AppImage&r=1
+	    fi
+	    $SUDO bash $THEIAFILE --silent &
+	    source $THEIAFILE
 	fi
 
 	if [ "$INST_VSCODE" != "n" ]; then
