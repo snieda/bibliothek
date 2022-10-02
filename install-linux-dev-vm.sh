@@ -114,7 +114,8 @@ if [ "$REPO" != "" ]; then
 fi
 echo     "================== development IDE+Tools ===================="
 read -p  "Install open java8                       (Y|n) : " INST_JAVA
-read -ep "Install graalvm java8 community        Version : " -i 20.2.0 INST_GRAALVM
+read -ep "Install graalvm java community         Version : " -i 22.2 INST_GRAALVM
+read -ep "Install language server JDTLS          Version : " -i 1.16.0 INST_JDTLS
 read -p  "Install nodejs                           (Y|n) : " INST_NODEJS
 read -ep "Install python3.x+anaconda3            Version : " -i 5.3.0 INST_PYTHON_ANACONDA
 read -p  "Install resilio sync (data sync)         (y|N) : " INST_RESILIO_SYNC
@@ -189,6 +190,7 @@ mkdir -p .termux
 mkdir -p shell
 mkdir -p .config/lf
 mkdir -p .config/broot
+mkdir -p .config/micro
 
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
@@ -239,6 +241,8 @@ echo "installing micro editor"
 #cp $MICRO_DIR/micro bin/
 curl https://getmic.ro | bash
 cp micro bin/
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/micro/settings.xml > .config/micro/settings.xml
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/micro/bindings.xml > .config/micro/bindings.xml
 micro -plugin install aspell editorconfig filemanager fish fzf jump lsp  quickfix wc autoclose comment diff ftoptions linter literate status
 
 echo "lf filemanager and additional cli tools"
@@ -299,7 +303,7 @@ if [ "$INST_JAVA" != "n" ]; then
 fi
 
 if [ "$INST_GRAALVM" != "" ]; then
-	GRAAL=graalvm-ce-java8-linux-amd$BIT-$INST_GRAALVM
+	GRAAL=graalvm-ce-java-linux-amd$BIT-$INST_GRAALVM
 	wget https://github.com/graalvm/graalvm-ce-builds/releases/download/vm-$INST_GRAALVM/$GRAAL.tar.gz
 	tar -xf $GRAAL.tar.gz
 	echo "export JAVA_HOME=$(pwd)/$GRAAL" >> .profile
@@ -315,6 +319,14 @@ if [ "$INST_GRAALVM" != "" ]; then
 	fi
 fi
 
+if [ "$INST_JDTLS" != "" ]; then
+	JDTLS=jdt-language-server-$INST_JDTLS
+	if [ ! -f "$JDTLS" ]; then
+		wget -nc https://download.eclipse.org/jdtls/milestones/$INST_DJTLS -O $JDTLS.tar.gz
+		tar -xf $JDTLS.tar.gz
+		echo "export PATH=$JDTLS/bin:$PATH" >> .profile
+	fi
+fi
 
 echo "installing all plugins for our vim-ide"
 vim +'PlugInstall --sync' +qa
