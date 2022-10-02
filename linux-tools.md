@@ -19,13 +19,14 @@ add shortcuts for fast file find (like Ctrl+P) and command find (like Ctrl+Shift
 	-k: convert to local
 	--ignore-length
 	-e robots=off --wait 1
+	-E add file extensions
 	--follow-ftp
 	--reject file-rejlist
 	-X --exclude dir-list
 	-np --no-parent
 	-N --timestamping only newer files
 	--content-disposition tries to find extension through content
-	wget -mpk --follow-ftp --ignore-length -e robots=off --exclude forum
+	wget -mpkE --follow-ftp --ignore-length -e robots=off --exclude forum
 
 ## tar
 
