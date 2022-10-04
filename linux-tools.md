@@ -148,6 +148,17 @@ find -type f -regextype "sed" -regex ".*^(cache).*" -mmin -120
 ### convert files in a tree from iso8859-1 to utf-8
 	find . -name "*.properties" -or -name "*.java" -type f -exec bash -c 'iconv {} -f ASCII//TRANSLIT -t UTF8 -o {}' \;
 
+## ripgrep (rg)
+
+### search in all directories and special files
+
+	ripgrep-all or rga adapters: pandoc poppler-utils ffmpeg zip decompress sqlite
+	example rga --rga-accurate mysearchstring
+
+	docx2txt
+	xlsx2txt
+	lesspipe
+
 ## file renaming
 
 	for f in abc*.txt do mv -- "$f" "${abc/nix}"; done
@@ -488,3 +499,7 @@ devilspie -a
 ## HTTPS redirection on HTTP-Webapplication with certbot
 	- creates/renews cert for application on port 80 
 	https://certbot.eff.org/lets-encrypt/ubuntufocal-webproduct
+
+## Application Network Traffic
+
+nethogs -v 1
