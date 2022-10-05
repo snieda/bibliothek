@@ -242,8 +242,8 @@ echo "installing micro editor"
 #cp $MICRO_DIR/micro bin/
 curl https://getmic.ro | bash
 cp micro bin/
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/micro/settings.xml > .config/micro/settings.xml
-curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/micro/bindings.xml > .config/micro/bindings.xml
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/micro/settings.json > .config/micro/settings.json
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/micro/bindings.json > .config/micro/bindings.json
 micro -plugin install aspell editorconfig filemanager fish fzf jump lsp  quickfix wc autoclose comment diff ftoptions linter literate status
 
 echo "lf filemanager and additional cli tools"
