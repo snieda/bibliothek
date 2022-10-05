@@ -1,0 +1,18 @@
+{
+    "colorscheme": "simple",
+    "diffgutter": true,
+    "eofnewline": false,
+    "fastdirty": true,
+    "hidehelp": false,
+    "ignorecase": false,
+    "lsp.server": "python=python3-pylsp,go=gopls,typescript=deno lsp,javascript=deno lsp,markdown=deno lsp,json=deno lsp,jsonc=deno lsp,rust=rls,lua=lua-lsp,c++=clangd,java=jdtls",
+    "matchbraceleft": true,
+    "pluginchannels": [
+        "https://raw.githubusercontent.com/micro-editor/plugin-channel/master/channel.json"
+    ],
+    "pluginrepos": [],
+    "savecursor": true,
+    "saveundo": true,
+    "scrollbar": true,
+    "termtitle": true
+}
