@@ -330,6 +330,7 @@ fi
 if [ "$INST_JDTLS" != "" ]; then
 	JDTLS=jdt-language-server-$INST_JDTLS
 	if [ ! -f "$JDTLS" ]; then
+			 
 		wget -nc https://download.eclipse.org/jdtls/milestones/$INST_DJTLS/latest.txt -O jdtls-latest.txt
 		wget -nc https://download.eclipse.org/jdtls/milestones/$INST_DJTLS/$(<jdtls-latest.txt) -O $JDTLS.tar.gz
 		tar -xf $JDTLS.tar.gz
@@ -619,4 +620,6 @@ source .profile
 
 echo -------------------------------------------------------
 echo "Installation finished successfull"
+echo "Please have a look into your .profile"
+echo "Use 'br' as filemanager and micro, ne or vim as editor
 echo -------------------------------------------------------
