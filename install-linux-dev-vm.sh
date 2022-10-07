@@ -621,5 +621,5 @@ source .profile
 echo -------------------------------------------------------
 echo "Installation finished successfull"
 echo "Please have a look into your .profile"
-echo "Use 'br' as filemanager and micro, ne or vim as editor
+echo "Use 'br' as filemanager and micro, ne or vim as editor"
 echo -------------------------------------------------------
