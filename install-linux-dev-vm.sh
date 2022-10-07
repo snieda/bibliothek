@@ -154,17 +154,20 @@ if [ "$INST_UPGRADE" != "n" ]; then
 	$SUDO $PKG -y upgrade
 fi
 
+echo "provide initial .profile"
+curl https://raw.githubusercontent.com/snieda/bibliothek/master/.profile >> .profile
+
 echo "install system tools (~83MB)..."
-for i in mc tree ytree htop git mupdf antiword fim zip rar p7zip tmux exfat-fuse; do $INST $i; done
+for i in mc tree ytree htop git mupdf antiword fim decompress zip rar p7zip tmux exfat-fuse sqlite; do $INST $i; done
 
 echo "install console text tools..."
-for i in vim ne dos2unix poppler-utils docx2txt catdoc kbtin pv bar ripgrep expect; do $INST $i; done
+for i in vim ne dos2unix poppler-utils docx2txt xlsx2txt lesspipe ffmpeg pandoc catdoc kbtin pv bar rg ripgrep rga ripgrep-all expect; do $INST $i; done
 
 echo "install console text color tools"
 for i in colordiff icdiff colorized-logs grc bat; do $INST $i; done
 
 echo "install networking tools..."
-for i in nmap git curl wget openssh openssh-server openvpn gnupg lynx links2 w3m w3m-img tightvncserver tinyproxy; do $INST $i; done
+for i in nmap git curl wget openssh openssh-server openvpn gnupg lynx links2 w3m w3m-img tightvncserver tinyproxy nethogs; do $INST $i; done
 
 echo "install printer drivers..."
 $INST printer-driver-cups-pdf
