@@ -331,8 +331,8 @@ if [ "$INST_JDTLS" != "" ]; then
 	JDTLS=jdt-language-server-$INST_JDTLS
 	if [ ! -f "$JDTLS" ]; then
 			 
-		wget -nc https://download.eclipse.org/jdtls/milestones/$INST_DJTLS/latest.txt -O jdtls-latest.txt
-		wget -nc https://download.eclipse.org/jdtls/milestones/$INST_DJTLS/$(<jdtls-latest.txt) -O $JDTLS.tar.gz
+		wget -nc https://download.eclipse.org/jdtls/milestones/$INST_JDTLS/latest.txt -O jdtls-latest.txt
+		wget -nc https://download.eclipse.org/jdtls/milestones/$INST_JDTLS/$(<jdtls-latest.txt) -O $JDTLS.tar.gz
 		tar -xf $JDTLS.tar.gz
 		echo "export PATH=$JDTLS/bin:$PATH" >> .profile
 	fi
