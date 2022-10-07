@@ -335,13 +335,6 @@ fi
 echo "installing all plugins for our vim-ide"
 vim +'PlugInstall --sync' +qa
 
-if [ "$INST_SQUIRREL" != "n" ]; then
-	SQUIRREL_FILE=squirrel-sql-client.jar
-	if [ ! -f "$SQUIRREL_FILE" ]; then
-		wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download -O $SQUIRREL_FILE
-	fi
-fi
-
 if [ "$INST_PYTHON_ANACONDA" != "" ]; then
     echo "install python+anaconda..."
 	$INST python3 python3-pip python3-nose
@@ -363,6 +356,7 @@ if [ "$INST_NODEJS" != "n" ]; then
 fi
 
 if [ "$CONSOLE_ONLY" == "n" ]; then
+
 	if [ "$INST_LXDE" != "n" ]; then
 		echo "install lxde..."
 		$INST lxde lxde-core
@@ -440,6 +434,14 @@ if [ "$CONSOLE_ONLY" == "n" ]; then
 	if [ "$INST_VLC" != "n" ]; then
 		echo "install vlc..."
 		$INST vlc-nox vlc
+	fi
+
+
+	if [ "$INST_SQUIRREL" != "n" ]; then
+		SQUIRREL_FILE=squirrel-sql-client.jar
+		if [ ! -f "$SQUIRREL_FILE" ]; then
+			wget -nc https://sourceforge.net/projects/squirrel-sql/files/latest/download -O $SQUIRREL_FILE
+		fi
 	fi
 
 	if [ "$INST_NETBEANS" != "" ]; then
@@ -609,3 +611,7 @@ fi
 # reload profile
 cd
 source .profile
+
+echo -------------------------------------------------------
+echo "Installation finished successfull"
+echo -------------------------------------------------------
