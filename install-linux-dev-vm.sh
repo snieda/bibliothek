@@ -198,7 +198,7 @@ mkdir -p .config/micro
 
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/ini > .config/mc/ini
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.config/mc/panels.ini > .config/mc/panels.ini
-curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash > shell/keybindings.bash
+curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/key-bindings.bash > shell/key-bindings.bash
 curl https://raw.githubusercontent.com/junegunn/fzf/master/shell/completion.bash > shell/completion.bash
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/.termux/termux.properties > .termux/termux.properties
 curl https://raw.githubusercontent.com/snieda/bibliothek/master/etc/lf/lfrc > .config/lf/lfrc
