@@ -435,6 +435,11 @@ sudo rkhunter --check
 ## stop a named process
 
 	ps -uax | grep '[t]sl2' | tee | awk '{print $2}' | xargs kill
+	
+or simply:
+	pkill  -f part-of-full-command
+or find the pid:
+	pgrep -f part-of-full-command	
 
 ## citrix problem with certificate: "Verbindung mit 0.0.0.2 Desktop kann nicht hergestellt werden"
 
@@ -482,6 +487,11 @@ devilspie -a
 	
 	let you configure a system status bar (cpu, ram-use etc.)
 
+## terminal image viewer
+	feh or tiv
+
+## best terminal browser
+	elinks (but without javascript!, alternatives: links, links2, lynx, w3m, browsh)
 ## netcat alternative pwncat (python script)
 
 	curl https://raw.githubusercontent.com/cytopia/pwncat/master/bin/pwncat
