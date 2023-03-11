@@ -498,7 +498,7 @@ devilspie -a
 	SIGCONT: kill -18 processId
 	
 	to see all possible signals: kill -l
-	use pstree to see the main process Id
+	use pstree to see the main process Id: pstree -gp
 	
 ## netcat alternative pwncat (python script)
 
