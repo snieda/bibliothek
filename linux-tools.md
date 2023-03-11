@@ -492,6 +492,14 @@ devilspie -a
 
 ## best terminal browser
 	elinks (but without javascript!, alternatives: links, links2, lynx, w3m, browsh)
+	
+## stop and continue processes to save battery power...
+	SIGSTOP: kill -19 processId
+	SIGCONT: kill -18 processId
+	
+	to see all possible signals: kill -l
+	use pstree to see the main process Id
+	
 ## netcat alternative pwncat (python script)
 
 	curl https://raw.githubusercontent.com/cytopia/pwncat/master/bin/pwncat
