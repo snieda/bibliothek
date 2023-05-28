@@ -59,6 +59,8 @@ elif [ "$PKG" == "pacman" ];then #arch, msys2 (windows/cygwin)
 	INST="$SUDO $PKG -S --noconfirm $*"
 elif [ "$PKG" == "pkg" ];then #freebsd
 	INST="$SUDO $PKG install -y --ignore-missing $*"
+elif [ "$PKG" == "apk" ];then #alpine linux
+	INST="$SUDO $PKG add $*"
 elif [ "$PKG" == "yum" ];then #fedora
 	INST="$SUDO $PKG install -y --skip-broken --tolerant $*"
 elif [ "$PKG" == "yast" ];then #SUSE (old)
