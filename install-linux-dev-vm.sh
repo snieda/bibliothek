@@ -42,7 +42,7 @@ ARCH=$(uname -m)
 $Os=$(uname -s)
 $os=${$(uname -s),,}
 
-read -ep "Pckg Installer (apt,pacman,pkg,yum,yast,zypper): " -i "apt" PKG
+read -ep "Installer (apt,pacman,pkg,apk,yum,yast,zypper): " -i "apt" PKG
 
 if [ "$UID" == "0" ]; then # only on root priviledge
 	$PKG install sudo > /dev/null #on minimized systems no sudo is available - you have to be root to install it!
