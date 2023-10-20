@@ -1,5 +1,8 @@
 # Linux Tool Descriptions
 
+## install terminal tools
+	sudo apt-get -y install tmux mc tree broot git nvim micro ne htop nmap nc tcpdump curl wget xclip poppler-utils dos2unix docx2txt catdoc fim cifs-utils openssh openvpn colordiff tar rar p7zip ntp xcompmgr w3m links2 inotify-tools fzf fzy mupdf abiword antiword
+
 ## bash
 
 use file asteriks like **/myfile.*
@@ -162,9 +165,6 @@ find -type f -regextype "sed" -regex ".*^(cache).*" -mmin -120
 ## file renaming
 
 	for f in abc*.txt do mv -- "$f" "${abc/nix}"; done
-
-## install terminal tools
-	sudo apt-get -y install mc tree ytree htop nmap git vim curl wget dos2unix conky mupdf abiword antiword xclip poppler-utils docx2txt catdoc fim vim cifs-utils openvpn colordiff w3m rar p7zip ntp ne xcompmgr tcpdump links2 tmux inotify-tools fzf
 
 ## cygwin
 console package installer:
