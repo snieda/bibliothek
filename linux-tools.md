@@ -2,14 +2,21 @@
 
 ## install terminal tools
 
-	sudo apt install -y fzf fzy tmux mc tree broot archivemount ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip 
- dos2unix poppler-utils docx2txt xls2csv catdoc fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 inotify-tools fzf fzy mupdf antiword
+	for p in fzf fzy tmux mc tree broot archivemount ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip 
+ dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc bat fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 inotify-tools fzf fzy mupdf antiword; do sudo apt install -y ; done
 
 ### configure terminal tools (start in your personal home directory!)
 
 	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.termux
 	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.config
  	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.local
+
+#### enable tools in your .profile
+
+	export VISUAL=lvim
+	export EDITOR=micro
+	export VIEWER=bat
+	export PAGER=bat
 
 ### install ide editor: lunarvim
 
@@ -20,6 +27,8 @@
 use file asteriks like **/myfile.*
 
 	shopt -s globstar
+
+  	shopt -s expand_aliases
 
 add shortcuts for fast file find (like Ctrl+P) and command find (like Ctrl+Shift+P
 
@@ -171,7 +180,7 @@ find -type f -regextype "sed" -regex ".*^(cache).*" -mmin -120
 	example rga --rga-accurate mysearchstring
 
 	docx2txt
-	xlsx2txt
+	xlsx2csv
 	lesspipe
 
 ## file renaming
@@ -372,7 +381,7 @@ in the commandline you can revert with:
 * slap:     https://github.com/slap-editor/slap
 * micro:    https://github.com/zyedidia/micro/releases
 * suplemon: https://github.com/richrd/suplemon
-
+* lunarvim: https://www.lunarvim.org/de/docs/installation
 	icdiff
 	ansi2html
 	pdftotext
@@ -412,7 +421,7 @@ https://medium.com/njiuko/using-fzf-instead-of-dmenu-2780d184753f
 windows system tools http://www.nirsoft.net/x64_download_package.html
 windows package manager: scoop (light, no admin required!)
 
-##  Eclilpse Dark Theme
+##  Eclipse Dark Theme
 
 http://www.eclipsecolorthemes.org/?view=theme&id=55501
 
