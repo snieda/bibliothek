@@ -2,20 +2,16 @@
 
 ## install terminal tools
 
-	for p in fzf fzy tmux mc tree broot archivemount ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc bat fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 inotify-tools fzf fzy mupdf antiword; do sudo apt install -y ; done
+	for p in fzf fzy tmux mc tree broot archivemount locate ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc bat fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 googler inotify-tools fzf fzy mupdf antiword; do sudo apt install -y ; done
 
 ### configure terminal tools (start in your personal home directory!)
 
-	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.termux
-	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.config
- 	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.local
+	its not possible to download explicit folders (see git archive) of git repositories without git clone
 
-#### enable tools in your .profile
-
-	export VISUAL=lvim
-	export EDITOR=micro
-	export VIEWER=bat
-	export PAGER=bat
+ 	git clone ... ~./config
+	cp -r ~/.config/bibliothek/.config ~/
+	cp -r ~/.config/bibliothek/.local ~/
+	cp -r ~/.config/bibliothek/.termux ~/
 
 ### install ide editor: lunarvim
 
@@ -23,18 +19,35 @@
 
 ## bash
 
-use file asteriks like **/myfile.*
+### create a .profile file in your home and add the following entries
 
-	shopt -s globstar
+	export PATH=~/.local/bin:$PATH
 
-  	shopt -s expand_aliases
+	# enable editors and viewers
 
-add shortcuts for fast file find (like Ctrl+P) and command find (like Ctrl+Shift+P
+		export VISUAL=lvim
+		export EDITOR=micro
+		export VIEWER=bat
+		export PAGER=bat
 
-	bind -x '"\C-r":"cat ~/.bash_history | fzy"'
-	bind -x '"\C-g":"locate . | fzy"'
-	bind -x '"\C-h":"apropos -s 1 \'' | fzy"'
+	# use file asteriks like **/myfile.*
 
+		shopt -s globstar
+
+	# use alias
+
+  		shopt -s expand_aliases
+
+	# add shortcuts for fast file find (like Ctrl+P) and command find (like Ctrl+Shift+P
+
+		bind -x '"\C-r":"cat ~/.bash_history | fzy"'
+		bind -x '"\C-g":"locate . | fzy"'
+		bind -x '"\C-h":"apropos -s 1 \'' | fzy"'
+
+	# provide a fast cd on additional paths
+
+		export CDPATH=....
+ 
 ## wget
 
 	-m: mirror
