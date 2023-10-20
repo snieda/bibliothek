@@ -2,8 +2,7 @@
 
 ## install terminal tools
 
-	for p in fzf fzy tmux mc tree broot archivemount ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip 
- dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc bat fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 inotify-tools fzf fzy mupdf antiword; do sudo apt install -y ; done
+	for p in fzf fzy tmux mc tree broot archivemount ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc bat fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 inotify-tools fzf fzy mupdf antiword; do sudo apt install -y ; done
 
 ### configure terminal tools (start in your personal home directory!)
 
