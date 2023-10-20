@@ -1,12 +1,14 @@
 # Linux Tool Descriptions
 
 ## install terminal tools
-	sudo apt-get -y install tmux mc tree broot archivemount ripgrep git nvim micro ne htop nmap nc tcpdump curl wget tinyproxy xclip poppler-utils dos2unix docx2txt catdoc fim cifs-utils openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m links2 inotify-tools fzf fzy mupdf antiword
+
+	sudo apt install -y fzf fzy tmux mc tree broot archivemount ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip 
+ dos2unix poppler-utils docx2txt xls2csv catdoc fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 inotify-tools fzf fzy mupdf antiword
 
 ## bash
 
 use file asteriks like **/myfile.*
-	
+
 	shopt -s globstar
 
 add shortcuts for fast file find (like Ctrl+P) and command find (like Ctrl+Shift+P
