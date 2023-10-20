@@ -5,6 +5,16 @@
 	sudo apt install -y fzf fzy tmux mc tree broot archivemount ripgrep git neovim micro ne htop nmap netcat tcpdump curl wget tinyproxy xclip 
  dos2unix poppler-utils docx2txt xls2csv catdoc fim cifs-utils openssl openssh openvpn sshfs colordiff tar rar p7zip ntp xcompmgr w3m elinks links2 inotify-tools fzf fzy mupdf antiword
 
+### configure terminal tools (start in your personal home directory!)
+
+	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.termux
+	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.config
+ 	wget -r https://raw.githubusercontent.com/snieda/bibliothek/master/.local
+
+### install ide editor: lunarvim
+
+	LV_BRANCH='release-1.3/neovim-0.9' bash <(curl -s https://raw.githubusercontent.com/LunarVim/LunarVim/release-1.3/neovim-0.9/utils/installer/install.sh)
+
 ## bash
 
 use file asteriks like **/myfile.*
