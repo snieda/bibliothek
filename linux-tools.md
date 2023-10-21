@@ -2,7 +2,7 @@
 
 ## install terminal tools
 
-	for p in fzf fzy tmux mc tree broot archivemount locate ripgrep expect git gnupg neovim micro ne htop nethogs nmap netcat tcpdump curl wget tinyproxy xclip dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc pandoc bat lesspipe ffmpeg fim cifs-utils openssl openssh openvpn sshfs colordiff icdiff grc tar rar p7zip ntp xcompmgr w3m w3m-img elinks links2 googler inotify-tools fzf fzy mupdf antiword  printer-driver-cups-pdf; do sudo apt install -y ; done
+	for p in fzf fzy tmux mc tree broot archivemount locate ripgrep expect git gnupg neovim micro ne htop nethogs nmap netcat tcpdump curl wget tinyproxy xclip dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc pandoc bat lesspipe ffmpeg fim cifs-utils openssl openssh openvpn sshfs colordiff icdiff grc tar rar p7zip ntp xcompmgr w3m w3m-img elinks links2 googler inotify-tools fzf fzy mupdf antiword  printer-driver-cups-pdf apropos; do sudo apt install $p -y; done
 
 ### configure terminal tools (start in your personal home directory!)
 
