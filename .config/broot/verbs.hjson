@@ -217,9 +217,25 @@
         {
             invocation: locate {anyfile}
             key: ctrl-F7
-            external: "$SHELL -c \"locate {anyfile} | fzy | xsel -b\""
+            external: "$SHELL -c \"locate {anyfile} | fzf | xsel -b\""
             leave_broot: false
             auto_exec: false
+        }
+        {
+            invocation: ccd-select
+            shortcut: ccd-select
+            external: "$SHELL -c \"tree -idf ~ | fzy -l 30 | xsel -i\""
+            leave_broot: false
+            auto_exec: true
+        }
+        {
+            invocation: ccd
+            shortcut: ccd
+            key: ctrl-shift-F1
+            cmd: ":ccd-select;:!focus $(xsel -o)"
+            leave_broot: false
+            auto_exec: false
+            set_working_dir: true
         }
         {
             invocation: terminal
