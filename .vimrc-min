@@ -1,0 +1,284 @@
+" simple vim configuration without plugins to be used as extended editor (no IDE)
+" usable if you are not authorized to install anything
+" cp Thomas Schneider / 2024
+"
+" help: some common vim commands -----------------------------------------------
+" * start vim in ease mode (like standard click&type editor: vim -y
+" 	** to see the keystrokes for that: h easy
+" * to see the current leader character: let mapleader
+" * store the word under the cursor to be used in the command line: * (example: *:s/\0\0<ENTER>)
+" * fuzzy finding: find *.java    or :e **/test/Suite.java
+" * load a list of all files in the current directory into a buffer: r! find . -type f     CTRL+W gf to open the file under the cursor
+" * set light color theme: colorscheme delek
+" * set dark color theme : colorscheme murphy
+" * open file explorer: open ./ (or Explore or Vexplore or VEx)
+" * open file explorer to the left: topleft vs open ./ (or shift with: CTRL-w H / J / K / L)
+" * open terminal: vert term
+" 	** to get into normal mode: CTRL+w N
+" * duplicate/split to the right: Ctrl+w v
+" * new split horizontal under current: Ctrl+w n
+" * new tab with new file: tabnew <file>
+" 	** switch no next/prev tab: CTRL+PU/PD
+" 	** select tab through its buffer: b <TAB>
+" 	** close all other tabs: tabonly
+" 	** open multiple tabs: args **/*.java | argdo tabe
+" * switch to next split: Ctrl+w w
+" * close current split: Ctrl+w q
+" * search/grep in all files: grep -r 'mypattern' ./
+" 	** open list as menu: cw (or copen)
+" * show all findings of word under cursor: [I
+" * store the word under cursor for searching: *  (e.g.: * :s/\0\0<ENTER>)
+" * repeat the last input: . (usable to switch comments)
+" * highlight symbols: e.g.: :g/ \w\+(
+" * show found symbols in quickfix window: vim // %
+" * maximize current window: tabedit %
+" * minimize current maximized window: tabclose
+" * show all commands: h index (all mappings: map)
+" * show all open buffers/files: files (or buffers)
+" 	** better with selection list:
+" 	** set wildchar=<Tab> wildmenu wildmode=full
+" 	** then you can use :f <TAB> or :b <TAB>
+" * show all changes: changes
+" * show file history: ol
+" * show command history: history
+" * show jump list: jumps
+" * show list of quickfix lists: chi
+" * goto previous/next cursor position: CTRL+O/CTRL+I
+" * goto line: <line-number>
+" * jump to matching brace: %
+" * jump to the previous/next change: g;, g,
+" * store current session: mksession session.vim
+" * restore session: source session.vim
+" * justify command height: set cmdheight=2
+" * see the last error messages: messages
+" * macros: q<register><commands>q	replay: @<register>
+" * replay last command: @@
+
+" vim file list with fuzzy finding  --------------------------------------------
+filetype plugin indent on
+set path+=$PWD/**        " enable fuzzy finding in the vim command line
+set path+=~/**
+set wildmenu             " enable fuzzy menu
+set wildignore+=**/.cache/**,**/.git/**,**/target/**,*.class,**/__pycache__/**,**/venv/**,**/node_modules/**,**/bin/**,**/dist/**,**/build/**,*.o,*.pyc,*.swp
+set wildchar=<Tab> wildmenu wildmode=longest:full,full
+set wildoptions=pum      " vertical selection list (since vim 9.0)
+"set wildmode=list:longest
+
+" General configuration -------------------------------------------------------
+filetype plugin indent on
+nmap <SPACE> <Nop>
+let mapleader=" "
+
+set mouse=a
+"set insertmode					" use <C-O>+key to execute key on normal mode. <C-L> starts command mode. ESC returns to insert
+set splitright
+set splitbelow
+set nostartofline
+"autocmd BufEnter * silent! normal! g`"zz   " go to the last cursur position in the buffer after switching
+
+filetype plugin indent on
+
+set hidden         				" to be able to switch between buffers without saving them
+set tabstop=4      				" show existing tab with 4 spaces width
+set shiftwidth=4   				" when indenting with '>', use 4 spaces width
+set softtabstop=4  				" Sets the number of columns for a TAB.
+set expandtab      				" On pressing tab, insert 4 spaces
+set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+set scrolloff=85				" using <END> -> don't scroll to far
+set hlsearch					" search will highlight all matches
+set incsearch
+set history=1000
+set paste
+set ttyfast
+
+set autoindent
+set showcmd
+set diffopt+=vertical
+
+" use windows shortcuts -------------------------------------------------------
+set nocompatible
+source $VIMRUNTIME/mswin.vim
+behave mswin
+set encoding=UTF-8
+
+" NeTRW Explorer Settings
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 15
+
+" vim layout -------------------------------------------------------------------
+autocmd VimEnter *  :Vexplore |
+    \ execute "wincmd l" |
+    \ rightbelow copen |
+	\ resize 15 |
+	\ vert term
+
+" THEMING ---------------------------------------------------------------------
+
+color ron
+autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE		" make background transparent
+set colorcolumn=120
+set cursorline
+
+set number
+set ruler
+set cursorcolumn
+hi CursorColumn ctermbg=8
+
+" Searching colors
+highlight Search cterm=NONE ctermfg=Yellow ctermbg=DarkGrey
+
+" Fix background on Guake
+highlight Normal ctermbg=NONE
+
+" Folding ---------------------------------------------------------------------
+"
+" Note : za --> toggle fold
+"        zd --> remove fold
+"        zo --> open fold
+"        zc --> close fold
+"
+" with foldmethod=manual may be more confortable than this
+"        va}zf --> close the current block
+
+set foldmethod=indent		" Fold by grouping indented text
+
+" Sets the maximum nesting of folds
+set foldnestmax=10
+
+" Avoid folding when the file is being open
+set nofoldenable
+
+" Folds with a higher level will be closed
+set foldlevel=2
+
+" TagBar Configuration --------------------------------------------------------
+
+" autofocus on Tagbar open
+let g:tagbar_autofocus = 1
+
+" toggle Tagbar display
+map <F4> :TagbarToggle<CR>
+
+" Set default width
+let g:tagbar_width = 30
+
+" vim leader keystrokes  ------------------------------------------------------
+
+" Eliminates delay issues
+set timeoutlen=1000 ttimeoutlen=50
+
+" Toggle english spelling check
+" noremap <C-m> :setlocal spell! spelllang=en_us<CR>
+
+" Show invisible characters
+noremap <C-k> :setlocal list!<CR>
+
+" Edit my .vimrc file"
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" Source my .vimrc file (This reloads the configuration)
+nnoremap <silent> <leader>sv :source $MYVIMRC<cr>
+
+" Selects all in the current buffer
+nnoremap <leader>av ggvGg_
+
+" Move lines
+nnoremap <leader>f :m .+1<CR>==
+nnoremap <leader>F :m .-2<CR>==
+inoremap <leader>f <Esc>:m .+1<CR>==gi
+inoremap <leader>F <Esc>:m .-2<CR>==gi
+vnoremap <leader>f :m '>+1<CR>gv=gv
+vnoremap <leader>F :m '<-2<CR>gv=gv
+
+" Quickfix
+nnoremap <leader>n :cnext<CR>
+nnoremap <leader>N :cprevious<CR>
+nnoremap <leader>g :cfirst<CR>
+nnoremap <leader>G :clast<CR>
+let g:workspace_autosave_always = 1
+
+" Switching between Tabs(=Views or Perspectives), Windows(=Splits) and Buffers(=File-Views in Tab)
+"noremap <Tab> :WintabsNext<CR>
+"noremap <S-Tab> :WintabsPrevious<CR>
+"noremap <Leader><Tab> :WintabsClose<CR>
+"noremap <Leader><S-Tab> :WintabsClose!<CR>
+"noremap <C-t> :tabnew<CR>
+"noremap <C-e> :WintabsAllBuffers<CR>
+"map <C-Tab> :tagNext<CR>
+"cabbrev bonly WSBufOnly
+
+:set autoread
+
+" session related -------------------------------------------------------
+cnoremap <leader> <A-W> source ~/.vim-session
+cnoremap <leader> <A-S> mksession! ~/.vim-session
+nnoremap <silent> <C-S><C-S> :mksession! ~/.vim-session <CR>
+
+"autocmd VimLeave * call SaveSess()
+"autocmd VimEnter * nested call RestoreSess()
+
+" /vim -b : edit binary using xxd-format!
+augroup Binary
+	au!
+	au BufReadPre  *.bin let &bin=1
+	au BufReadPost *.bin if &bin | %!xxd
+	au BufReadPost *.bin set ft=xxd | endif
+	au BufWritePre *.bin if &bin | %!xxd -r
+	au BufWritePre *.bin endif
+	au BufWritePost *.bin if &bin | %!xxd
+	au BufWritePost *.bin set nomod | endif
+augroup END
+
+let g:decomp_jar = '~/bin/cfr-0.138.jar'
+au BufNewFile,BufRead,BufReadPost *.class set filetype=java
+
+let python_highlight_all=1
+syntax on
+
+" common editor keystrokes ----------------------------------------------
+map <F1>  : help <C-r><C-w><CR>|   " show vim help for current word 
+map <C-A>   ggvGg_|					" select all
+map <C-F> : /<cword>|				" find/search
+map <S-F>  [I|						" searches the word under cursor
+map <A-e> : Vexplore|				" show file explorer
+map <C-e> : b |						" select open file (buffer)
+map <C-p> : find|					" find and open file using wildcards and autocompletion
+map <A-p> : map|					" show a list of all commands with keystrokes
+map <C-b>l :colorscheme delek|		" switch to light colorscheme
+map <C-b>k :colorscheme default|	" swithc to default colorscheme (transparent)
+map <C-b>j :colorscheme murphy|		" switch to dark high contrast colorscheme
+map <C-1> :cli|						" opens a quickfix list
+map <C-h> :grep <cword> **|			" grep word under cursor in all files
+map <C-m> : tabedit %<CR>|			" maximize current file (opening in new tab)
+map <S-m> : tabclose<CR>|			" close the maximized tab view
+map <C-s> : write<CR>|				" save the current file
+map <C-q> : qa<CR>|					" quit vim
+map <C-t> : tabnew<CR>|				" creates a new buffer
+nnoremap <TAB> gt|					" switch to next tab
+nnoremap <S-TAB> gT|				" switch to previous tab
+"nnoremap <C-Tab> : tabNext|			" switch to next tab (not working!)
+"nnoremap ^[[1;5I: tabNext|			" not working
+"nnoremap ^[[1;6I: tabPrevious|		" not working
+map <leader><A-LEFT> <C-o>
+map <leader><A-RIGHT> <C-i>
+map <leader>tt :bo terminal<CR>| 	" to scroll in terminal: Ctrl+W N (to cancel: i or a)
+map <Esc>[1;3D <C-I>|            	" go back to last position with ALT-LEFT
+map <Esc>[1;3C <C-O>|            	" go forward to next postition with ALT-RIGHT
+
+noremap <A-PageUp> :tabmove -1<CR>
+noremap <A-PageDown> :tabmove +1<CR>
+
+" java+maven ------------------------------------------------------------
+let $JDB="-agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n"
+let $MSD="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8787 -Xnoagent -Djava.compiler=NONE"
+let $SON="mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=the-generated-token"
+map <leader>mc :execute bo term ++rows=16 mvn compile map <leader>mi :execute bo term ++rows=16 mvn install
+map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
+map <leader>mt :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.") . " test -o
+map <leader>md :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.core") . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
+map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
+map <leader>sn :execute "bo term ++rows=16 $SON"
