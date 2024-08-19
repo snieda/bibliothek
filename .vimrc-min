@@ -91,9 +91,11 @@ set history=1000
 set paste
 set ttyfast
 
-set autoindent
+"set autoindent
 set showcmd
 set diffopt+=vertical
+set ignorecase					" Ignore capital letters during search.
+set smartcase					" Override the ignorecase option if searching for capital letters.
 
 " use windows shortcuts -------------------------------------------------------
 set nocompatible
@@ -133,6 +135,41 @@ highlight Search cterm=NONE ctermfg=Yellow ctermbg=DarkGrey
 
 " Fix background on Guake
 highlight Normal ctermbg=NONE
+
+" If Vim version is equal to or greater than 7.3 enable undofile.
+" This allows you to undo changes to a file even after saving it.
+if version >= 703
+    set undodir=~/.vim/backup
+    set undofile
+    set undoreload=10000
+endif
+set nobackup		" don't backup files
+
+" You can split a window into sections by typing `:split` or `:vsplit`.
+" Display cursorline and cursorcolumn ONLY in active window.
+augroup cursor_off
+    autocmd!
+    autocmd WinLeave * set nocursorline nocursorcolumn
+    autocmd WinEnter * set cursorline cursorcolumn
+augroup END
+" STATUS LINE ------------------------------------------------------------ {{{
+
+" Clear status line when vimrc is reloaded.
+set statusline=
+
+" Status line left side.
+set statusline+=\ %F\ %M\ %Y\ %R
+
+" Use a divider to separate the left side from the right side.
+set statusline+=%=
+
+" Status line right side.
+set statusline+=\ ascii:\ %b\ hex:\ 0x%B\ row:\ %l\ col:\ %c\ percent:\ %p%%
+
+" Show the status on the second to last line.
+set laststatus=2
+
+" }}}
 
 " Folding ---------------------------------------------------------------------
 "
@@ -271,6 +308,12 @@ map <Esc>[1;3C <C-O>|            	" go forward to next postition with ALT-RIGHT
 
 noremap <A-PageUp> :tabmove -1<CR>
 noremap <A-PageDown> :tabmove +1<CR>
+" Resize split windows using arrow keys by pressing:
+" CTRL+UP, CTRL+DOWN, CTRL+LEFT, or CTRL+RIGHT.
+noremap <c-up> <c-w>+
+noremap <c-down> <c-w>-
+noremap <c-left> <c-w>>
+noremap <c-right> <c-w><
 
 " java+maven ------------------------------------------------------------
 let $JDB="-agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n"
