@@ -3,7 +3,7 @@
 " cp Thomas Schneider / 2024
 "
 " help: some common vim commands -----------------------------------------------
-" * start vim in ease mode (like standard click&type editor: vim -y
+" * start vim in easy mode (like standard click&type editor: vim -y (to exit to normal: <C-L>)
 " 	** to see the keystrokes for that: h easy
 " * to see the current leader character: let mapleader
 " * store the word under the cursor to be used in the command line: * (example: *:s/\0\0<ENTER>)
@@ -136,6 +136,8 @@ highlight Search cterm=NONE ctermfg=Yellow ctermbg=DarkGrey
 " Fix background on Guake
 highlight Normal ctermbg=NONE
 
+set nobackup		" don't backup files
+
 " If Vim version is equal to or greater than 7.3 enable undofile.
 " This allows you to undo changes to a file even after saving it.
 if version >= 703
@@ -143,7 +145,6 @@ if version >= 703
     set undofile
     set undoreload=10000
 endif
-set nobackup		" don't backup files
 
 " You can split a window into sections by typing `:split` or `:vsplit`.
 " Display cursorline and cursorcolumn ONLY in active window.
@@ -283,7 +284,7 @@ map <C-F> : /<cword>|				" find/search
 map <S-F>  [I|						" searches the word under cursor
 map <A-e> : Vexplore|				" show file explorer
 map <C-e> : b |						" select open file (buffer)
-map <C-p> : find|					" find and open file using wildcards and autocompletion
+map <C-p> : find **/<cword>|		" find and open file using wildcards and autocompletion
 map <A-p> : map|					" show a list of all commands with keystrokes
 map <C-b>l :colorscheme delek|		" switch to light colorscheme
 map <C-b>k :colorscheme default|	" swithc to default colorscheme (transparent)
@@ -316,12 +317,25 @@ noremap <c-left> <c-w>>
 noremap <c-right> <c-w><
 
 " java+maven ------------------------------------------------------------
-let $JDB="-agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n"
-let $MSD="-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8787 -Xnoagent -Djava.compiler=NONE"
-let $SON="mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=the-generated-token"
+let JDB='-agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n'
+let MSD='-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8787 -Xnoagent -Djava.compiler=NONE'
+let SON='mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=the-generated-token'
 map <leader>mc :execute bo term ++rows=16 mvn compile map <leader>mi :execute bo term ++rows=16 mvn install
 map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
 map <leader>mt :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.") . " test -o
 map <leader>md :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.core") . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
 map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
 map <leader>sn :execute "bo term ++rows=16 $SON"
+
+" debugging with JDB ----------------------------------------------------
+map <F12> : call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java -attach 8787\n")
+map <S-B> : call term_sendkeys(term_list()[0], "stop at " . tr(expand("%:r"), "/", ".") . ":" . line(".") . "\n")
+map <S-I> : call term_sendkeys(term_list()[0], "dump " . expand("<cword>") . "\n")<CR>
+map <F5> : call term_sendkeys(term_list()[0], "stepi\n")<CR>
+map <F6> : call term_sendkeys(term_list()[0], "next\n")<CR>
+map <F7> : call term_sendkeys(term_list()[0], "suspend\n")<CR>
+map <F8> : call term_sendkeys(term_list()[0], "resume\n")<CR>
+map <F9> : call term_sendkeys(term_list()[0], "up\n")<CR>
+map <F10> : call term_sendkeys(term_list()[0], "down\n")<CR>
+map <F11> : call term_sendkeys(term_list()[0], "threads\n")<CR>
+
