@@ -1,8 +1,11 @@
-" simple vim configuration without plugins to be used as extended editor (no IDE)
+" -----------------------------------------------------------------------------
+" simple vim configuration without plugins to be used as extended editor (~ IDE)
 " usable if you are not authorized to install anything
-" cp Thomas Schneider / 2024
-"
-" help: some common vim commands -----------------------------------------------
+" cp Thomas Schneider / 08-2024
+" -----------------------------------------------------------------------------
+
+" help: some common vim commands ----------------------------------------------
+" * a vim cheatsheet: https://vim.rtorr.com/
 " * start vim in easy mode (like standard click&type editor: vim -y (to exit to normal: <C-L>)
 " 	** to see the keystrokes for that: h easy
 " * to see the current leader character: let mapleader
@@ -55,11 +58,10 @@
 " * replay last command: @@
 
 " vim file list with fuzzy finding  --------------------------------------------
-filetype plugin indent on
-set path+=$PWD/**        " enable fuzzy finding in the vim command line
-set path+=~/**
+set path+=$PWD/**        " enable fuzzy finding in the vim command line on current path
+set path+=~/**           " add home path to fuzzy finding
 set wildmenu             " enable fuzzy menu
-set wildignore+=**/.cache/**,**/.git/**,**/target/**,*.class,**/__pycache__/**,**/venv/**,**/node_modules/**,**/bin/**,**/dist/**,**/build/**,*.o,*.pyc,*.swp
+set wildignore+=**/*cache*/**,**/t?mp/**,**/.git/**,**/target/**,*.class,**/__pycache__/**,**/venv/**,**/node_modules/**,**/bin/**,**/dist/**,**/build/**,*.o,*.pyc,*.swp
 set wildchar=<Tab> wildmenu wildmode=longest:full,full
 set wildoptions=pum      " vertical selection list (since vim 9.0)
 "set wildmode=list:longest
@@ -98,10 +100,10 @@ set ignorecase					" Ignore capital letters during search.
 set smartcase					" Override the ignorecase option if searching for capital letters.
 
 " use windows shortcuts -------------------------------------------------------
-set nocompatible
-source $VIMRUNTIME/mswin.vim
-behave mswin
-set encoding=UTF-8
+set nocompatible				" disable strict vi mode
+source $VIMRUNTIME/mswin.vim	" load some windows specific behaviour and shortcuts
+behave mswin					" see above
+set encoding=UTF-8				" use UTF-8 standard encoding
 
 " NeTRW Explorer Settings
 
@@ -120,15 +122,15 @@ autocmd VimEnter *  :Vexplore |
 
 " THEMING ---------------------------------------------------------------------
 
-color ron
+color ron						" hight contrast dark theme
 autocmd vimenter * hi Normal guibg=NONE ctermbg=NONE		" make background transparent
-set colorcolumn=120
-set cursorline
-
-set number
-set ruler
-set cursorcolumn
+set colorcolumn=120				" show red line as maximum on given column
+set cursorline					" highlight current cursor line
+set cursorcolumn				" hightlight current cursor row
+set number						" visible line numbers
+set ruler						
 hi CursorColumn ctermbg=8
+syntax on						" use system syntax coloring (syntax enable: overwrite with your own)
 
 " Searching colors
 highlight Search cterm=NONE ctermfg=Yellow ctermbg=DarkGrey
@@ -136,7 +138,11 @@ highlight Search cterm=NONE ctermfg=Yellow ctermbg=DarkGrey
 " Fix background on Guake
 highlight Normal ctermbg=NONE
 
-set nobackup		" don't backup files
+" trying to highlight markers - but not working...
+highlight leftMargin term=bold ctermfg=Green ctermbg=DarkGrey
+match leftMargin /%/
+ 
+set nobackup		" don't backup files, we do that through undo/redo
 
 " If Vim version is equal to or greater than 7.3 enable undofile.
 " This allows you to undo changes to a file even after saving it.
@@ -153,6 +159,7 @@ augroup cursor_off
     autocmd WinLeave * set nocursorline nocursorcolumn
     autocmd WinEnter * set cursorline cursorcolumn
 augroup END
+
 " STATUS LINE ------------------------------------------------------------ {{{
 
 " Clear status line when vimrc is reloaded.
@@ -239,17 +246,8 @@ nnoremap <leader>g :cfirst<CR>
 nnoremap <leader>G :clast<CR>
 let g:workspace_autosave_always = 1
 
-" Switching between Tabs(=Views or Perspectives), Windows(=Splits) and Buffers(=File-Views in Tab)
-"noremap <Tab> :WintabsNext<CR>
-"noremap <S-Tab> :WintabsPrevious<CR>
-"noremap <Leader><Tab> :WintabsClose<CR>
-"noremap <Leader><S-Tab> :WintabsClose!<CR>
-"noremap <C-t> :tabnew<CR>
-"noremap <C-e> :WintabsAllBuffers<CR>
-"map <C-Tab> :tagNext<CR>
-"cabbrev bonly WSBufOnly
 
-:set autoread
+:set autoread			" refresh open (unchanged) buffer if content was changed outside
 
 " session related -------------------------------------------------------
 cnoremap <leader> <A-W> source ~/.vim-session
@@ -271,34 +269,29 @@ augroup Binary
 	au BufWritePost *.bin set nomod | endif
 augroup END
 
-let g:decomp_jar = '~/bin/cfr-0.138.jar'
-au BufNewFile,BufRead,BufReadPost *.class set filetype=java
-
-let python_highlight_all=1
-syntax on
 
 " common editor keystrokes ----------------------------------------------
-map <F1>  : help <C-r><C-w><CR>|   " show vim help for current word 
+map <F1>  : vert help <C-r><C-w><CR>| " show vim help for current word 
 map <C-A>   ggvGg_|					" select all
-map <C-F> : /<cword>|				" find/search
+map <C-F> /<C-R><C-W>|				" find/search
 map <S-F>  [I|						" searches the word under cursor
 map <A-e> : Vexplore|				" show file explorer
 map <C-e> : b |						" select open file (buffer)
-map <C-p> : find **/<cword>|		" find and open file using wildcards and autocompletion
-map <A-p> : map|					" show a list of all commands with keystrokes
+map <C-p> : tabfind ./**/|			" find and open file using wildcards and autocompletion
+map <A-p> : nmap|					" show a list of all commands in normal mode with keystrokes
 map <C-b>l :colorscheme delek|		" switch to light colorscheme
 map <C-b>k :colorscheme default|	" swithc to default colorscheme (transparent)
 map <C-b>j :colorscheme murphy|		" switch to dark high contrast colorscheme
 map <C-1> :cli|						" opens a quickfix list
-map <C-h> :grep <cword> **|			" grep word under cursor in all files
+map <C-h> :grep! <C-R><C-W> ** |	" grep word under cursor in all files
 map <C-m> : tabedit %<CR>|			" maximize current file (opening in new tab)
 map <S-m> : tabclose<CR>|			" close the maximized tab view
 map <C-s> : write<CR>|				" save the current file
-map <C-q> : qa<CR>|					" quit vim
+map <C-q> : qa|						" quit vim
 map <C-t> : tabnew<CR>|				" creates a new buffer
 nnoremap <TAB> gt|					" switch to next tab
 nnoremap <S-TAB> gT|				" switch to previous tab
-"nnoremap <C-Tab> : tabNext|			" switch to next tab (not working!)
+"nnoremap <C-Tab> : tabNext|		" switch to next tab (not working!)
 "nnoremap ^[[1;5I: tabNext|			" not working
 "nnoremap ^[[1;6I: tabPrevious|		" not working
 map <leader><A-LEFT> <C-o>
@@ -316,26 +309,52 @@ noremap <c-down> <c-w>-
 noremap <c-left> <c-w>>
 noremap <c-right> <c-w><
 
-" java+maven ------------------------------------------------------------
-let JDB='-agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n'
-let MSD='-Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8787 -Xnoagent -Djava.compiler=NONE'
-let SON='mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=the-generated-token'
-map <leader>mc :execute bo term ++rows=16 mvn compile map <leader>mi :execute bo term ++rows=16 mvn install
-map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
-map <leader>mt :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.") . " test -o
-map <leader>md :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.core") . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
-map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
-map <leader>sn :execute "bo term ++rows=16 $SON"
+noremap <c-s-up> <c-w>k
+noremap <c-s-down> <c-w>j
+noremap <c-s-left> <c-w>h
+noremap <c-s-right> <c-w>l
 
-" debugging with JDB ----------------------------------------------------
-map <F12> : call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java -attach 8787\n")
-map <S-B> : call term_sendkeys(term_list()[0], "stop at " . tr(expand("%:r"), "/", ".") . ":" . line(".") . "\n")
-map <S-I> : call term_sendkeys(term_list()[0], "dump " . expand("<cword>") . "\n")<CR>
+" TODO: how exapnd directyl to command
+let python_highlight_all=1
+" java+maven ------------------------------------------------------------
+let g:decomp_jar = '~/bin/cfr-0.138.jar'
+let $JDB=' -agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n '
+let $MSD=' -Xdebug -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5000 -Xnoagent -Djava.compiler=NONE '
+let $SON=' mvn sonar:sonar -Dsonar.host.url=http://localhost:9000 -Dsonar.login=the-generated-token '
+" au BufNewFile,BufRead,BufReadPost *.class set filetype=java
+
+augr class
+au!
+	au bufreadpost,filereadpost *.class %!d:java -jar ~/bin/cfr-0.138.jar %
+	au bufreadpost,filereadpost *.class set readonly
+	au bufreadpost,filereadpost *.class set ft=java
+	au bufreadpost,filereadpost *.class normal gg=G
+	au bufreadpost,filereadpost *.class set nomodified
+augr END
+
+map <leader>mc :bo term ++rows=16 mvn -o compile
+map <leader>mi :bo term ++rows=16 mvn clean install
+map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
+"map <leader>mt :execute "bo term ++rows=16 mvnDebug -o test -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
+nnoremap <leader>mt :bo term ++rows=16 mvnDebug -o test -Dtest=%:t:r\#<C-R><C-W>
+map <leader>md :execute "bo term ++rows=16 mvnDebug -pl " . input("maven-sub-module=","tsl2.nano.core", file) . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
+map <leader>ms :execute "bo term ++rows=16" . expand("$SON")
+map <leader>mj :execute "mvnDebug exec:java -Dexec.mainClass=" .. expand("<cword>") .. "-Dexec.mainArgs="
+map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
+
+" debugging with JDB (sending keys to terminal --------------------------
+map <F10> : tabnew $JAVA_HOME/lib/src.zip
+map <F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java -attach 8787\n")
+map <S-F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java -attach 8000\n")
+map <S-B> mb : call term_sendkeys(term_list()[0], "stop at " . tr(expand("%:r"), "/", ".") . ":" . line(".") . "\n")
+map <S-B>l :marks
+map <S-I> : call term_sendkeys(term_list()[0], "print " . expand("<cword>") . "\n")<CR>
+map <S-I>d : call term_sendkeys(term_list()[0], "dump " . expand("<cword>") . "\n")<CR>
 map <F5> : call term_sendkeys(term_list()[0], "stepi\n")<CR>
 map <F6> : call term_sendkeys(term_list()[0], "next\n")<CR>
 map <F7> : call term_sendkeys(term_list()[0], "suspend\n")<CR>
 map <F8> : call term_sendkeys(term_list()[0], "resume\n")<CR>
 map <F9> : call term_sendkeys(term_list()[0], "up\n")<CR>
-map <F10> : call term_sendkeys(term_list()[0], "down\n")<CR>
+map <S-F9> : call term_sendkeys(term_list()[0], "down\n")<CR>
 map <F11> : call term_sendkeys(term_list()[0], "threads\n")<CR>
 
