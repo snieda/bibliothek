@@ -1,6 +1,7 @@
 " -----------------------------------------------------------------------------
 " simple vim configuration without plugins to be used as extended editor (~ IDE)
 " usable if you are not authorized to install anything
+" java/maven/jdb is configured to be usable through eclipse like shortcuts
 " cp Thomas Schneider / 08-2024
 " -----------------------------------------------------------------------------
 
@@ -17,9 +18,10 @@
 " * open file explorer: open ./ (or Explore or Vexplore or VEx)
 " * open file explorer to the left: topleft vs open ./ (or shift with: CTRL-w H / J / K / L)
 " * open terminal: vert term
-" 	** to get into normal mode: CTRL+w N
+" 	** to get into normal mode: Ctrl+W N
+"	** to switch to another buffer: Ctrl+W Ctrl+W
 " * duplicate/split to the right: Ctrl+w v
-" * new split horizontal under current: Ctrl+w n
+" * new split horizontal under current: Ctrl+w un
 " * new tab with new file: tabnew <file>
 " 	** switch no next/prev tab: CTRL+PU/PD
 " 	** select tab through its buffer: b <TAB>
@@ -57,14 +59,28 @@
 " * macros: q<register><commands>q	replay: @<register>
 " * replay last command: @@
 
+" HELP java debugging ----------------------------------------------------------
+" * open your test class with: <Ctrl+P> and entering part of class name
+" * use / to find the position of your test method
+" * hit <leader>mt to start maven in debug mode for the test at cursor position
+" * hit <F12> to start the jdb debugger. change the command to fit your configuration and hit <ENTER>
+" * hit <Ctrl+W><Ctrl+W> to switch from terminal input to your source code
+" * set your cursor at a line to be a breakpoint. hit <Shift-B> to enable the breakpoint
+" * hit <Shift-B>l to see all markers (to be reusable as breakpoints....)
+" * Now you can run the test with <F-8>
+" * if the debugger suspends a thread in cause of a breakpoint, set your cursor on a variable and hit <S-I> to see the value
+
 " vim file list with fuzzy finding  --------------------------------------------
 set path+=$PWD/**        " enable fuzzy finding in the vim command line on current path
 set path+=~/**           " add home path to fuzzy finding
 set wildmenu             " enable fuzzy menu
-set wildignore+=**/*cache*/**,**/t?mp/**,**/.git/**,**/target/**,*.class,**/__pycache__/**,**/venv/**,**/node_modules/**,**/bin/**,**/dist/**,**/build/**,*.o,*.pyc,*.swp
+set wildignore+=**/*cache*/**,tags,**/.metadata/**,**/t?mp/**,**/.git/**,**/target/**,*.class,**/__pycache__/**,**/venv/**,**/node_modules/**,**/dist/**,**/build/**,*.o,*.pyc,*.swp
 set wildchar=<Tab> wildmenu wildmode=longest:full,full
 set wildoptions=pum      " vertical selection list (since vim 9.0)
-"set wildmode=list:longest
+set wildmode=list:longest
+"let &grepprg="grep -v -n -r --exclude=\\*.{o,obj,~,pyc,git,class}\\* --exclude={tags,cscope,target}\\* $* /dev/null"
+"set grepprg=rg\ --vimgrep
+let &grepprg='grep -n -R -H  --exclude=' . shellescape(&wildignore) . ' $*'
 
 " General configuration -------------------------------------------------------
 filetype plugin indent on
@@ -128,8 +144,8 @@ set colorcolumn=120				" show red line as maximum on given column
 set cursorline					" highlight current cursor line
 set cursorcolumn				" hightlight current cursor row
 set number						" visible line numbers
-set ruler						
-hi CursorColumn ctermbg=8
+set ruler						" show the line and column number of the cursor position
+hi CursorColumn ctermbg=8		" cursor column color
 syntax on						" use system syntax coloring (syntax enable: overwrite with your own)
 
 " Searching colors
@@ -142,7 +158,7 @@ highlight Normal ctermbg=NONE
 highlight leftMargin term=bold ctermfg=Green ctermbg=DarkGrey
 match leftMargin /%/
  
-set nobackup		" don't backup files, we do that through undo/redo
+set nobackup					" don't backup files, we do that through undo/redo
 
 " If Vim version is equal to or greater than 7.3 enable undofile.
 " This allows you to undo changes to a file even after saving it.
@@ -269,6 +285,49 @@ augroup Binary
 	au BufWritePost *.bin set nomod | endif
 augroup END
 
+" decompile java classes (copied from: https://github.com/junegunn/vim-cfr/blob/master/plugin/cfr.vim) ------
+let s:jar = expand('<sfile>:h:h') .. '/cfr-latest.jar'
+
+function! s:download() abort
+  let json = json_decode(system('curl -sL https://api.github.com/repos/leibnitz27/cfr/releases/latest'))
+  let url = json['assets'][0]['browser_download_url']
+  echohl WarningMsg | echom 'Downloading cfr.jar from ' .. url | echohl None
+  call system(printf('curl -sL %s -o %s', url, s:jar))
+endfunction
+
+function! s:decompile(class) abort
+  if !filereadable(s:jar)
+    call s:download()
+  endif
+
+  setlocal bufhidden=hide noswapfile filetype=java modifiable
+  let command = printf('java -jar %s %s', s:jar, a:class)
+  let lines = systemlist(command)
+  if v:shell_error
+    echoerr printf('Failed to run %s (%d)', command, v:shell_error)
+    return
+  endif
+
+  normal! gg"_dG
+  call setline(1, lines)
+  setlocal nomodifiable
+endfunction
+
+function! s:nope()
+  echohl WarningMsg | echom 'Nope.' | echohl None
+endfunction
+
+augroup vim-cfr
+  autocmd!
+  autocmd BufReadCmd *.class call <sid>decompile(expand('<afile>'))
+  autocmd BufWriteCmd *.class call <sid>nope()
+augroup END
+
+" decompile through javap -----------------------------------------------
+augroup decompile-javap
+	autocmd!
+	autocmd BufReadCmd *.class :tabnew|read !javap -c '<afile>'
+augroup END 
 
 " common editor keystrokes ----------------------------------------------
 map <F1>  : vert help <C-r><C-w><CR>| " show vim help for current word 
@@ -279,15 +338,21 @@ map <A-e> : Vexplore|				" show file explorer
 map <C-e> : b |						" select open file (buffer)
 map <C-p> : tabfind ./**/|			" find and open file using wildcards and autocompletion
 map <A-p> : nmap|					" show a list of all commands in normal mode with keystrokes
-map <C-b>l :colorscheme delek|		" switch to light colorscheme
-map <C-b>k :colorscheme default|	" swithc to default colorscheme (transparent)
-map <C-b>j :colorscheme murphy|		" switch to dark high contrast colorscheme
-map <C-1> :cli|						" opens a quickfix list
-map <C-h> :grep! <C-R><C-W> ** |	" grep word under cursor in all files
+map <A-b>l :colorscheme delek|		" switch to light colorscheme
+map <A-b>k :colorscheme default|	" swithc to default colorscheme (transparent)
+map <A-b>j :colorscheme murphy|		" switch to dark high contrast colorscheme
+map <C-1> :cli|						" opens a quickfix error list, if any exist
+map <C-2> :copen|					" opens a quickfix list
+map <C-3> : tag |					" select a definition from tag file
+map <F3> <C-]>|						" open defintion from tag file
+map <F4> :vsplit tags<cr>|			" show all language tags on the right
+map <C-h> :grep! <C-R><C-W>\|:copen|" grep word under cursor in all files
 map <C-m> : tabedit %<CR>|			" maximize current file (opening in new tab)
 map <S-m> : tabclose<CR>|			" close the maximized tab view
 map <C-s> : write<CR>|				" save the current file
+imap <C-s> : write<CR>|				" save the current file
 map <C-q> : qa|						" quit vim
+imap <C-q> : qa|					" quit vim
 map <C-t> : tabnew<CR>|				" creates a new buffer
 nnoremap <TAB> gt|					" switch to next tab
 nnoremap <S-TAB> gT|				" switch to previous tab
@@ -314,7 +379,6 @@ noremap <c-s-down> <c-w>j
 noremap <c-s-left> <c-w>h
 noremap <c-s-right> <c-w>l
 
-" TODO: how exapnd directyl to command
 let python_highlight_all=1
 " java+maven ------------------------------------------------------------
 let g:decomp_jar = '~/bin/cfr-0.138.jar'
@@ -336,25 +400,29 @@ map <leader>mc :bo term ++rows=16 mvn -o compile
 map <leader>mi :bo term ++rows=16 mvn clean install
 map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
 "map <leader>mt :execute "bo term ++rows=16 mvnDebug -o test -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
-nnoremap <leader>mt :bo term ++rows=16 mvnDebug -o test -Dtest=%:t:r\#<C-R><C-W>
+nnoremap <leader>mt :bo term ++rows=16 mvnDebug -o -fn -test -Dtest=%:t:r\#<C-R><C-W>
 map <leader>md :execute "bo term ++rows=16 mvnDebug -pl " . input("maven-sub-module=","tsl2.nano.core", file) . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
 map <leader>ms :execute "bo term ++rows=16" . expand("$SON")
 map <leader>mj :execute "mvnDebug exec:java -Dexec.mainClass=" .. expand("<cword>") .. "-Dexec.mainArgs="
 map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
 
 " debugging with JDB (sending keys to terminal --------------------------
-map <F10> : tabnew $JAVA_HOME/lib/src.zip
-map <F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java -attach 8787\n")
-map <S-F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java -attach 8000\n")
+map <A-F3> <F10>\|/<C-R><C-W> <CR>
+map <F10> : tabnew  $JAVA_HOME/lib/src.zip
+map <F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java:$PWD/src/test/java -attach localhost:8787\n")
+map <A-F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java:$PWD/src/test/java -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8787\n")
 map <S-B> mb : call term_sendkeys(term_list()[0], "stop at " . tr(expand("%:r"), "/", ".") . ":" . line(".") . "\n")
-map <S-B>l :marks
+map <S-B>l : call term_sendkeys(term_list()[0], "stop\n")
+map <S-B>m :marks
 map <S-I> : call term_sendkeys(term_list()[0], "print " . expand("<cword>") . "\n")<CR>
 map <S-I>d : call term_sendkeys(term_list()[0], "dump " . expand("<cword>") . "\n")<CR>
+map <S-I>l : call term_sendkeys(term_list()[0], "locals\n ")<CR>
+map <S-I>s : call term_sendkeys(term_list()[0], "set " . expand("<cword>") . "=\n")
 map <F5> : call term_sendkeys(term_list()[0], "stepi\n")<CR>
 map <F6> : call term_sendkeys(term_list()[0], "next\n")<CR>
 map <F7> : call term_sendkeys(term_list()[0], "suspend\n")<CR>
 map <F8> : call term_sendkeys(term_list()[0], "resume\n")<CR>
 map <F9> : call term_sendkeys(term_list()[0], "up\n")<CR>
-map <S-F9> : call term_sendkeys(term_list()[0], "down\n")<CR>
+map <A-F9> : call term_sendkeys(term_list()[0], "down\n")<CR>
 map <F11> : call term_sendkeys(term_list()[0], "threads\n")<CR>
 
