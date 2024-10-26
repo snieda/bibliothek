@@ -135,6 +135,7 @@ autocmd VimEnter *  :Vexplore |
     \ rightbelow copen |
 	\ resize 15 |
 	\ vert term
+"  \ execute "normal! \<C-x>\<C-u>"
 
 " THEMING ---------------------------------------------------------------------
 
@@ -400,7 +401,8 @@ map <leader>mc :bo term ++rows=16 mvn -o compile
 map <leader>mi :bo term ++rows=16 mvn clean install
 map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
 "map <leader>mt :execute "bo term ++rows=16 mvnDebug -o test -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
-nnoremap <leader>mt :bo term ++rows=16 mvnDebug -o -fn -test -Dtest=%:t:r\#<C-R><C-W>
+"nnoremap <leader>mt :bo term ++rows=16 mvnDebug -o -fn -DforkCount=0 test -Dtest=%:t:r\#<C-R><C-W>
+nnoremap <leader>mt :bo term ++rows=16 mvn -Dmaven.surefire.debug -o -fn -DforkCount=0 test -Dtest=%:t:r\#<C-R><C-W>
 map <leader>md :execute "bo term ++rows=16 mvnDebug -pl " . input("maven-sub-module=","tsl2.nano.core", file) . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
 map <leader>ms :execute "bo term ++rows=16" . expand("$SON")
 map <leader>mj :execute "mvnDebug exec:java -Dexec.mainClass=" .. expand("<cword>") .. "-Dexec.mainArgs="
@@ -409,9 +411,9 @@ map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARF
 " debugging with JDB (sending keys to terminal --------------------------
 map <A-F3> <F10>\|/<C-R><C-W> <CR>
 map <F10> : tabnew  $JAVA_HOME/lib/src.zip
-map <F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java:$PWD/src/test/java -attach localhost:8787\n")
+map <F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java:$PWD/src/test/java -attach localhost:5005\n")
 map <A-F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java:$PWD/src/test/java -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8787\n")
-map <S-B> mb : call term_sendkeys(term_list()[0], "stop at " . tr(expand("%:r"), "/", ".") . ":" . line(".") . "\n")
+map <S-B> mb : <C-\>eprintf("call term_sendkeys(term_list()[0], \"stop at " . expand( tr(expand("%:r"), "/", ".")) . ":" . expand(line(".")) . "\\n\")") <CR>
 map <S-B>l : call term_sendkeys(term_list()[0], "stop\n")
 map <S-B>m :marks
 map <S-I> : call term_sendkeys(term_list()[0], "print " . expand("<cword>") . "\n")<CR>
@@ -421,7 +423,8 @@ map <S-I>s : call term_sendkeys(term_list()[0], "set " . expand("<cword>") . "=\
 map <F5> : call term_sendkeys(term_list()[0], "stepi\n")<CR>
 map <F6> : call term_sendkeys(term_list()[0], "next\n")<CR>
 map <F7> : call term_sendkeys(term_list()[0], "suspend\n")<CR>
-map <F8> : call term_sendkeys(term_list()[0], "resume\n")<CR>
+map <F8> : call term_sendkeys(term_list()[0], "cont\n")<CR>
+map <A-F8> : call term_sendkeys(term_list()[0], "resume\n")<CR>
 map <F9> : call term_sendkeys(term_list()[0], "up\n")<CR>
 map <A-F9> : call term_sendkeys(term_list()[0], "down\n")<CR>
 map <F11> : call term_sendkeys(term_list()[0], "threads\n")<CR>
