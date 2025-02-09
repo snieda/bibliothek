@@ -76,6 +76,10 @@ tar -xvf archive.tar.tgz
 
 	nmap -p 8000-9000 -v  xxx.xxx.xxx.xxx
 
+## netstat
+
+	netstat -ap	# show all socket ports with their process pid
+
 ## curl --> jenkins REST-API
 
 build mit parametern starten:
@@ -282,6 +286,9 @@ Anzeige der Historie mit Änderungs-Details
 
 	git log --follow --grep=<pattern> --graph --cc <Dateipfad>
 
+komprimiert:
+	git log --all --date=short --stat --oneline --graph
+
 Was wurde bisher nur lokal committed (ohne durch push auf remote gespielt worden zu sein)
 
 	git log <MY-BRANCH>...origin/<MY-BRANCH>
@@ -397,14 +404,15 @@ in the commandline you can revert with:
 	icdiff
 	ansi2html
 	pdftotext
-
+* have a look at my simple .vimrc-min (-> java-ide with eclipse shortcuts, without lsp and plugins, but directly jdb etc.)
+  
 AsciiSignature: http://www.kammerl.de/ascii/AsciiSignature.php mit sub-zero
 
 ## FileManager
 
 	mc    # midnightcommander
 	lf    # configurable filemanager, written in go 
-	broot # tree file manager with fast fuzzy search
+	broot # br: tree file manager with fast fuzzy search
 
 ## FILE CONCATENATE
 
@@ -518,7 +526,7 @@ devilspie -a
 
 	Extensions in : https://extensions.gnome.org/
 	
-	let you configure a system status bar (cpu, ram-use etc.)
+	let you configure a system status bar (cpu, ram-use, miniview etc.)
 
 ## terminal image viewer
 	feh or tiv
@@ -553,4 +561,4 @@ devilspie -a
 
 ## Application Network Traffic
 
-nethogs -v 1
+sudo nethogs -v 1
