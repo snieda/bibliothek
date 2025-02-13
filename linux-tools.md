@@ -2,7 +2,7 @@
 
 ## install terminal tools
 
-	for p in fzf fzy tmux mc tree broot archivemount locate ripgrep expect git gnupg neovim micro ne htop nethogs nmap netcat tcpdump curl wget tinyproxy xclip dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc pandoc bat lesspipe ffmpeg fim cifs-utils openssl openssh openvpn sshfs colordiff icdiff grc tar rar p7zip ntp xcompmgr w3m w3m-img elinks links2 googler inotify-tools fzf fzy mupdf antiword  printer-driver-cups-pdf apropos; do sudo apt install $p -y; done
+	for p in fzf fzy tmux mc tree broot archivemount locate ripgrep expect git gnupg neovim micro ne htop nethogs nmap netcat tcpdump curl wget tinyproxy xclip dos2unix poppler-utils docx2txt xlsx2csv xls2csv catdoc pandoc bat lesspipe ffmpeg fim cifs-utils openssl openssh openvpn sshfs colordiff icdiff grc tar rar p7zip ntp xcompmgr w3m w3m-img elinks links2 googler inotify-tools fzf fzy mupdf mupdf-tools antiword  printer-driver-cups-pdf apropos; do sudo apt install $p -y; done
 
 ### configure terminal tools (start in your personal home directory!)
 
@@ -48,22 +48,6 @@
 
 		export CDPATH=....
  
-## wget
-
-	-m: mirror
-	-p: page-requisites
-	-k: convert to local
-	--ignore-length
-	-e robots=off --wait 1
-	-E add file extensions
-	--follow-ftp
-	--reject file-rejlist
-	-X --exclude dir-list
-	-np --no-parent
-	-N --timestamping only newer files
-	--content-disposition tries to find extension through content
-	wget -mpkE --follow-ftp --ignore-length -e robots=off --exclude forum
-
 ## tar
 
 pack:
@@ -79,6 +63,30 @@ tar -xvf archive.tar.tgz
 ## netstat
 
 	netstat -ap	# show all socket ports with their process pid
+
+## netcat alternative pwncat (python script)
+
+	curl https://raw.githubusercontent.com/cytopia/pwncat/master/bin/pwncat
+
+## Application Network Traffic
+
+sudo nethogs -v 1
+
+## wget
+
+	-m: mirror
+	-p: page-requisites
+	-k: convert to local
+	--ignore-length
+	-e robots=off --wait 1
+	-E add file extensions
+	--follow-ftp
+	--reject file-rejlist
+	-X --exclude dir-list
+	-np --no-parent
+	-N --timestamping only newer files
+	--content-disposition tries to find extension through content
+	wget -mpkE --follow-ftp --ignore-length -e robots=off --exclude forum
 
 ## curl --> jenkins REST-API
 
@@ -282,6 +290,10 @@ Vergleich einer Datei in unterschiedlichen branches
 
 	git diff <BRANCH-1> <BRANCH-2> <Dateipfad>
 
+Einfache Änderungs-Übersicht:
+
+ 	git log -p
+ 
 Anzeige der Historie mit Änderungs-Details
 
 	git log --follow --grep=<pattern> --graph --cc <Dateipfad>
@@ -541,10 +553,6 @@ devilspie -a
 	to see all possible signals: kill -l
 	use pstree to see the main process Id: pstree -gp
 	
-## netcat alternative pwncat (python script)
-
-	curl https://raw.githubusercontent.com/cytopia/pwncat/master/bin/pwncat
-
 ## Sql GraphViz
 
 	https://github.com/rm-hull/sql_graphviz
@@ -558,7 +566,3 @@ devilspie -a
 ## HTTPS redirection on HTTP-Webapplication with certbot
 	- creates/renews cert for application on port 80 
 	https://certbot.eff.org/lets-encrypt/ubuntufocal-webproduct
-
-## Application Network Traffic
-
-sudo nethogs -v 1
