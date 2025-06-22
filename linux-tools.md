@@ -475,6 +475,23 @@ https://gist.github.com/snieda/0063c25f13cf8c9d5021941ca57ac895
 
 see https://www.reddit.com/r/Ubuntu/comments/61xfzk/hibernation_ubuntu_1604_unencrypted_swap/
 
+## Sleep deep in /etc/default/grub
+
+	GRUB_CMDLINE_LINUX_DEFAULT="quiet splash mem_sleep_default=deep resume=UUID=<SWAP-UUID>"
+
+## System logs
+
+boot log:
+	journalctl -b
+
+boot kernel messages (dmesg)
+	
+	journalctl -b -k
+
+user log:
+	
+	journalctl _UID=$(id -u)
+
 ## AntiVir / Trojan
 
 sudo apt install clamav
@@ -502,6 +519,7 @@ or find the pid:
 ## Windows in Linux: Wine in Docker with x11docker
 
 https://hub.docker.com/r/x11docker/lxde
+wine-bottles-and-chocolate.md
 
 ## VLC
 
@@ -538,7 +556,7 @@ devilspie -a
 
 	Extensions in : https://extensions.gnome.org/
 	
-	let you configure a system status bar (cpu, ram-use, miniview etc.)
+	let you configure a system status bar (cpu, ram-use, miniview, System Monitor Next, Net Speed Simplified, Ubuntu Dock,WTMB (Window Thumbnails) etc.)
 
 ## terminal image viewer
 	feh or tiv
