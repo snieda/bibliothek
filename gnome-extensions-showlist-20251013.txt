@@ -1,0 +1,412 @@
+windowsNavigator@gnome-shell-extensions.gcampax.github.com
+  Name: Window Navigator
+  Beschreibung: Allow keyboard selection of windows and workspaces in overlay mode. <Ctrl>number selects a workspace, and <Alt>number selects a window.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/windowsNavigator@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Originalersteller: zaspire@rambler.ru
+  Version: 77
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+system-monitor@paradoxxx.zero.gmail.com
+  Name: system-monitor
+  Beschreibung: Display system information in GNOME Shell status bar, such as memory, CPU, disk and battery usages, network rates…
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/system-monitor@paradoxxx.zero.gmail.com
+  Adresse: https://github.com/paradoxxxzero/gnome-shell-system-monitor-applet
+  Version: 40
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+hibernate-status@dromi
+  Name: Hibernate Status Button
+  Beschreibung: Adds a Hibernate button in Status menu. Using Alt modifier, you can also select Hybrid Sleep instead.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/hibernate-status@dromi
+  Adresse: https://github.com/arelange/gnome-shell-extension-hibernate-status
+  Version: 42
+  Eingeschaltet: Ja
+  Status: ACTIVE
+window-thumbnails@G-dH.github.com
+  Name: WTMB (Window Thumbnails)
+  Beschreibung: Allows you to create a Picture-in-Picture (PiP) view of any window
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/window-thumbnails@G-dH.github.com
+  Adresse: https://github.com/G-dH/window-thumbnails
+  Version: 49.0 (15)
+  Eingeschaltet: Ja
+  Status: ACTIVE
+blur-my-shell@aunetx
+  Name: Blur my Shell
+  Beschreibung: Adds a blur look to different parts of the GNOME Shell, including the top panel, dash and overview.
+
+You can support my work by sponsoring me on:
+- github: https://github.com/sponsors/aunetx
+- ko-fi: https://ko-fi.com/aunetx
+
+If you use Ubuntu, you may want to change the radius of the corner effect for Dash-to-Dock in preferences, else you may see unpleasantly mixed radii in your dock.
+
+Note: if the extension shows an error after updating, please make sure to restart your session to see if it persists. This is due to a bug in gnome shell, which I can't fix by myself.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/blur-my-shell@aunetx
+  Adresse: https://github.com/aunetx/blur-my-shell
+  Version: 69
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+dynamic-panel-transparency@rockon999.github.io
+  Name: Dynamic Panel Transparency
+  Beschreibung: This extension fades your top panel to nothingness when there are no maximized windows present. Never again will the panel be abruptly darkened!
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/dynamic-panel-transparency@rockon999.github.io
+  Adresse: https://github.com/ewlsh/dynamic-panel-transparency/
+  Version: 37
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+window-list@gnome-shell-extensions.gcampax.github.com
+  Name: Window List
+  Beschreibung: Display a window list at the bottom of the screen.
+This extension is part of Classic Mode and is officially supported by GNOME. Please do not report bugs using the form below, use GNOME's GitLab instance instead.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/window-list@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 62
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+simplenetspeed@biji.extension
+  Name: Simple net speed
+  Beschreibung: Simply showing network speed. Left click to change modes:
+
+1. Total net speed in bits per second
+2. Total net speed in Bytes per second
+3. Up & down speed in bits per second
+4. Up & down speed in Bytes per second
+5. Total of downloaded in Bytes (Right click to reset counter)
+
+Middle click to change font size
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/simplenetspeed@biji.extension
+  Adresse: https://github.com/biji/simplenetspeed
+  Version: 33
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+unite@hardpixel.eu
+  Name: Unite
+  Beschreibung: Unite is a GNOME Shell extension which makes a few layout tweaks to the top panel and removes window decorations to make it look like Ubuntu Unity Shell.
+
+- Adds window buttons to the top panel for maximized windows.
+- Shows current window title in the app menu for maximized windows.
+- Removes titlebars on maximized windows.
+- Hides window controls on maximized windows with headerbars.
+- Moves the date to the right, reduces panel spacing and removes dropdown arrows.
+- Moves legacy tray icons to the top panel.
+- Moves notifications to the right.
+- Hides activities button.
+- Adds desktop name to the top panel.
+
+This extension depends on some Xorg utilities. To install them:
+- Debian/Ubuntu: apt install x11-utils
+- Fedora/RHEL: dnf install xprop
+- Fedora Silverblue: rpm-ostree install xprop
+- Arch: pacman -S xorg-xprop
+
+*Settings are provided to enable/disable or customize the available tweaks.
+* Since version 2 applications on wayland with client side decorations are supported using CSS.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/unite@hardpixel.eu
+  Adresse: https://github.com/hardpixel/unite-shell
+  Version: 72
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+apps-menu@gnome-shell-extensions.gcampax.github.com
+  Name: Apps Menu
+  Beschreibung: Add a category-based menu for apps.
+This extension is part of Classic Mode and is officially supported by GNOME. Please do not report bugs using the form below, use GNOME's GitLab instance instead.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/apps-menu@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 65
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+scroll-workspaces@gfxmonk.net
+  Name: Top Panel Workspace Scroll
+  Beschreibung: Change workspaces by scrolling over the top panel
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/scroll-workspaces@gfxmonk.net
+  Adresse: https://github.com/gfxmonk/gnome-shell-scroll-workspaces
+  Version: 38
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+desktop-icons@csoriano
+  Name: Desktop Icons
+  Beschreibung: Add icons to the desktop
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/desktop-icons@csoriano
+  Adresse: https://gitlab.gnome.org/World/ShellExtensions/desktop-icons
+  Version: 19
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+miniview@thesecretaryofwar.com
+  Name: Miniview
+  Beschreibung: Show window previews
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/miniview@thesecretaryofwar.com
+  Adresse: https://github.com/iamlemec/miniview
+  Version: 18
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+system-monitor-next@paradoxxx.zero.gmail.com
+  Name: system-monitor-next
+  Beschreibung: Display system information in GNOME Shell status bar, such as memory, CPU, disk and battery usages, network rates…
+
+Please see the extension homepage for prerequisite packages that must be installed first.
+
+If you get an error after updating, try restarting GNOME Shell or logging out and logging back in.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/system-monitor-next@paradoxxx.zero.gmail.com
+  Adresse: https://github.com/mgalgs/gnome-shell-system-monitor-next-applet
+  Version: 81
+  Eingeschaltet: Ja
+  Status: ACTIVE
+drive-menu@gnome-shell-extensions.gcampax.github.com
+  Name: Removable Drive Menu
+  Beschreibung: A status menu for accessing and unmounting removable devices.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/drive-menu@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 67
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+network-stats@gnome.noroadsleft.xyz
+  Name: Network Stats
+  Beschreibung: Displays internet upload speed, download speed, bandwidth, data usage. 
+
+ visit github page for instructions, suggestions and feature requests. 
+
+ ERROR while updating extension ? restart your system or reload gnome shell.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/network-stats@gnome.noroadsleft.xyz
+  Adresse: https://github.com/noroadsleft000/gnome-network-stats
+  Version: 34
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+netspeedsimplified@prateekmedia.extension
+  Name: Net speed Simplified
+  Beschreibung: A Net Speed extension With Loads of Customization. Fork of simplenetspeed
+
+Full CHANGELOG can be found on github releases page
+
+Features 
+1. Clean UI 
+2. Adjustable Refresh rate 
+3. Preferences to manage extension 
+4. Vertical Alignment Support 
+5. Two Icon sets for Indicators 
+
+Feature Highlights for Preferences 
+1. Lock Mouse Actions option 
+2. Advance Position options to pinpoint where to place the indicator on the Panel. 
+3. Refresh time option by which you can change refresh rate value between 1.0 and 10.0 seconds. 
+4. Option to show upload speed first 
+5. Color Customizations for speed indicators 
+6. Option to Hide when Disconnected 
+7. Option to use shorter units like K/s instead of KB/s 
+8. Limit Unit option and more... 
+
+Modes 
+1. Total net speed in terms of bits per second 
+2. Total net speed in terms of bytes per second 
+3. Combined Up & down speed in terms of bits per second 
+4. Combined Up & down speed in terms of bytes per second 
+5. Total transferred data in terms of bytes (Right click to reset counter) 
+
+Mouse Events 
+- Left click to change modes 
+- Right click(in 1-4 modes): Toggle the visibility of total transfer data. 
+- Right click(in 5th mode): Reset total transfer data. 
+- Right Click(Four consecutive times): Toggle through horizontal/vertical alignment. 
+- Middle click: Cycle through the font sizes.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/netspeedsimplified@prateekmedia.extension
+  Adresse: https://github.com/prateekmedia/netspeedsimplified
+  Version: 44
+  Eingeschaltet: Ja
+  Status: ACTIVE
+forge@jmmaranan.com
+  Name: Forge
+  Beschreibung: Tiling and window manager for GNOME
+
+Please report bugs/issues on https://github.com/forge-ext/forge/issues
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/forge@jmmaranan.com
+  Adresse: https://github.com/forge-ext/forge
+  Version: 88
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+shell-configurator@adeswanta
+  Name: Shell Configurator
+  Beschreibung: Configure and customize GNOME Shell with advanced settings.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/shell-configurator@adeswanta
+  Adresse: https://gitlab.com/adeswantaTechs/shell-configurator
+  Version: 5
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+gnomesome@chwick.github.com
+  Name: Gnomesome
+  Beschreibung: Tiling window manager with awesome keybindings
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/gnomesome@chwick.github.com
+  Adresse: https://github.com/chwick/gnomesome
+  Version: 15
+  Eingeschaltet: Ja
+  Status: OUT OF DATE
+tiling-assistant@leleat-on-github
+  Name: Tiling Assistant
+  Beschreibung: Expand GNOME's 2 column tiling and add a Windows-snap-assist-inspired popup...
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/tiling-assistant@leleat-on-github
+  Adresse: https://github.com/Leleat/Tiling-Assistant
+  Version: 53
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+user-theme@gnome-shell-extensions.gcampax.github.com
+  Name: User Themes
+  Beschreibung: Load shell themes from user directory.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/user-theme@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 64
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+tophat@fflewddur.github.io
+  Name: TopHat
+  Beschreibung: View CPU, memory, disk, and network activity in the GNOME top bar.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/tophat@fflewddur.github.io
+  Adresse: https://github.com/fflewddur/tophat
+  Version: 22
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+Resource_Monitor@Ory0n
+  Name: Resource Monitor
+  Beschreibung: Resource Monitor is a GNOME Shell extension that provides real-time monitoring of key system resources directly in the GNOME Shell top bar. It tracks CPU usage, load average, and temperature; RAM and swap usage; disk stats and space; GPU usage, memory, and temperature; and network activity for both WLAN and Ethernet connections.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/Resource_Monitor@Ory0n
+  Adresse: https://github.com/0ry0n/Resource_Monitor/
+  Version: 26
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+Vitals@CoreCoding.com
+  Name: Vitals
+  Beschreibung: A glimpse into your computer's temperature, voltage, fan speed, memory usage, processor load, system resources, network speed and storage stats. This is a one stop shop to monitor all of your vital sensors. Uses asynchronous polling to provide a smooth user experience. Feature requests or bugs? Please use GitHub.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/Vitals@CoreCoding.com
+  Adresse: https://github.com/corecoding/Vitals
+  Version: 73
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+workspace-indicator@gnome-shell-extensions.gcampax.github.com
+  Name: Workspace Indicator
+  Beschreibung: Put an indicator on the panel signaling in which workspace you are, and give you the possibility of switching to another one.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/workspace-indicator@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 66
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+gsconnect@andyholmes.github.io
+  Name: GSConnect
+  Beschreibung: GSConnect is a complete implementation of KDE Connect especially for GNOME Shell with Nautilus, Chrome and Firefox integration. It does not rely on the KDE Connect desktop application and will not work with it installed.
+
+KDE Connect allows devices to securely share content like notifications or files and other features like SMS messaging and remote control. The KDE Connect team has applications for Linux, BSD, Android, Sailfish, iOS, macOS and Windows.
+
+Please report issues on Github!
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/gsconnect@andyholmes.github.io
+  Adresse: https://github.com/GSConnect/gnome-shell-extension-gsconnect/wiki
+  Version: 67
+  Eingeschaltet: Ja
+  Status: ACTIVE
+launch-new-instance@gnome-shell-extensions.gcampax.github.com
+  Name: Launch New Instance
+  Beschreibung: Always launch a new instance when clicking in the dash or the application view.
+This extension is part of Classic Mode and is officially supported by GNOME. Please do not report bugs using the form below, use GNOME's GitLab instance instead.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/launch-new-instance@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 48
+  Eingeschaltet: Ja
+  Status: ACTIVE
+gTile@vibou
+  Name: gTile
+  Beschreibung: Tile windows on a grid
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/gTile@vibou
+  Adresse: https://github.com/gTile
+  Version: 62
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+gtktitlebar@velitasali.github.io
+  Name: GTK Title Bar
+  Beschreibung: Remove title bars for non-GTK apps with minimal interference with the default workflow
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/gtktitlebar@velitasali.github.io
+  Adresse: https://github.com/velitasali/gtktitlebar
+  Version: 11
+  Eingeschaltet: Nein
+  Status: OUT OF DATE
+native-window-placement@gnome-shell-extensions.gcampax.github.com
+  Name: Native Window Placement
+  Beschreibung: Arrange windows in overview in a more compact way.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/native-window-placement@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 65
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+places-menu@gnome-shell-extensions.gcampax.github.com
+  Name: Places Status Indicator
+  Beschreibung: Add a menu for quickly navigating places in the system.
+This extension is part of Classic Mode and is officially supported by GNOME. Please do not report bugs using the form below, use GNOME's GitLab instance instead.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/places-menu@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 69
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+auto-move-windows@gnome-shell-extensions.gcampax.github.com
+  Name: Auto Move Windows
+  Beschreibung: Move applications to specific workspaces when they create windows.
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/auto-move-windows@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 63
+  Eingeschaltet: Ja
+  Status: ACTIVE
+screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
+  Name: Screenshot Window Sizer
+  Beschreibung: Resize windows for GNOME Software screenshots with Ctrl+Alt+s shortcut
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/screenshot-window-sizer@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Version: 45
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+ubuntu-appindicators@ubuntu.com
+  Name: Ubuntu AppIndicators
+  Beschreibung: Support app indicators and legacy tray icons in top panel, as the default Ubuntu experience. System update of AppIndicator and KStatusNotifierItem Support extension.
+  Pfad: /usr/share/gnome-shell/extensions/ubuntu-appindicators@ubuntu.com
+  Adresse: https://github.com/ubuntu/gnome-shell-extension-appindicator
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+ubuntu-dock@ubuntu.com
+  Name: Ubuntu Dock
+  Beschreibung: A dock for the Gnome Shell, default Ubuntu experience. This extension is a modified version of Dash To Dock with different defaults. Dash To Dock can be installed to replace it and give more (but unsupported) configuration options.
+  Pfad: /usr/share/gnome-shell/extensions/ubuntu-dock@ubuntu.com
+  Adresse: https://micheleg.github.io/dash-to-dock/
+  Originalersteller: micxgx@gmail.com
+  Version: 100
+  Eingeschaltet: Ja
+  Status: ACTIVE
+light-style@gnome-shell-extensions.gcampax.github.com
+  Name: Light Style
+  Beschreibung: Switch default to light style
+  Pfad: /usr/share/gnome-shell/extensions/light-style@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+system-monitor@gnome-shell-extensions.gcampax.github.com
+  Name: System Monitor
+  Beschreibung: Monitor system from the top bar
+  Pfad: /usr/share/gnome-shell/extensions/system-monitor@gnome-shell-extensions.gcampax.github.com
+  Adresse: https://gitlab.gnome.org/GNOME/gnome-shell-extensions
+  Eingeschaltet: Nein
+  Status: INITIALIZED
+ding@rastersoft.com
+  Name: Desktop Icons NG (DING)
+  Beschreibung: Adds icons to the desktop. Fork of the original Desktop Icons extension, with several enhancements .
+  Pfad: /usr/share/gnome-shell/extensions/ding@rastersoft.com
+  Adresse: https://gitlab.com/rastersoft/desktop-icons-ng
+  Eingeschaltet: Ja
+  Status: ACTIVE
+tiling-assistant@ubuntu.com
+  Name: Ubuntu Tiling Assistant
+  Beschreibung: Expand GNOME's 2 column tiling and add a Windows-snap-assist-inspired popup...
+  Pfad: /usr/share/gnome-shell/extensions/tiling-assistant@ubuntu.com
+  Adresse: https://launchpad.net/ubuntu/+source/gnome-shell-extension-tiling-assistant
+  Version: 51
+  Eingeschaltet: Ja
+  Status: ACTIVE
+clipboard-indicator@tudmotu.com
+  Name: Clipboard Indicator
+  Beschreibung: The most popular clipboard manager for GNOME, with over 1M downloads
+  Pfad: /home/ts/.local/share/gnome-shell/extensions/clipboard-indicator@tudmotu.com
+  Adresse: https://github.com/Tudmotu/gnome-shell-extension-clipboard-indicator
+  Version: 69
+  Eingeschaltet: Ja
+  Status: ACTIVE
