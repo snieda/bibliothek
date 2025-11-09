@@ -67,5 +67,3 @@ help_select() {
       echo "help_download xdg-open https://github.com/denysdovhan/bash-handbook ~/bash-handbook.html # bash handbook"; \
    } | fzf )
 }
-
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
