@@ -392,6 +392,6 @@
             internal: ":toggle_stage"
             auto_exec: true
         }
-    ]
+]
 
 }

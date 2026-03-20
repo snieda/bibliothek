@@ -49,7 +49,26 @@ lvim.plugins = {
 			  vim.g.molten_output_win_max_height = 20
 		  end,
 	  },
-	 --  {
+	  -- Auto theme detection
+  {
+    "f-person/auto-dark-mode.nvim",
+    priority = 1000,
+    config = function()
+      local auto_dark_mode = require('auto-dark-mode')
+      auto_dark_mode.setup({
+        update_interval = 3000,
+        set_dark_mode = function()
+          vim.api.nvim_set_option_value("background", "dark", {})
+          vim.cmd("colorscheme lunar")
+        end,
+        set_light_mode = function()
+          vim.api.nvim_set_option_value("background", "light", {})
+          vim.cmd("colorscheme delek")
+        end,
+      })
+    end,
+  },
+  --  {
 		-- 'edluffy/hologram.nvim',         -- enable view of images
 		-- config = function()
 		--   require("hologram").setup()
@@ -71,8 +90,24 @@ lvim.plugins = {
 		 --  },
 	  -- }
   }
-  
-  vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
+  -- automatic theming
+  update_interval = 5000 -- Check every 5 seconds
+  vim.opt.termguicolors = true
+vim.keymap.set('n', '<leader>td', function()
+  require('auto-dark-mode').disable()
+  vim.cmd('colorscheme murphy')
+end, { desc = 'Force dark theme' })
+
+vim.keymap.set('n', '<leader>tl', function()
+  require('auto-dark-mode').disable()
+  vim.cmd('colorscheme delek')
+end, { desc = 'Force light theme' })
+
+vim.keymap.set('n', '<leader>ta', function()
+  require('auto-dark-mode').enable()
+end, { desc = 'Auto theme' })
+
+ vim.o.sessionoptions="blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
   require("nvim-dap-virtual-text").setup()
   require("telescope").load_extension "file_browser"
   -- require('mini.map').setup()
@@ -80,7 +115,9 @@ lvim.plugins = {
   -- require("mason-nvim-dap").setup({
   --     automatic_installation = true
   -- })
-  
+
+-- vim.autocmd BufRead,BufNewFile = *.jte set filetype=html
+
   -- telescope
   vim.api.nvim_set_keymap('n', "<C-p>", "<cmd>Telescope find_files<cr>", { noremap = true, silent = true, desc = "Find file" })
   vim.api.nvim_set_keymap('n', "<leader>fg", "<cmd>Telescope live_grep<cr>", { noremap = true, silent = true, desc = "Grep" })

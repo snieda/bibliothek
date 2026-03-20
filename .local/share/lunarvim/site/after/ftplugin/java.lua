@@ -129,15 +129,15 @@ formatters.setup {
   { command = "google_java_format", filetypes = { "java" } },
 }
 
--- require("dap").configurations.java = {
---     {
---       type = 'java';
---       request = 'attach';
---       name = "Debug (Attach) - Remote";
---       hostName = "127.0.0.1";
---       port = 8787;
---     },
---   }
+require("dap").configurations.java = {
+    {
+      type = 'java';
+      request = 'attach';
+      name = "Debug (Attach) - Remote";
+      hostName = "127.0.0.1";
+      port = 8787;
+    },
+  }
 
   local continue = function()
     if vim.fn.filereadable('.vscode/launch.json') then
