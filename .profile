@@ -29,7 +29,7 @@ if [ -d "$HOME/.local/bin" ] ; then
 fi
 
 # save history after each command (otherwise tmux will do this only on exit)
-PROMPT_COMMAND="history -a; history -c; history -r"
+PROMPT_COMMAND="history -a"
 
 alias x=xdg-open
 alias fd=fdfind
@@ -53,13 +53,23 @@ bind -x '"\C-g":"read f < <(tree -idf ~ | fzy -l 30) | xsel -i && echo -en "\033
 bind -x '"\C-h":"{ apropos . ; [ -f ~/bash.txt ] && cat bash.txt; } | fzy"'
 bind -x '"\C-k":"gg"'
 
+bind -x '"\C-o":bind_terms'
+bind_terms() {
+  local fname=~/terms.txt
+  local selected=$(cat ${fname} | fzf)
+  READLINE_LINE="${READLINE_LINE:0:$READLINE_POINT}${selected}${READLINE_LINE:$READLINE_POINT}"
+  READLINE_POINT=$(( READLINE_POINT + ${#selected} ))
+}
+
 #command -v __git_ps1 >/dev/null 2>&1 && export PS1="$PS1\n\[\033[1;34m\]└─ ▶$(__git_ps1):\[\033[0m\]"
 function ff() { find . -name $2 | fzy | xargs $1; }
 function hh() { cat bash_history | fzy; }
 function fo() { first=$(fzy) && second=$(fzy) && $1 $first $second; }
 function ft() { find . -type f -name $1 -exec sh -c 'less {} | grep --with-filename $2' ; }
-
-export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+#export JAVA_HOME=~/zulu8.50.0.51-ca-jdk8.0.275-linux_x64
+#export JAVA_HOME=/usr/lib/jvm/java-17-openjdk-amd64
+export JAVA_HOME=/usr/lib/jvm/java-25-openjdk-amd64
+#export JDTLS_HOME=~/jdt-ls
 export NNN_PLUG='f:fzcd;h:fzhist;m:mocplay;d:diffs;t:nmount;v:imgview;p:-!less -iR $nnn*;s:-!sudo -E vim $nnn*;l:-!git log;h:-!hx $nnn*;g:-!git diff;r:rg'
 export MVND_HOME=~/mvnd
 export VIRTUAL_ENV=~/.config/python3-venv
@@ -69,8 +79,8 @@ export VIEWER=bat
 export PAGER=bat
 
 source $VIRTUAL_ENV/bin/activate
-
 source $MVND_HOME/bin/mvnd-bash-completion.bash
+source .ts-bash.sh
 
 #PATH="$MVND_HOME/bin:/home/$USER/bin:/home/$USER/.local/bin:$JAVA_HOME/bin:$JDTLS_HOME/bin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin"
 PATH="$MVND_HOME/bin:$VIRTUAL_ENV/bin:/home/$USER/bin:/home/$USER/.local/bin:$JAVA_HOME/bin:$JDTLS_HOME/bin:$PATH"
@@ -82,9 +92,10 @@ export WEBKIT_DISABLE_COMPOSITING_MODE=1
 CDPATH=.:/home/$USER:/home/$USER/workspace/heroku:/home/$USER/workspace/$USERl2nano-code
 
 source ~/bin/smartcd.sh
+eval "$(zoxide init bash)"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/home/$USER/.rd/bin:$PATH"
+export PATH="/home/ts/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 if [ -d ~/.bash_completion.d ]; then

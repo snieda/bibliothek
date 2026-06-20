@@ -1,0 +1,1 @@
+qemu-system-x86_64 -enable-kvm -m 4G -smp 4 -machine q35 -cpu host -device virtio-vga-gl -rtc base=utc -hda chromeos_16002.51.0_reven_recovery_stable-channel_mp-v6.bin -hdb disk.img -display gtk,gl=on,show-cursor=on -usb -device usb-tablet

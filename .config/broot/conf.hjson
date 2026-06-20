@@ -26,6 +26,17 @@
     #
     default_flags: "ihgsd"
 
+	###############################################################
+	# Terminal's title
+	# If you want the terminal's title to be updated when you change
+	# directory, set a terminal_title pattern by uncommenting one of
+	# the examples below and tuning it to your taste.
+	#
+	# terminal_title: "[broot] {git-name}"
+	# terminal_title: "{file} 🐄"
+	# terminal_title: "-= {file-name} =-"
+	# reset_terminal_title_on_exit: false
+
     ###############################################################
     # Date/Time format
     # If you want to change the format for date/time, uncomment the
@@ -34,13 +45,16 @@
     #
     # date_time_format: %Y/%m/%d %R
 
-    ###############################################################
-    # uncomment to activate modal mode
-    #
-    # (you really should read https://dystroy.org/broot/modal/
-    # before as it may not suit everybody even among vim users)
-    #
-    # modal: true
+	###############################################################
+	# uncomment to activate modal mode
+	#
+	# (you really should read https://dystroy.org/broot/modal/
+	# before as it may not suit everybody even among vim users)
+	#
+	# You may start either in 'command' mode, or in 'input' mode
+	#
+	# modal: true
+	# initial_mode: command
 
     ###############################################################
     # Whether to mark the selected line with a triangle
@@ -82,16 +96,33 @@
     #
     icon_theme: vscode
 
-    ###############################################################
-    # Special paths
-    # If some paths must be handled specially, uncomment (and change
-    # this section as per the examples)
-    #
-    # special_paths: {
-    #     "/media/slow-backup-disk"    : no-enter
-    #     "/home/dys/useless"    : hide
-    #     "/home/dys/my-link-I-want-to-explore"    : enter
-    # }
+	###############################################################
+	# Special paths
+	# If some paths must be handled specially, uncomment (and change
+	# this section as per the examples)
+	# Setting "list":"never" on a dir prevents broot from looking at its 
+	#  children when searching, unless the dir is the selected root.
+	# Setting "sum":"never" on a dir prevents broot from looking at its
+	#  children when computing the total size and count of files.
+	# Setting "show":"always" makes a file visible even if its name
+	#  starts with a dot.
+	# Setting "list":"always" may be useful on a link to a directory
+	#  (they're otherwise not entered by broot unless selected)
+	#
+	special_paths: {
+		"/media" : {
+		    list: "never"
+		    sum: "never"
+		}
+		"~/.config": { "show": "always" }
+		"trav": {
+		    show: always
+		    list: "always",
+		    sum: "never"
+		}
+		# "~/useless": { "show": "never" }
+		# "~/my-link-I-want-to-explore": { "list": "always" }
+	}
 
     ###############################################################
     # Quit on last cancel
@@ -153,6 +184,51 @@
     }
 
 	###############################################################
+	# Max file size for content search
+	#
+	# Bigger files are ignored when searching their content. You
+	# can specify this size either in ISO units (eg 5GB) or in
+	# the old binary units (eg 44Kib)
+	content_search_max_file_size: 10MB
+
+    ###############################################################
+    # Max Panels Count
+    #
+    # Change this if you sometimes want to have more than 2 panels
+    # open
+    # max_panels_count: 2
+
+	###############################################################
+	# Update work dir
+	#
+	# By default, broot process' work dir is kept in sync with the
+	# current's panel root. If you want to keep it unchanged,
+	# uncomment this setting
+	#
+	# update_work_dir: false
+
+	###############################################################
+	# Kitty Keyboard extension
+	#
+	# If you want to use advanced keyboard shortcuts in Kitty
+	# compatible terminals (Kitty, Wezterm), set this to true.
+	# 
+	# This makes it possible to use shortcuts like 'space-n', 
+	# 'ctrl-alt-a-b', 'shift-space', etc.
+	#
+	enable_kitty_keyboard: false
+
+	###############################################################
+	# lines around matching line in filtered preview
+	#
+	# When searching the content of a file, you can have either
+	# only the matching lines displayed, or some of the surrounding
+	# ones too.
+	#
+	lines_before_match_in_preview: 1
+	lines_after_match_in_preview: 1
+
+	###############################################################
 	# transformations before preview
 	#
 	# It's possible to define transformations to apply to some files
@@ -192,14 +268,20 @@
 	         mode: text
 	         command: [ "jq" ]
 	     }
+		 # Use zmore to preview compressed text files
+		 {
+		     input_extensions: [ "gz", "z", "tgz" ] // case doesn't matter
+		     output_extension: txt
+		     mode: text
+		     command: [ "zmore" ]
+		 }
+		 {
+		 	input_extensions: ["jar", "zip", "rar", "war", "arj"]
+		 	output_extension: txt
+		 	mode: text
+		 	command: [ "less" ]
+		 }
 	]
-
-    ###############################################################
-    # Max Panels Count
-    #
-    # Change this if you sometimes want to have more than 2 panels
-    # open
-    # max_panels_count: 2
 
     ###############################################################
     # Imports
@@ -224,6 +306,11 @@
 				unknown
 			]
 			file: dark-blue-skin.hjson
+		    //file: skins/catppuccin-macchiato.hjson
+		    //file: skins/catppuccin-mocha.hjson
+		    //file: skins/dark-gruvbox.hjson
+		    //file: skins/dark-orange.hjson
+		    //file: skins/solarized-dark.hjson
 		}
 
         # This skin is imported when your terminal is light

@@ -56,7 +56,7 @@ lvim.plugins = {
     config = function()
       local auto_dark_mode = require('auto-dark-mode')
       auto_dark_mode.setup({
-        update_interval = 3000,
+        update_interval = 5000,
         set_dark_mode = function()
           vim.api.nvim_set_option_value("background", "dark", {})
           vim.cmd("colorscheme lunar")
@@ -68,7 +68,18 @@ lvim.plugins = {
       })
     end,
   },
-  --  {
+  {
+  'jkeresman01/spring-initializr.nvim',
+  dependencies = {
+    'nvim-lua/plenary.nvim',
+    'MunifTanjim/nui.nvim',
+    'nvim-telescope/telescope.nvim',
+  },
+  config = function()
+    require('spring-initializr').setup()
+  end
+  },
+  {
 		-- 'edluffy/hologram.nvim',         -- enable view of images
 		-- config = function()
 		--   require("hologram").setup()
@@ -90,8 +101,8 @@ lvim.plugins = {
 		 --  },
 	  -- }
   }
+}
   -- automatic theming
-  update_interval = 5000 -- Check every 5 seconds
   vim.opt.termguicolors = true
 vim.keymap.set('n', '<leader>td', function()
   require('auto-dark-mode').disable()

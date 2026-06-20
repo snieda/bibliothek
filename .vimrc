@@ -57,7 +57,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --java-completer' }
 "Plug 'vim-syntastic/syntastic'       " syntax checker for casi all languages
 "Plug 'w0rp/ale'                      " linter for casi all languages
 "Plug 'natebosch/vim-lsc'
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim'              " full IDE plugin, config see: https://github.com/neoclide/coc.nvim#example-vim-configuration
 Plug 'liuchengxu/vista.vim'
 
 "debugging
@@ -328,7 +328,7 @@ endif
 " set laststatus=2
 
 " Ale Configuration -----------------------------------------------------------
-let g:ale_statusline_format = ['x %d', 'â  %d', 'â¬¥ ok']
+let g:ale_statusline_format = ['x %d', '⚠ %d', '⬥ ok']
 let g:ale_open_list=1
 let g:ale_set_loclist=1
 let g:ale_set_quickfix=1
@@ -357,13 +357,13 @@ hi TabLineFill ctermfg=LightBlue ctermbg=DarkBlue
 let g:airline_powerline_fonts = 1
 
 " powerline symbols
-"let g:airline_left_sep = 'î°'
-"let g:airline_left_alt_sep = 'î±'
-"let g:airline_right_sep = 'î²'
-"let g:airline_right_alt_sep = 'î³'
-"let g:airline_symbols.branch = 'î '
-"let g:airline_symbols.readonly = 'î¢'
-"let g:airline_symbols.linenr = 'î¡'
+"let g:airline_left_sep = ''
+"let g:airline_left_alt_sep = ''
+"let g:airline_right_sep = ''
+"let g:airline_right_alt_sep = ''
+"let g:airline_symbols.branch = ''
+"let g:airline_symbols.readonly = ''
+"let g:airline_symbols.linenr = ''
 
 " devicons
 set guifont=Fantasque\ Sans\ Mono\ 11
@@ -519,7 +519,7 @@ cabbrev bonly WSBufOnly
 cnoremap <leader> <A-W> source ~/.vim-session
 cnoremap <leader> <A-S> mksession! ~/.vim-session
 nnoremap <silent> <C-S><C-S> :mksession! ~/.vim-session <CR>
-autocmd VimLeave * NERDTreeClose
+autocmd VimLeave * tabdo NERDTreeClose
 
 "fu! SaveSess()
 "    execute 'mksession! ' . getcwd() . '/.session.vim'
@@ -594,7 +594,7 @@ set encoding=UTF-8
 "autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 " java language server
-let g:lsc_server_commands = {'java': '<path-to-java-language-server>/java-language-server/dist/lang_server_{linux|mac|windows}.sh'}
+let g:lsc_server_commands = {'java': '~/.vim/plugged/vimspector/gadgets/linuxjava-language-server/dist/lang_server_linux'}
 " vimspector
 let g:vimspector_enable_mappings = 'HUMAN'
 
@@ -617,7 +617,7 @@ let g:ycm_java_jdtls_extension_path = [
   \ '~/.vim/plugged/vimspector/gadgets/linux'
   \ ]
 
-let g:jdt_ls_debugger_port = 0
+let g:jdt_ls_debugger_port = 8787
 function! s:StartDebugging()
   if g:jdt_ls_debugger_port <= 0
     " Get the DAP port
@@ -702,3 +702,4 @@ map <leader>mt :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module="
 map <leader>md :execute "bo term ++rows=16 mvn -pl " . input("maven-sub-module=","tsl2.nano.core") . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
 let $JDB="-agentlib:jdwp=transport=dt_socket,address=localhost:8787,server=y,suspend=n"
 map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
+

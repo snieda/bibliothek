@@ -124,7 +124,7 @@ export QT_SCALE_FACTOR=2
 source ~/.config/broot/launcher/bash/br
 
 ## START-BCVI
-  echo $PATH | grep -q ~/bin || PATH="~/bin:$PATH"
+  echo $PATH | grep -q ~/bin || PATH=~/bin:"$PATH"
   test -n "$(which bcvi)" && eval "$(bcvi --unpack-term)"
   test -n "${BCVI_CONF}"  && alias vi="bcvi"
   test -n "${BCVI_CONF}"  && alias suvi="EDITOR='bcvi -c viwait' sudoedit"
@@ -133,7 +133,7 @@ source ~/.config/broot/launcher/bash/br
 
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="~/.rd/bin:$PATH"
+export PATH=~/.rd/bin:$PATH
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 
 source /home/$USER/.config/broot/launcher/bash/br
@@ -143,3 +143,7 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 [[ -r ~/.profile ]] && $(alias x 2>/dev/null ) || source ~/.profile
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"

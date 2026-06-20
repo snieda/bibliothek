@@ -2,6 +2,7 @@
 " simple vim configuration without plugins to be used as extended editor (~ IDE)
 " usable if you are not authorized to install anything
 " java/maven/jdb is configured to be usable through eclipse like shortcuts
+"   usage: vim -u ~/.vimrc-min
 " cp Thomas Schneider / 08-2024
 " -----------------------------------------------------------------------------
 
@@ -67,7 +68,7 @@
 " * hit <Ctrl+W><Ctrl+W> to switch from terminal input to your source code
 " * set your cursor at a line to be a breakpoint. hit <Shift-B> to enable the breakpoint
 " * hit <Shift-B>l to see all markers (to be reusable as breakpoints....)
-" * Now you can run the test with <F-8>
+" * Now you can run the test with <F8>
 " * if the debugger suspends a thread in cause of a breakpoint, set your cursor on a variable and hit <S-I> to see the value
 
 " vim file list with fuzzy finding  --------------------------------------------
@@ -134,7 +135,8 @@ autocmd VimEnter *  :Vexplore |
     \ execute "wincmd l" |
     \ rightbelow copen |
 	\ resize 15 |
-	\ vert term
+	\ wincmd 2 w
+"	\ vert term |
 "  \ execute "normal! \<C-x>\<C-u>"
 
 " THEMING ---------------------------------------------------------------------
@@ -331,7 +333,8 @@ augroup decompile-javap
 augroup END 
 
 " common editor keystrokes ----------------------------------------------
-map <F1>  : vert help <C-r><C-w><CR>| " show vim help for current word 
+map <F1>  : vert help <C-r><C-w><CR>| " show vim help for current word
+map <F2>  : !ctags -R               " generate tags file 
 map <C-A>   ggvGg_|					" select all
 map <C-F> /<C-R><C-W>|				" find/search
 map <S-F>  [I|						" searches the word under cursor
@@ -397,23 +400,26 @@ au!
 	au bufreadpost,filereadpost *.class set nomodified
 augr END
 
-map <leader>mc :bo term ++rows=16 mvn -o compile
-map <leader>mi :bo term ++rows=16 mvn clean install
-map <leader>mf :bo term ++rows=16 mvn -o install -DskipTests
+map <leader>mc :bo term  mvn -o compile
+map <leader>mi :bo term  mvn clean install
+map <leader>mf :bo term  mvn -o install -DskipTests
 "map <leader>mt :execute "bo term ++rows=16 mvnDebug -o test -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
 "nnoremap <leader>mt :bo term ++rows=16 mvnDebug -o -fn -DforkCount=0 test -Dtest=%:t:r\#<C-R><C-W>
-nnoremap <leader>mt :bo term ++rows=16 mvn -Dmaven.surefire.debug -o -fn -DforkCount=0 test -Dtest=%:t:r\#<C-R><C-W>
-map <leader>md :execute "bo term ++rows=16 mvnDebug -pl " . input("maven-sub-module=","tsl2.nano.core", file) . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
-map <leader>ms :execute "bo term ++rows=16" . expand("$SON")
+nnoremap <leader>mt :bo term mvn -Dmaven.surefire.debug -o -fn -DforkCount=0 test -Dtest=%:t:r\#<C-R><C-W>
+map <leader>md :execute "bo term  mvnDebug -pl " . input("maven-sub-module=","tsl2.nano.core", file) . " test -o -Dmaven.surefire.debug -Dtest=" . expand("%:t:r") . "\\#" . expand("<cword>")
+map <leader>ms :execute "bo term " . expand("$SON")
 map <leader>mj :execute "mvnDebug exec:java -Dexec.mainClass=" .. expand("<cword>") .. "-Dexec.mainArgs="
 map <leader>jd :bo term bash -c "declare -g JARFILE=$(fzf); java $JDB -jar $JARFILE"
 
 " debugging with JDB (sending keys to terminal --------------------------
+sign define bp text=>>
+
 map <A-F3> <F10>\|/<C-R><C-W> <CR>
 map <F10> : tabnew  $JAVA_HOME/lib/src.zip
 map <F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java:$PWD/src/test/java -attach localhost:5005\n")
 map <A-F12> : exec "vert term" \| :call term_sendkeys(term_list()[0], "jdb -sourcepath $PWD/src/main/java:$PWD/src/test/java -connect com.sun.jdi.SocketAttach:hostname=localhost,port=8787\n")
-map <S-B> mb : <C-\>eprintf("call term_sendkeys(term_list()[0], \"stop at " . expand( tr(expand("%:r"), "/", ".")) . ":" . expand(line(".")) . "\\n\")") <CR>
+map <S-B>z :exe ":sign place name=bp line=" . line(".") . " file=" . expand("%:p") 
+map <S-B> <S-B>z <CR> : <C-\>eprintf("call term_sendkeys(term_list()[0], \"stop at " . expand( tr(expand("%:r"), "/", ".")) . ":" . expand(line(".")) . "\\n\")") <CR>
 map <S-B>l : call term_sendkeys(term_list()[0], "stop\n")
 map <S-B>m :marks
 map <S-I> : call term_sendkeys(term_list()[0], "print " . expand("<cword>") . "\n")<CR>

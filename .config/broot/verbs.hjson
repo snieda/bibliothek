@@ -22,6 +22,21 @@
         #     leave_broot: false
         # }
 
+		# Zip selected file(s) into a new archive named <name>.zip
+		# This can be called on the staging area after having staged several
+		# files or directories
+		{
+		    invocation: "zip {name}"
+		    external: [
+		        "zip"
+		        "-r"
+		        "{name:path-from-directory}.zip"
+		        "{file:space-separated}"
+		    ]
+		    leave_broot: false
+		    working_dir: "{root}"
+		}
+
         # A standard recommended command for editing files, that you
         # can customize.
         # If $EDITOR isn't set on your computer, you should either set it using
@@ -218,6 +233,7 @@
             invocation: locate {anyfile}
             key: ctrl-F7
             external: "$SHELL -c \"locate {anyfile} | fzf | xsel -b\""
+			from_shell: true
             leave_broot: false
             auto_exec: false
         }
@@ -225,6 +241,7 @@
             invocation: ccd-select
             shortcut: ccd-select
             external: "$SHELL -c \"tree -idf ~ | fzy -l 30 | xsel -i\""
+			from_shell: true
             leave_broot: false
             auto_exec: true
         }
@@ -298,7 +315,8 @@
             invocation: word-view
             key: ctrl-shift-F3
             shortcut: w
-            external: $SHELL -c \docx2txt < {file} | less\
+            external: $SHELL -c \docx2txt < {file} | less
+			from_shell: true
             leave_broot: false
         }
         {
@@ -306,6 +324,7 @@
             key: alt-shift-F3
             shortcut: x
             external: "$SHELL -c \"xlsx2csv -a -d tab {file} | less\""
+			from_shell: true
             leave_broot: false
         }
         {
@@ -313,6 +332,7 @@
             key: alt-F3
             shortcut: libre
             external: "$SHELL -c \"odt2txt {file} | less\""
+			from_shell: true
             leave_broot: false
         }
         {
